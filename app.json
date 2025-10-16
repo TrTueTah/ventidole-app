@@ -1,4 +1,9 @@
 {
   "name": "Ventidole",
-  "displayName": "Ventidole"
+  "extra": {
+    "eas": {
+      "projectId": "e11357fe-af1d-48f9-93df-2a4b4b47e576"
+    }
+  },
+  "owner": "tanhtran"
 }

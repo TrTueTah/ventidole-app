@@ -1,0 +1,28 @@
+import { RemoteConfigKeys } from './types';
+
+export const defaultConfig: RemoteConfigKeys = {
+    minimum_code_version: 1,
+    maintenance: false,
+    PhoneVerificationCodeLength: '4',
+    show_online_status: false,
+    websocket_url: 'wss://api.ventidole.app',
+    enable_push_notifications: true,
+    enable_connection_feature: false,
+    max_upload_size: 10 * 1024 * 1024,
+    session_timeout: 3600,
+    api_timeout: 10000,
+    firebase_timeout: 10000,
+    max_image_retries: 3,
+    image_retry_delay: 1000,
+    image_load_timeout: 10000,
+    events_count_limit: 100,
+    default_event_limit: 50,
+    users_query_limit: 100,
+    animation_duration: 1000,
+    card_animation_delay: 500,
+    stepper_animation_delay: 500,
+    toast_delay: 3000,
+    countdown_duration: 60000,
+    filter_packages: [],
+    hard_wall_since_date: '2025-09-19T00:00:00Z',
+};
