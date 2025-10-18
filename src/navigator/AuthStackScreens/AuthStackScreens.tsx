@@ -15,8 +15,8 @@ const AuthStackScreens: FC = (): JSX.Element => {
   const AuthStack = createStackNavigator();
   return (
     <NavigationIndependentTree>
-      <AuthStack.Navigator>
-        <AuthStack.Screen key={signInPath} name={signInPath} component={SignInScreen} />
+      <AuthStack.Navigator screenOptions={{ headerShown: false, freezeOnBlur: true }}>
+        <AuthStack.Screen key={signInPath} name={signInPath} component={SignInScreen}/>
         <AuthStack.Screen key={signUpPath} name={signUpPath} component={SignUpScreen} />
         <AuthStack.Screen key={forgotPasswordPath} name={forgotPasswordPath} component={ForgotPasswordScreen} />
         <AuthStack.Screen key={resetPasswordPath} name={resetPasswordPath} component={ResetPasswordScreen} />

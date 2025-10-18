@@ -24,6 +24,7 @@ export interface InputProps {
   inputStyle?: StyleProp<TextStyle>;
   labelStyle?: TextStyle;
   containerInnerStyle?: StyleProp<ViewStyle>;
+  secureTextEntry?: boolean;
   onChange: (val: string) => void;
   onBlur?: () => void;
   onPressFocus?: () => void;

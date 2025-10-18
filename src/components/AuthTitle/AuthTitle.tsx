@@ -1,5 +1,4 @@
-import { View, Text } from 'react-native'
-import React, { FC } from 'react'
+import { FC, useState } from 'react'
 import * as S from './AuthTitle.style'
 import Logo from 'assets/images/logo/logo.svg'
 
@@ -9,6 +8,7 @@ interface AuthTitleProps {
 }
 
 const AuthTitle: FC<AuthTitleProps> = ({ title }) => {
+  const [name, setName] = useState('')
   return (
     <S.Container>
       <Logo height={32} />

@@ -1,13 +1,22 @@
 import { FC, ReactElement } from 'react';
 import { ActivityIndicator, Button as ButtonAntd } from '@ant-design/react-native';
-
-//import components
 import { View, Text, TextStyle, ViewStyle } from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { ButtonProps } from 'typescript/interfaces';
-import { Montserrat500 } from 'constants/fonts';
+import { Montserrat500, Montserrat700 } from 'constants/fonts';
 import { screenHeight } from 'constants/common';
-import { blackColor, grayColor, whiteColor } from 'constants/colors';
+import {
+  whiteColor,
+  white10Color,
+  white40Color,
+  white64Color,
+  blackColor,
+  primaryColor,
+  grayColor,
+  transparentWhite30Color,
+  primary1Color,
+  gray1Color,
+} from 'constants/colors';
 
 const Button: FC<ButtonProps> = ({
   title,
@@ -25,20 +34,19 @@ const Button: FC<ButtonProps> = ({
   const styles = {
     ['default']: {
       container: buttonContatinerStyle,
-
       activeStyle: {
-        backgroundColor: 'rgba(240, 240, 240, 1)',
+        backgroundColor: primary1Color,
         borderRadius: 85,
       } as ViewStyle,
       defaultRaw: {
         borderRadius: 100,
-        backgroundColor: whiteColor,
+        backgroundColor: primaryColor,
         height: screenHeight / 18,
         maxHeight: 64,
       } as ViewStyle,
       defaultRawText: {
-        color: '#010101',
-        fontFamily: Montserrat500,
+        color: whiteColor,
+        fontFamily: Montserrat700,
         textAlign: 'center' as const,
         fontSize: RFValue(14, 932),
         ...buttonTitleStyle,
@@ -48,53 +56,52 @@ const Button: FC<ButtonProps> = ({
         borderColor: 'transparent',
       },
       defaultHighlight: {
-        backgroundColor: 'rgba(255, 255,255, 0.8)',
+        backgroundColor: white10Color,
       },
       defaultHighlightText: {
-        color: blackColor,
+        color: whiteColor,
       } as TextStyle,
     },
     ['gray']: {
       container: buttonContatinerStyle,
       activeStyle: {
-        backgroundColor: 'rgba(55, 55, 55, 1)',
+        backgroundColor: gray1Color,
         borderRadius: 85,
-        borderColor: 'rgba(55, 55, 55, 1)',
+        borderColor: gray1Color,
         borderWidth: 1,
       } as ViewStyle,
       defaultRaw: {
         borderRadius: 100,
-        backgroundColor: 'rgba(32, 32, 32, 1)',
+        backgroundColor: grayColor,
         height: screenHeight / 18,
         maxHeight: 64,
-        borderColor: 'rgba(32, 32, 32, 1)',
+        borderColor: grayColor,
         borderWidth: 1,
       } as ViewStyle,
       defaultRawText: {
-        color: whiteColor,
-        fontFamily: Montserrat500,
+        color: blackColor,
+        fontFamily: Montserrat700,
         textAlign: 'center' as const,
         fontSize: RFValue(14, 932),
         marginLeft: leftIcon ? 8 : 0,
         ...buttonTitleStyle,
       } as TextStyle,
       defaultDisabledRaw: {
-        backgroundColor: grayColor,
-        borderColor: 'transparent',
+        backgroundColor: gray1Color,
       },
       defaultHighlight: {
-        backgroundColor: 'rgba(255, 255,255, 0.1)',
+        backgroundColor: gray1Color,
       },
       defaultHighlightText: {
-        color: blackColor,
+        color: whiteColor,
       } as TextStyle,
     },
     ['outline']: {
       container: buttonContatinerStyle,
       activeStyle: {
-        backgroundColor: 'rgba(255, 255, 255, 0.12)',
+        backgroundColor: white10Color,
         borderRadius: 85,
-        borderColor: 'rgba(50, 50, 50, 1)',
+        borderColor: white40Color,
         borderWidth: 1,
       } as ViewStyle,
       defaultRaw: {
@@ -102,7 +109,7 @@ const Button: FC<ButtonProps> = ({
         backgroundColor: 'transparent',
         height: screenHeight / 18,
         maxHeight: 64,
-        borderColor: 'rgba(32, 32, 32, 1)',
+        borderColor: white40Color,
         borderWidth: 1,
       } as ViewStyle,
       defaultRawText: {
@@ -114,14 +121,14 @@ const Button: FC<ButtonProps> = ({
         ...buttonTitleStyle,
       } as TextStyle,
       defaultDisabledRaw: {
+        borderColor: white10Color,
         backgroundColor: 'transparent',
-        borderColor: 'rgba(32, 32, 32, 1)',
       },
       defaultDisabledRawText: {
-        color: whiteColor,
+        color: white64Color,
       },
       defaultHighlight: {
-        backgroundColor: 'rgba(255, 255,255, 0.05)',
+        backgroundColor: transparentWhite30Color,
       },
       defaultHighlightText: {
         color: whiteColor,
@@ -130,7 +137,7 @@ const Button: FC<ButtonProps> = ({
     ['transparent']: {
       container: buttonContatinerStyle,
       activeStyle: {
-        backgroundColor: 'rgba(255, 255, 255, 0.08)',
+        backgroundColor: white10Color,
         borderRadius: 15,
       } as ViewStyle,
       defaultRaw: {
@@ -149,45 +156,17 @@ const Button: FC<ButtonProps> = ({
         ...buttonTitleStyle,
       },
       defaultHighlight: {
-        backgroundColor: 'transparent',
+        backgroundColor: white10Color,
       },
       defaultHighlightText: {
         color: whiteColor,
       },
-    },
-    ['whatsapp']: {
-      container: buttonContatinerStyle,
-      defaultRaw: {
-        borderRadius: 100,
-        backgroundColor: 'rgba(37, 211, 102, 0.6)',
-        borderColor: 'transparent',
-        height: screenHeight / 18,
-        maxHeight: 64,
-      } as ViewStyle,
-      defaultRawText: {
-        color: whiteColor,
-        fontFamily: Montserrat500,
-        textAlign: 'center' as const,
-        fontSize: RFValue(14, 932),
-        marginLeft: leftIcon ? 8 : 0,
-        ...buttonTitleStyle,
-      } as TextStyle,
-      defaultDisabledRaw: {
-        backgroundColor: grayColor,
-
-      },
-      defaultHighlight: {
-        backgroundColor: 'rgba(37, 211, 102, 0.2)',
-      },
-      defaultHighlightText: {
-        color: whiteColor,
-      } as TextStyle,
     },
   };
 
   const renderContent = () => {
     if (loading) {
-      return <ActivityIndicator color={blackColor} size="small" />;
+      return <ActivityIndicator color={whiteColor} size="small" />;
     }
 
     if (leftIcon) {
@@ -199,11 +178,18 @@ const Button: FC<ButtonProps> = ({
       );
     }
 
-    return title;
+    return <Text style={styles[variant].defaultRawText}>{title}</Text>;
   };
 
   return (
-    <ButtonAntd activeStyle={styles[variant].activeStyle} testID={testID} id={id} style={buttonStyle} onPress={onPress} disabled={disabled || loading} styles={styles[variant]}>
+    <ButtonAntd
+      activeStyle={styles[variant].activeStyle}
+      testID={testID}
+      id={id}
+      style={Object.assign({}, styles[variant].defaultRaw, buttonStyle)}
+      onPress={onPress}
+      disabled={disabled || loading}
+    >
       {renderContent()}
     </ButtonAntd>
   );
