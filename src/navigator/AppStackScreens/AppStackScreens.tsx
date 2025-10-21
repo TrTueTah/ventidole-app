@@ -1,16 +1,18 @@
-import { View, Text, TouchableOpacity } from 'react-native'
 import React from 'react'
-import { useAuthStore } from 'src/store/authStore'
+import { createStackNavigator } from '@react-navigation/stack';
+import { RootStackParamList } from 'typescript/types';
+import { bottomTabsStackPath } from 'constants/pathLocations';
+import BottomMenu from 'navigator/BottomMenu/BottomMenu';
+
+const AppStack = createStackNavigator<RootStackParamList>();
 
 const AppStackScreens = () => {
-  const { logout } = useAuthStore();
   return (
-    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'white'}}>
-      <Text>AppStackScreens</Text>
-      <TouchableOpacity onPress={logout} style={{marginTop: 20, padding: 10, backgroundColor: 'blue', borderRadius: 5}}>
-        <Text>Click Me</Text>
-      </TouchableOpacity>
-    </View>
+    <>
+      <AppStack.Navigator initialRouteName={bottomTabsStackPath} screenOptions={{ headerShown: false }}>
+        <AppStack.Screen key={bottomTabsStackPath} name={bottomTabsStackPath} component={BottomMenu} />
+      </AppStack.Navigator>
+    </>
   )
 }
 

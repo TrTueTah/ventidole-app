@@ -1,4 +1,3 @@
-
 export type RootStackParamList = {
   '/sign-in': undefined;
   '/sign-up': undefined;
@@ -17,4 +16,9 @@ export type RootStackParamList = {
   '/bottom-tabs-stack': undefined;
   '/notifications-stack': undefined;
   '/common-stack': undefined;
+  '/home': undefined;
+  '/chat': undefined;
+  '/shop': undefined;
+  '/archive': undefined;
+  '/more': undefined;
 };

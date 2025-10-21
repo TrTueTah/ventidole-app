@@ -11,6 +11,11 @@ const verifyEmailPath: keyof RootStackParamList = '/verify-email';
 const authCompletePath: keyof RootStackParamList = '/auth-complete';
 const termAndUsePath: keyof RootStackParamList = '/terms-and-use';
 const chooseIdolPath: keyof RootStackParamList = '/choose-idol';
+const chatPath: keyof RootStackParamList = '/chat';
+const homePath: keyof RootStackParamList = '/home';
+const shopPath: keyof RootStackParamList = '/shop';
+const archivePath: keyof RootStackParamList = '/archive';
+const morePath: keyof RootStackParamList = '/more';
 
 export {
   // Stacks paths
@@ -18,6 +23,11 @@ export {
   notificationsStackPath,
   commonStackPath,
   // Screen paths
+  chatPath,
+  homePath,
+  shopPath,
+  archivePath,
+  morePath,
   signInPath,
   signUpPath,
   resetPasswordPath,
