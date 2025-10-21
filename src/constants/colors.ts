@@ -19,6 +19,7 @@ const secondaryColor: string = 'rgba(12, 244, 180)'
 
 const grayColor: string = 'rgba(30, 30, 30, 0.1)';
 const gray1Color: string = 'rgba(215, 215, 215, 1)';
+const gray2Color: string = 'rgba(0, 0, 0, 0.2)'
 const backgroundGradientColors = [black5Color, blackColor];
 const transparentWhite30Color: string = 'rgba(255, 255, 255, 0.3)';
 const transparentBlack20Color: string = 'rgba(0, 0, 0, 0.2)';
@@ -44,6 +45,7 @@ export {
   secondaryColor, 
   grayColor,
   gray1Color,
+  gray2Color,
   backgroundGradientColors,
   errorColor,
   transparentWhite30Color,

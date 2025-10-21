@@ -6,12 +6,11 @@ const commonStackPath = '/common-stack';
 // Screen paths
 const signInPath: keyof RootStackParamList = '/sign-in';
 const signUpPath: keyof RootStackParamList = '/sign-up';
-const forgotPasswordPath: keyof RootStackParamList = '/forgot-password';
 const resetPasswordPath: keyof RootStackParamList = '/reset-password';
-const resetPasswordCompletePath: keyof RootStackParamList = '/reset-password-complete';
 const verifyEmailPath: keyof RootStackParamList = '/verify-email';
-const registerCompletePath: keyof RootStackParamList = '/register-complete';
+const authCompletePath: keyof RootStackParamList = '/auth-complete';
 const termAndUsePath: keyof RootStackParamList = '/terms-and-use';
+const chooseIdolPath: keyof RootStackParamList = '/choose-idol';
 
 export {
   // Stacks paths
@@ -21,10 +20,9 @@ export {
   // Screen paths
   signInPath,
   signUpPath,
-  forgotPasswordPath,
   resetPasswordPath,
-  resetPasswordCompletePath,
   verifyEmailPath,
-  registerCompletePath,
+  authCompletePath,
   termAndUsePath,
+  chooseIdolPath
 };

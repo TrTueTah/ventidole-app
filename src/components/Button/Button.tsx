@@ -16,6 +16,7 @@ import {
   transparentWhite30Color,
   primary1Color,
   gray1Color,
+  secondaryColor,
 } from 'constants/colors';
 
 const Button: FC<ButtonProps> = ({
@@ -99,9 +100,9 @@ const Button: FC<ButtonProps> = ({
     ['outline']: {
       container: buttonContatinerStyle,
       activeStyle: {
-        backgroundColor: white10Color,
+        backgroundColor: gray1Color,
         borderRadius: 85,
-        borderColor: white40Color,
+        borderColor: gray1Color,
         borderWidth: 1,
       } as ViewStyle,
       defaultRaw: {
@@ -109,23 +110,23 @@ const Button: FC<ButtonProps> = ({
         backgroundColor: 'transparent',
         height: screenHeight / 18,
         maxHeight: 64,
-        borderColor: white40Color,
+        borderColor: gray1Color,
         borderWidth: 1,
       } as ViewStyle,
       defaultRawText: {
-        color: whiteColor,
-        fontFamily: Montserrat500,
+        color: secondaryColor,
+        fontFamily: Montserrat700,
         textAlign: 'center' as const,
         fontSize: RFValue(14, 932),
         marginLeft: leftIcon ? 8 : 0,
         ...buttonTitleStyle,
       } as TextStyle,
       defaultDisabledRaw: {
-        borderColor: white10Color,
-        backgroundColor: 'transparent',
+        borderColor: grayColor,
+        backgroundColor: grayColor,
       },
       defaultDisabledRawText: {
-        color: white64Color,
+        color: whiteColor,
       },
       defaultHighlight: {
         backgroundColor: transparentWhite30Color,
@@ -155,6 +156,12 @@ const Button: FC<ButtonProps> = ({
         marginLeft: leftIcon ? 8 : 0,
         ...buttonTitleStyle,
       },
+      defaultDisabledRaw: {
+        backgroundColor: white64Color,
+      },
+      defaultDisabledRawText: {
+        color: white40Color,
+      } as TextStyle,
       defaultHighlight: {
         backgroundColor: white10Color,
       },
@@ -186,7 +193,13 @@ const Button: FC<ButtonProps> = ({
       activeStyle={styles[variant].activeStyle}
       testID={testID}
       id={id}
-      style={Object.assign({}, styles[variant].defaultRaw, buttonStyle)}
+      style={(
+        [
+          styles[variant].defaultRaw,
+          disabled && styles[variant].defaultDisabledRaw,
+          buttonStyle,
+        ] as unknown
+      ) as ViewStyle}
       onPress={onPress}
       disabled={disabled || loading}
     >

@@ -1,4 +1,4 @@
-import { TouchableOpacity, Text } from 'react-native';
+import { TouchableOpacity, Text, ScrollView, KeyboardAvoidingView } from 'react-native';
 import { useState } from 'react';
 import { Formik } from 'formik';
 
@@ -16,6 +16,7 @@ import Google from 'assets/images/icons/google.svg';
 import EyeClosed from 'assets/images/icons/eye-closed.svg';
 import EyeOpen from 'assets/images/icons/eye-open.svg';
 import { useAppNavigation } from 'hooks/useAppNavigation';
+import { isIos } from 'constants/common';
 
 const SignInScreen = () => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
@@ -23,6 +24,17 @@ const SignInScreen = () => {
 
   return (
     <S.Container>
+      <KeyboardAvoidingView
+        style={{ flex: 1 }}
+        behavior={isIos ? 'padding' : undefined}
+        // keyboardVerticalOffset={isIos ? 0 : 0}
+      >
+        {/* === ScrollView để cuộn khi nội dung dài === */}
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{ flexGrow: 1, justifyContent: 'center', paddingVertical: 24 }}
+          keyboardShouldPersistTaps="handled"
+        >
       <S.Wrapper>
         <AuthTitle title="Welcome Back to Ventidole" />
 
@@ -72,7 +84,7 @@ const SignInScreen = () => {
                   <S.StyledCheckbox />
                   <S.RememberText>Remember me</S.RememberText>
                 </S.RememberMe>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => navigation.navigate('/verify-email', { type: 'resetPassword', header: 'Forgot your password? Find it' })}>
                   <S.TextButton>Forget password?</S.TextButton>
                 </TouchableOpacity>
               </S.RememberForgotContainer>
@@ -104,6 +116,8 @@ const SignInScreen = () => {
           )}
         </Formik>
       </S.Wrapper>
+      </ScrollView>
+      </KeyboardAvoidingView>
     </S.Container>
   );
 };
