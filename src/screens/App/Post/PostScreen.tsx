@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import * as S from './PostScreen.style';
 import PostCard from 'components/Card/PostCard/PostCard';
 import { KeyboardAvoidingView } from 'react-native-keyboard-controller';
@@ -8,6 +8,8 @@ import { formatNumber } from 'helpers/format-number';
 import { formatEpoch } from 'helpers/date-converter';
 import HeartOutline from 'assets/images/icons/heart-outline.svg';
 import Comment from 'assets/images/icons/comment.svg';
+import SendIcon from 'assets/images/icons/send.svg';
+import { blackColor, primaryColor } from 'constants/colors';
 
 const POST_DATA = {
   author: {
@@ -42,7 +44,7 @@ const COMMENTS = Array.from({ length: 6 }).map((_, i) => ({
 const CommentCard = ({ comment }: { comment: (typeof COMMENTS)[0] }) => {
   return (
     <S.CommentCardContainer>
-          <S.CommentAvatar source={{ uri: comment.author.avatarUrl }} />
+      <S.CommentAvatar source={{ uri: comment.author.avatarUrl }} />
       <S.CommentCardWrapper>
         <S.CommentInfoContainer>
           <S.InfoColumn>
@@ -62,13 +64,13 @@ const CommentCard = ({ comment }: { comment: (typeof COMMENTS)[0] }) => {
         </S.CommentContentContainer>
         <S.CommentFooter>
           <S.CommentFooterSection>
-            <HeartOutline />
+            <HeartOutline color={blackColor} />
             <S.CommentFooterText>
               {formatNumber(comment.totalLike)}
             </S.CommentFooterText>
           </S.CommentFooterSection>
           <S.CommentFooterSection>
-            <Comment />
+            <Comment color={blackColor}/>
             <S.CommentFooterText>
               {formatNumber(comment.totalReply)}
             </S.CommentFooterText>
@@ -80,6 +82,7 @@ const CommentCard = ({ comment }: { comment: (typeof COMMENTS)[0] }) => {
 };
 
 const PostScreen = () => {
+  const [commentText, setCommentText] = useState('');
   return (
     <KeyboardAvoidingView
       style={{ flex: 1 }}
@@ -108,11 +111,20 @@ const PostScreen = () => {
             <CommentCard comment={item} />
           )}
         />
-        {/* <S.CommentInputContainer>
-          <S.CommentInput placeholder="Write your comment..." />
-          <HeartOutline width={RFValue(18)} height={RFValue(18)} />
-          <SendIcon width={RFValue(18)} height={RFValue(18)} />
-        </S.CommentInputContainer> */}
+        <S.CommentInputContainer>
+          <HeartOutline width={RFValue(24)} height={RFValue(24)} color={blackColor}/>
+          <S.CommentInputWrapper>
+            <S.CommentInput
+              textAlignVertical="top"
+              placeholder="Write your comment..."
+              multiline={true}
+              value={commentText}
+              onChangeText={setCommentText}
+              numberOfLines={4}
+            />
+          </S.CommentInputWrapper>
+          <SendIcon width={RFValue(24)} height={RFValue(24)} color={primaryColor} />
+        </S.CommentInputContainer>
       </S.Container>
     </KeyboardAvoidingView>
   );

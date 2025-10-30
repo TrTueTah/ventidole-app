@@ -1,7 +1,19 @@
 import styled from 'styled-components/native';
 import { RFValue } from 'react-native-responsive-fontsize';
-import { backgroundColor, whiteColor, blackColor, black50Color, black10Color } from 'constants/colors';
-import { Montserrat700, Montserrat400, Montserrat500, Montserrat300 } from 'constants/fonts';
+import {
+  backgroundColor,
+  whiteColor,
+  blackColor,
+  black50Color,
+  black10Color,
+} from 'constants/colors';
+import {
+  Montserrat700,
+  Montserrat400,
+  Montserrat500,
+  Montserrat300,
+} from 'constants/fonts';
+import { TextInput } from 'react-native';
 
 export const Container = styled.View`
   flex: 1;
@@ -93,7 +105,7 @@ export const CommentAuthorName = styled.Text`
 export const CommentDate = styled.Text`
   font-size: ${RFValue(12)}px;
   font-family: ${Montserrat300};
-  color: ${black50Color}
+  color: ${black50Color};
 `;
 
 export const CommentContentContainer = styled.View`
@@ -121,4 +133,41 @@ export const CommentFooterText = styled.Text`
   font-size: ${RFValue(12)}px;
   font-family: ${Montserrat300};
   color: ${blackColor};
+`;
+
+export const CommentInputContainer = styled.View`
+  position: relative;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  flex-direction: row;
+  align-items: flex-end;
+  background-color: ${whiteColor};
+  border-top-width: 1px;
+  border-color: #eee;
+  padding: ${RFValue(8)}px ${RFValue(12)}px;
+  gap: ${RFValue(8)}px;
+  padding-bottom: ${RFValue(32)}px;
+`;
+
+export const CommentInputWrapper = styled.View`
+  flex-direction: row;
+  align-items: center;
+  padding: ${RFValue(4)}px ${RFValue(12)}px;
+  border-width: 1px;
+  border-color: ${black10Color};
+  border-radius: ${RFValue(20)}px;
+  width: 80%;
+  max-height: ${RFValue(200)}px;
+  min-height: ${RFValue(20)}px;
+  flex-grow: 1;
+`;
+
+export const CommentInput = styled(TextInput)`
+  max-height: ${RFValue(200)}px;
+  min-height: ${RFValue(20)}px;
+  font-family: ${Montserrat300};
+  font-size: ${RFValue(12)}px;
+  line-height: ${RFValue(12)}px;
+  width: 100%;
 `;
