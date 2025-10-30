@@ -13,6 +13,7 @@ const termAndUsePath: keyof RootStackParamList = '/terms-and-use';
 const chooseIdolPath: keyof RootStackParamList = '/choose-idol';
 const chatPath: keyof RootStackParamList = '/chat';
 const homePath: keyof RootStackParamList = '/home';
+const postStackPath: keyof RootStackParamList = '/post-stack';
 const shopPath: keyof RootStackParamList = '/shop';
 const archivePath: keyof RootStackParamList = '/archive';
 const morePath: keyof RootStackParamList = '/more';
@@ -34,5 +35,6 @@ export {
   verifyEmailPath,
   authCompletePath,
   termAndUsePath,
-  chooseIdolPath
+  chooseIdolPath,
+  postStackPath
 };

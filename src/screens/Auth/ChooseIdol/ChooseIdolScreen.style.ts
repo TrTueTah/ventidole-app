@@ -13,17 +13,9 @@ import {
 import LinearGradient from 'react-native-linear-gradient';
 import {RFValue} from 'react-native-responsive-fontsize';
 import {isIos, screenHeight} from 'constants/common';
-import {backgroundGradientColors, blackColor, whiteColor} from 'constants/colors';
+import {blackColor, whiteColor} from 'constants/colors';
 import {Montserrat400, Montserrat500, Montserrat700} from 'constants/fonts';
 import Button from 'components/Button/Button';
-
-export const GradientBackground = styled(LinearGradient).attrs({
-  colors: backgroundGradientColors,
-  start: {x: 0, y: 1},
-  end: {x: 0, y: 0},
-})`
-  flex: 1;
-`;
 
 export const AvoidingContainer = styled(KeyboardAvoidingView).attrs({
   behavior: isIos ? 'padding' : 'height',

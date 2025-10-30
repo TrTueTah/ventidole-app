@@ -1,12 +1,25 @@
-import { View, Text } from 'react-native'
-import React from 'react'
+import React, { FC } from 'react';
+import { createStackNavigator } from '@react-navigation/stack';
+import HomeScreen from 'screens/App/Home/HomeScreen';
+import HomeHeader from 'components/Header/HomeHeader/HomeHeader';
+import { homePath } from 'constants/pathLocations';
 
-const HomeStackScreen = () => {
+const HomeStack = createStackNavigator();
+
+const HomeStackScreen: FC = () => {
   return (
-    <View>
-      <Text>HomeStackScreen</Text>
-    </View>
-  )
-}
+    <HomeStack.Navigator initialRouteName={homePath}>
+      <HomeStack.Screen
+        name={homePath}
+        key={homePath}
+        component={HomeScreen}
+        options={{
+          headerShown: true,
+          header: () => <HomeHeader />,
+        }}
+      />
+    </HomeStack.Navigator>
+  );
+};
 
-export default HomeStackScreen
+export default HomeStackScreen;

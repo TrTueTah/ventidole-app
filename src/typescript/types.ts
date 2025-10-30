@@ -21,4 +21,8 @@ export type RootStackParamList = {
   '/shop': undefined;
   '/archive': undefined;
   '/more': undefined;
+  '/post-stack': {
+    screen?: string;
+    postId: string;
+  };
 };

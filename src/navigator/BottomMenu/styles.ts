@@ -22,8 +22,6 @@ const useStyles = () =>
     tabNavigator: {
       backgroundColor: whiteColor,
       borderTopWidth: 0,
-      marginTop: 10,
-      paddingTop: 10,
       shadowOffset: {
         height: 0,
         width: 0,

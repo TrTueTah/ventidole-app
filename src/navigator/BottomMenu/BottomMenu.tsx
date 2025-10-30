@@ -11,7 +11,6 @@ import { TabBarName, TabIcon } from 'navigator/TabBar/TabBar';
 import { archivePath, chatPath, homePath, morePath, shopPath } from 'constants/pathLocations';
 import HomeStackScreen from 'navigator/AppStackScreens/HomeStackScreen/HomeStackScreen';
 import ShopStackScreen from 'navigator/AppStackScreens/ShopStackScreen/ShopStackScreen';
-import ArchiveStackScreen from 'navigator/AppStackScreens/ArchiveStackScreen/ArchiveStackScreen';
 import ChatStackScreen from 'navigator/AppStackScreens/ChatStackScreen/ChatStackScreen';
 import MoreStackScreen from 'navigator/AppStackScreens/MoreStackScreen/MoreStackScreen';
 
@@ -50,7 +49,6 @@ const BottomMenu: FC = (): JSX.Element => {
       initialRouteName={initialRouteName}>
       <Tab.Screen name={homePath} component={HomeStackScreen} />
       <Tab.Screen name={shopPath} component={ShopStackScreen} initialParams={{ initialTab: 'explore' }} />
-      <Tab.Screen name={archivePath} component={ArchiveStackScreen} />
       <Tab.Screen name={chatPath} component={ChatStackScreen} />
       <Tab.Screen name={morePath} component={MoreStackScreen} />
     </Tab.Navigator>
