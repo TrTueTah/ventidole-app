@@ -1,7 +1,7 @@
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack';
 import { RootStackParamList } from 'typescript/types';
-import { bottomTabsStackPath, postStackPath } from 'constants/pathLocations';
+import { bottomTabsStackPath, communityStackPath, postStackPath } from 'constants/pathLocations';
 import BottomMenu from 'navigator/BottomMenu/BottomMenu';
 import PostStackScreen from './PostStackScreen/PostStackScreen';
 

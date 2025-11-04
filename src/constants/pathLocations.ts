@@ -12,11 +12,14 @@ const authCompletePath: keyof RootStackParamList = '/auth-complete';
 const termAndUsePath: keyof RootStackParamList = '/terms-and-use';
 const chooseIdolPath: keyof RootStackParamList = '/choose-idol';
 const chatPath: keyof RootStackParamList = '/chat';
+const chatWindowPath: keyof RootStackParamList = '/chat/chat-window';
 const homePath: keyof RootStackParamList = '/home';
 const postStackPath: keyof RootStackParamList = '/post-stack';
+const replyPath: keyof RootStackParamList = '/post-stack/reply';
 const shopPath: keyof RootStackParamList = '/shop';
 const archivePath: keyof RootStackParamList = '/archive';
 const morePath: keyof RootStackParamList = '/more';
+const communityStackPath: keyof RootStackParamList = '/community-stack';
 
 export {
   // Stacks paths
@@ -36,5 +39,8 @@ export {
   authCompletePath,
   termAndUsePath,
   chooseIdolPath,
-  postStackPath
+  postStackPath,
+  communityStackPath,
+  chatWindowPath,
+  replyPath
 };

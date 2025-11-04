@@ -1,13 +1,15 @@
-import { View, Text } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import { postStackPath } from 'constants/pathLocations';
+import { postStackPath, replyPath } from 'constants/pathLocations';
 import PostScreen from 'screens/App/Post/PostScreen';
 import HeaderBackButton from 'components/Header/HeaderBackButton/HeaderBackButton';
 import ArrowRight from 'assets/images/icons/arrow-right.svg';
 import { Montserrat300, Montserrat500 } from 'constants/fonts';
 import { black50Color } from 'constants/colors';
 import { RFValue } from 'react-native-responsive-fontsize';
+import ReplyScreen from 'screens/App/Reply/ReplyScreen';
+import { useAppNavigation } from 'hooks/useAppNavigation';
 
 const PostStack = createStackNavigator();
 
@@ -19,14 +21,23 @@ const PostStackScreen = ({ route }: { route: any }) => {
         component={PostScreen}
         options={{
           headerShown: true,
-          header: () => <HeaderBackButton children={<PostTitle />} />,
+          header: () => <HeaderBackButton children={<PostTitle title={'Post'} />} />,
+        }}
+      />
+      <PostStack.Screen
+        name={replyPath}
+        component={ReplyScreen}
+        options={{
+          headerShown: true,
+          header: () => <HeaderBackButton children={<PostTitle title={'Replies'} />} />,
         }}
       />
     </PostStack.Navigator>
   );
 };
 
-const PostTitle = () => {
+const PostTitle = ({ title }: { title: string}) => {
+  const navigation = useAppNavigation();
   return (
     <View style={{ alignItems: 'center' }}>
       <Text
@@ -35,14 +46,15 @@ const PostTitle = () => {
           fontFamily: Montserrat500,
         }}
       >
-        Posts
+        {title}
       </Text>
-      <View
+      <TouchableOpacity
         style={{
           flexDirection: 'row',
           alignItems: 'center',
           gap: 4,
         }}
+        onPress={() => navigation.navigate('/bottom-tabs-stack') }
       >
         <Text
           style={{
@@ -58,7 +70,7 @@ const PostTitle = () => {
           height={RFValue(10)}
           color={black50Color}
         />
-      </View>
+      </TouchableOpacity>
     </View>
   );
 };

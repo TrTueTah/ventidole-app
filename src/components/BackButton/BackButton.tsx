@@ -7,9 +7,10 @@ import { blackColor } from 'constants/colors';
 interface BackButtonProps {
   onPress: () => void;
   containerStyle?: StyleProp<ViewStyle>;
+  color?: any;
 }
 
-const BackButton = ({ onPress, containerStyle }: BackButtonProps) => {
+const BackButton = ({ onPress, containerStyle, color }: BackButtonProps) => {
   return (
     <TouchableWithoutFeedback onPress={onPress} style={containerStyle}>
       <ArrowLeft width={24} height={24} color={blackColor} />

@@ -22,7 +22,7 @@ export const ArtistList = styled.FlatList.attrs({
   padding: ${RFValue(12)}px;
 `;
 
-export const ArtistItem = styled.View`
+export const ArtistItem = styled.TouchableOpacity`
   flex-direction: column;
   align-items: center;
   gap: ${RFValue(8)}px;

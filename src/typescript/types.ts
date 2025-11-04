@@ -18,11 +18,21 @@ export type RootStackParamList = {
   '/common-stack': undefined;
   '/home': undefined;
   '/chat': undefined;
+  '/chat/chat-window'?: {
+    chatId: string;
+  };
   '/shop': undefined;
   '/archive': undefined;
   '/more': undefined;
   '/post-stack': {
     screen?: string;
     postId: string;
+  };
+  '/post-stack/reply': {
+    replyId: string;
+  }
+  '/community-stack': {
+    screen?: string;
+    communityId: string;
   };
 };

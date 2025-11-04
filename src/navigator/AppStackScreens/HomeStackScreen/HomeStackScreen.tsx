@@ -2,7 +2,8 @@ import React, { FC } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import HomeScreen from 'screens/App/Home/HomeScreen';
 import HomeHeader from 'components/Header/HomeHeader/HomeHeader';
-import { homePath } from 'constants/pathLocations';
+import { communityStackPath, homePath } from 'constants/pathLocations';
+import CommunityStackScreen from '../CommunityStackScreen/CommunityStackScreen';
 
 const HomeStack = createStackNavigator();
 
@@ -16,6 +17,14 @@ const HomeStackScreen: FC = () => {
         options={{
           headerShown: true,
           header: () => <HomeHeader />,
+        }}
+      />
+      <HomeStack.Screen
+        key={communityStackPath}
+        name={communityStackPath}
+        component={CommunityStackScreen}
+        options={{
+          headerShown: false
         }}
       />
     </HomeStack.Navigator>

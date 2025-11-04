@@ -1,6 +1,7 @@
 import { primaryColor } from 'constants/colors';
 import * as S from './ArtistCommunityList.style';
 import PlusIcon from 'assets/images/icons/plus.svg';
+import { useAppNavigation } from 'hooks/useAppNavigation';
 
 const SAMPLE_DATA = [
   {
@@ -36,6 +37,7 @@ const SAMPLE_DATA = [
 ];
 
 const ArtistCommunityList = () => {
+  const navigation = useAppNavigation();
   return (
     <S.ArtistContainer>
       <S.ArtistList
@@ -48,7 +50,7 @@ const ArtistCommunityList = () => {
         data={SAMPLE_DATA}
         keyExtractor={(item: any) => item.id}
         renderItem={({ item }: { item: any }) => (
-          <S.ArtistItem>
+          <S.ArtistItem onPress={() => navigation.navigate('/community-stack', { communityId: item.id })}>
             <S.ArtistImage source={{ uri: item.imageUrl }} />
             <S.ArtistName>{item.name}</S.ArtistName>
           </S.ArtistItem>
