@@ -4,7 +4,7 @@
  */
 
 export interface paths {
-    "/auth/sign-in": {
+    "/v1/auth/sign-in": {
         parameters: {
             query?: never;
             header?: never;
@@ -13,14 +13,14 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        post: operations["AuthController_signIn"];
+        post: operations["AuthController_signIn_v1"];
         delete?: never;
         options?: never;
         head?: never;
         patch?: never;
         trace?: never;
     };
-    "/auth/sign-up": {
+    "/v1/auth/sign-up": {
         parameters: {
             query?: never;
             header?: never;
@@ -29,14 +29,14 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        post: operations["AuthController_signUp"];
+        post: operations["AuthController_signUp_v1"];
         delete?: never;
         options?: never;
         head?: never;
         patch?: never;
         trace?: never;
     };
-    "/auth/send-verification": {
+    "/v1/auth/send-verification": {
         parameters: {
             query?: never;
             header?: never;
@@ -45,14 +45,14 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        post: operations["AuthController_sendVerification"];
+        post: operations["AuthController_sendVerification_v1"];
         delete?: never;
         options?: never;
         head?: never;
         patch?: never;
         trace?: never;
     };
-    "/auth/confirm-verification": {
+    "/v1/auth/confirm-verification": {
         parameters: {
             query?: never;
             header?: never;
@@ -61,14 +61,14 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        post: operations["AuthController_confirmVerification"];
+        post: operations["AuthController_confirmVerification_v1"];
         delete?: never;
         options?: never;
         head?: never;
         patch?: never;
         trace?: never;
     };
-    "/auth/refresh-token": {
+    "/v1/auth/refresh-token": {
         parameters: {
             query?: never;
             header?: never;
@@ -77,14 +77,14 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        post: operations["AuthController_refreshNewToken"];
+        post: operations["AuthController_refreshNewToken_v1"];
         delete?: never;
         options?: never;
         head?: never;
         patch?: never;
         trace?: never;
     };
-    "/auth/reset-password": {
+    "/v1/auth/reset-password": {
         parameters: {
             query?: never;
             header?: never;
@@ -93,14 +93,14 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        post: operations["AuthController_resetPassword"];
+        post: operations["AuthController_resetPassword_v1"];
         delete?: never;
         options?: never;
         head?: never;
         patch?: never;
         trace?: never;
     };
-    "/user/update-status": {
+    "/v1/user/update-status": {
         parameters: {
             query?: never;
             header?: never;
@@ -109,7 +109,23 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        post: operations["UserController_updateStatus"];
+        post: operations["UserController_updateStatus_v1"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/post": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["PostController_createPost_v1"];
         delete?: never;
         options?: never;
         head?: never;
@@ -302,6 +318,121 @@ export interface components {
              */
             status: "active" | "inactive";
         };
+        CreatePostResponse: {
+            /**
+             * @description Post ID
+             * @example post-clx123abc
+             */
+            postId: string;
+            /**
+             * @description User ID who created the post
+             * @example user-123
+             */
+            userId: string;
+            /**
+             * @description Username of the author
+             * @example johndoe
+             */
+            username: string;
+            /**
+             * @description Display name of the author
+             * @example John Doe
+             */
+            displayName: string;
+            /**
+             * @description User avatar URL
+             * @example https://storage.googleapis.com/bucket/avatars/user-123.jpg
+             */
+            userAvatar: string;
+            /**
+             * @description Post content
+             * @example Beautiful sunset at the beach! 🌅 #nature #sunset
+             */
+            content: string;
+            /**
+             * @description Media URLs
+             * @example [
+             *       "https://storage.googleapis.com/bucket/image1.jpg"
+             *     ]
+             */
+            mediaUrls: string[];
+            /**
+             * @description Hashtags
+             * @example [
+             *       "nature",
+             *       "sunset"
+             *     ]
+             */
+            hashtags: string[];
+            /**
+             * @description Mentioned user IDs
+             * @example [
+             *       "user-id-1"
+             *     ]
+             */
+            mentions: string[];
+            /**
+             * @description Location
+             * @example Santa Monica Beach, CA
+             */
+            location: string;
+            /**
+             * @description Creation timestamp
+             * @example 2025-11-05T10:30:00Z
+             */
+            createdAt: string;
+            /**
+             * @description Counters
+             * @example {
+             *       "likesCount": 0,
+             *       "commentsCount": 0,
+             *       "sharesCount": 0
+             *     }
+             */
+            counters: Record<string, never>;
+        };
+        CreatePostRequest: {
+            /**
+             * @description Post content/caption
+             * @example Beautiful sunset at the beach! 🌅 #nature #sunset
+             */
+            content: string;
+            /**
+             * @description Media URLs (images/videos)
+             * @example [
+             *       "https://storage.googleapis.com/bucket/image1.jpg"
+             *     ]
+             */
+            mediaUrls: string[];
+            /**
+             * @description Hashtags
+             * @example [
+             *       "nature",
+             *       "sunset",
+             *       "photography"
+             *     ]
+             */
+            hashtags: string[];
+            /**
+             * @description Mentioned user IDs
+             * @example [
+             *       "user-id-1",
+             *       "user-id-2"
+             *     ]
+             */
+            mentions?: string[];
+            /**
+             * @description Location/place name
+             * @example Santa Monica Beach, CA
+             */
+            location: string;
+            /**
+             * @description Post visibility
+             * @example public
+             * @enum {string}
+             */
+            visibility: "public" | "followers" | "private";
+        };
     };
     responses: never;
     parameters: never;
@@ -311,7 +442,7 @@ export interface components {
 }
 export type $defs = Record<string, never>;
 export interface operations {
-    AuthController_signIn: {
+    AuthController_signIn_v1: {
         parameters: {
             query?: never;
             header?: never;
@@ -355,7 +486,7 @@ export interface operations {
             };
         };
     };
-    AuthController_signUp: {
+    AuthController_signUp_v1: {
         parameters: {
             query?: never;
             header?: never;
@@ -399,7 +530,7 @@ export interface operations {
             };
         };
     };
-    AuthController_sendVerification: {
+    AuthController_sendVerification_v1: {
         parameters: {
             query?: never;
             header?: never;
@@ -443,7 +574,7 @@ export interface operations {
             };
         };
     };
-    AuthController_confirmVerification: {
+    AuthController_confirmVerification_v1: {
         parameters: {
             query?: never;
             header?: never;
@@ -487,7 +618,7 @@ export interface operations {
             };
         };
     };
-    AuthController_refreshNewToken: {
+    AuthController_refreshNewToken_v1: {
         parameters: {
             query?: never;
             header?: never;
@@ -531,7 +662,7 @@ export interface operations {
             };
         };
     };
-    AuthController_resetPassword: {
+    AuthController_resetPassword_v1: {
         parameters: {
             query?: never;
             header?: never;
@@ -578,7 +709,7 @@ export interface operations {
             };
         };
     };
-    UserController_updateStatus: {
+    UserController_updateStatus_v1: {
         parameters: {
             query?: never;
             header?: never;
@@ -613,6 +744,50 @@ export interface operations {
                          * @example null
                          */
                         data: null;
+                        /**
+                         * @description Error information (null on success)
+                         * @example null
+                         */
+                        error?: null;
+                        /** @description Error code (optional) */
+                        errorCode?: string;
+                    };
+                };
+            };
+        };
+    };
+    PostController_createPost_v1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreatePostRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /**
+                         * @description HTTP status code
+                         * @example 200
+                         */
+                        statusCode: number;
+                        /**
+                         * @description Response message
+                         * @example OK
+                         */
+                        message: string;
+                        /** @description Response data */
+                        data: components["schemas"]["CreatePostResponse"];
                         /**
                          * @description Error information (null on success)
                          * @example null

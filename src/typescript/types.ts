@@ -13,10 +13,19 @@ export type RootStackParamList = {
   };
   '/terms-and-use': undefined;
   '/choose-idol': undefined;
-  '/bottom-tabs-stack': undefined;
+  '/bottom-tabs-stack': undefined | {
+    screen?: string;
+    params?: {
+      screen?: string;
+      params?: any;
+    };
+  };
   '/notifications-stack': undefined;
   '/common-stack': undefined;
-  '/home': undefined;
+  '/home': undefined | {
+    screen?: string;
+    params?: any;
+  };
   '/chat': undefined;
   '/chat/chat-window'?: {
     chatId: string;
@@ -27,6 +36,7 @@ export type RootStackParamList = {
   '/post-stack': {
     screen?: string;
     postId: string;
+    communityId?: string;
   };
   '/post-stack/reply': {
     replyId: string;

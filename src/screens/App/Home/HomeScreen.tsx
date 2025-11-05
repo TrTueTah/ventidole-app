@@ -11,6 +11,7 @@ const POST_SAMPLE_DATA = [
       name: 'John Doe',
       avatarUrl:
         'https://res.cloudinary.com/dsc9afexw/image/upload/v1756372055/5c53d14e4ebbf5c723559e7b3f27c628baac4651_izhcbp.png',
+      communityId: 'c1',
     },
     id: '1',
     content: `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s`,
@@ -24,6 +25,7 @@ const POST_SAMPLE_DATA = [
     author: {
       id: 'a2',
       name: 'Jane Smith',
+      communityId: 'c1',
       avatarUrl:
         'https://res.cloudinary.com/dsc9afexw/image/upload/v1756372055/5c53d14e4ebbf5c723559e7b3f27c628baac4651_izhcbp.png',
     },
@@ -39,6 +41,7 @@ const POST_SAMPLE_DATA = [
     author: {
       id: 'a3',
       name: 'Alice Johnson',
+      communityId: 'c1',
       avatarUrl:
         'https://res.cloudinary.com/dsc9afexw/image/upload/v1756372055/5c53d14e4ebbf5c723559e7b3f27c628baac4651_izhcbp.png',
     },
@@ -54,8 +57,8 @@ const POST_SAMPLE_DATA = [
 
 const HomeScreen = () => {
   const navigation = useAppNavigation();
-  const handlePostPress = (postId: string) => {
-    navigation.navigate('/post-stack', { postId });
+  const handlePostPress = (postId: string, communityId: string) => {
+    navigation.navigate('/post-stack', { postId, communityId });
   }
   return (
     <S.Container>
@@ -68,7 +71,7 @@ const HomeScreen = () => {
           </S.TopContainer>
         }
         renderItem={({ item }: { item: any }) => (
-          <S.TouchableZone onPress={() => handlePostPress(item.id)}>
+          <S.TouchableZone onPress={() => handlePostPress(item.id, item.author.communityId)}>
             <PostCard post={item} containerStyle={{ borderRadius: 20 }}/>
           </S.TouchableZone>
         )}

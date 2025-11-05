@@ -14,6 +14,8 @@ import { useAppNavigation } from 'hooks/useAppNavigation';
 const PostStack = createStackNavigator();
 
 const PostStackScreen = ({ route }: { route: any }) => {
+  const communityId = route?.params?.communityId;
+  console.log('PostStackScreen communityId:', communityId);
   return (
     <PostStack.Navigator>
       <PostStack.Screen
@@ -21,23 +23,43 @@ const PostStackScreen = ({ route }: { route: any }) => {
         component={PostScreen}
         options={{
           headerShown: true,
-          header: () => <HeaderBackButton children={<PostTitle title={'Post'} />} />,
+          header: () => <HeaderBackButton children={<PostTitle title={'Post'} communityId={communityId} />} />,
         }}
+        initialParams={{ communityId }}
       />
       <PostStack.Screen
         name={replyPath}
         component={ReplyScreen}
         options={{
           headerShown: true,
-          header: () => <HeaderBackButton children={<PostTitle title={'Replies'} />} />,
+          header: () => <HeaderBackButton children={<PostTitle title={'Replies'} communityId={communityId} />} />,
         }}
       />
     </PostStack.Navigator>
   );
 };
 
-const PostTitle = ({ title }: { title: string}) => {
+const PostTitle = ({ title, communityId }: { title: string; communityId?: string }) => {
   const navigation = useAppNavigation();
+  
+  const handleGoToCommunity = () => {
+    if (communityId) {
+      // Navigate to specific community with nested navigation
+      navigation.navigate('/bottom-tabs-stack', {
+        screen: '/home',
+        params: {
+          screen: '/community-stack',
+          params: {
+            communityId: communityId,
+          },
+        },
+      });
+    } else {
+      // Just go to bottom tabs (home)
+      navigation.navigate('/bottom-tabs-stack');
+    }
+  };
+  
   return (
     <View style={{ alignItems: 'center' }}>
       <Text
@@ -54,7 +76,7 @@ const PostTitle = ({ title }: { title: string}) => {
           alignItems: 'center',
           gap: 4,
         }}
-        onPress={() => navigation.navigate('/bottom-tabs-stack') }
+        onPress={handleGoToCommunity}
       >
         <Text
           style={{
