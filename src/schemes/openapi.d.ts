@@ -4,6 +4,151 @@
  */
 
 export interface paths {
+    "/v1/file/upload": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["FileController_uploadFile_v1"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/file/upload-multiple": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["FileController_uploadMultipleFiles_v1"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/file/delete": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete: operations["FileController_deleteFile_v1"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/file/url": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["FileController_getFileUrl_v1"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/file/signed-url": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["FileController_getSignedUrl_v1"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/file/exists": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["FileController_fileExists_v1"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/file/metadata": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get file metadata */
+        get: operations["FileController_getFileMetadata_v1"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/file/list": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["FileController_listFiles_v1"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/file/folder": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete: operations["FileController_deleteFolder_v1"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/auth/sign-in": {
         parameters: {
             query?: never;
@@ -100,6 +245,86 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/user/me": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["UserController_getCurrentUser_v1"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/user/{userId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["UserController_getUserById_v1"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/user/profile": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch: operations["UserController_updateProfile_v1"];
+        trace?: never;
+    };
+    "/v1/user/fan": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["UserController_createFanProfile_v1"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch: operations["UserController_updateFanProfile_v1"];
+        trace?: never;
+    };
+    "/v1/user/idol": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch: operations["UserController_updateIdolProfile_v1"];
+        trace?: never;
+    };
     "/v1/user/update-status": {
         parameters: {
             query?: never;
@@ -123,10 +348,318 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get?: never;
+        get: operations["PostController_getPosts_v1"];
         put?: never;
         post: operations["PostController_createPost_v1"];
         delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/post/{postId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["PostController_getPost_v1"];
+        put?: never;
+        post?: never;
+        delete: operations["PostController_deletePost_v1"];
+        options?: never;
+        head?: never;
+        patch: operations["PostController_updatePost_v1"];
+        trace?: never;
+    };
+    "/chat/channels": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get all channels for current user */
+        get: operations["ChatController_getMyChannels"];
+        put?: never;
+        /** Create a new chat channel */
+        post: operations["ChatController_createChannel"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/chat/channels/{channelId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get channel details by ID */
+        get: operations["ChatController_getChannelById"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/chat/messages": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Send a message to a channel */
+        post: operations["ChatController_sendMessage"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/chat/channels/{channelId}/messages": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get messages from a channel */
+        get: operations["ChatController_getMessages"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/chat/channels/read": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Mark messages as read in a channel */
+        post: operations["ChatController_markAsRead"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/chat/channels/participants": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Add participants to a channel */
+        post: operations["ChatController_addParticipants"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/chat/channels/{channelId}/leave": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Leave a channel */
+        post: operations["ChatController_leaveChannel"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/admin/login": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Admin login (bypass all verification) */
+        post: operations["AdminController_adminLogin"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/admin/signup": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Admin signup (bypass all verification, instantly active) */
+        post: operations["AdminController_adminSignup"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/admin/groups": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get all groups (Admin only) */
+        get: operations["AdminController_getAllGroups"];
+        put?: never;
+        /** Create a new group (Admin only) */
+        post: operations["AdminController_createGroup"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/admin/idols": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get all idols (Admin only) */
+        get: operations["AdminController_getAllIdols"];
+        put?: never;
+        /** Create a new idol account (Admin only) */
+        post: operations["AdminController_createIdolAccount"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/admin/fans": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get all fans (Admin only) */
+        get: operations["AdminController_getAllFans"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/admin/users": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get all users with profiles (Admin only) */
+        get: operations["AdminController_getAllUsers"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/admin/statistics": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get platform statistics (Admin only) */
+        get: operations["AdminController_getStatistics"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/admin/users/{userId}/deactivate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /** Deactivate a user account (Admin only) */
+        patch: operations["AdminController_deactivateUser"];
+        trace?: never;
+    };
+    "/admin/users/{userId}/activate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /** Activate a user account (Admin only) */
+        patch: operations["AdminController_activateUser"];
+        trace?: never;
+    };
+    "/admin/users/{userId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /** Delete a user account (Admin only) */
+        delete: operations["AdminController_deleteUser"];
         options?: never;
         head?: never;
         patch?: never;
@@ -156,7 +689,85 @@ export interface components {
              * @description Error code (optional)
              * @enum {string}
              */
-            errorCode?: "validation_failed" | "unauthenticated" | "unauthorized" | "http_error" | "unknown_error" | "token_expired" | "invalid_token" | "not_any_recipient" | "send_mail_failed" | "consumer_not_found" | "consumer_failed" | "process_failed" | "otp_already_exist" | "otp_spam" | "otp_expired" | "otp_incorrect" | "invalid_decode_token" | "invalid_token_issuer" | "VerificationNotFound" | "VerificationSessionExpired" | "AccountNotFound" | "ExistedEmail" | "ExistedPhoneNumber" | "InvalidEmailOrPassword" | "InvalidTokenSecret";
+            errorCode?: "validation_failed" | "unauthenticated" | "unauthorized" | "http_error" | "unknown_error" | "token_expired" | "invalid_token" | "not_any_recipient" | "send_mail_failed" | "consumer_not_found" | "consumer_failed" | "process_failed" | "otp_already_exist" | "otp_spam" | "otp_expired" | "otp_incorrect" | "invalid_decode_token" | "invalid_token_issuer" | "VerificationNotFound" | "VerificationSessionExpired" | "AccountNotFound" | "ExistedEmail" | "ExistedPhoneNumber" | "ExistedUsername" | "InvalidEmailOrPassword" | "InvalidTokenSecret" | "FileNotFound" | "FileTooLarge" | "InvalidFileType" | "InvalidFileName" | "EmailAlreadyExists" | "UsernameAlreadyExists" | "FanProfileNotFound" | "IdolProfileNotFound" | "ChatChannelNotFound" | "NotChannelParticipant" | "NotChannelAdmin" | "CannotSendToAnnouncementChannel";
+        };
+        UploadFileResponse: {
+            /**
+             * @description Public URL of the uploaded file
+             * @example https://storage.googleapis.com/my-bucket/posts/file-uuid.jpg
+             */
+            url: string;
+            /**
+             * @description Name of the uploaded file
+             * @example file-uuid.jpg
+             */
+            fileName: string;
+            /**
+             * @description Full path of the file in storage
+             * @example posts/file-uuid.jpg
+             */
+            filePath: string;
+            /**
+             * @description Size of the file in bytes
+             * @example 102400
+             */
+            size: number;
+            /**
+             * @description MIME type of the file
+             * @example image/jpeg
+             */
+            mimeType: string;
+            /**
+             * Format: date-time
+             * @description Upload timestamp
+             * @example 2025-11-06T08:00:00.000Z
+             */
+            uploadedAt: string;
+        };
+        GetFileUrlResponse: {
+            /**
+             * @description Public URL of the file
+             * @example https://storage.googleapis.com/my-bucket/posts/file-uuid.jpg
+             */
+            url: string;
+        };
+        GetSignedUrlResponse: {
+            /**
+             * @description Signed URL for temporary access
+             * @example https://storage.googleapis.com/my-bucket/posts/file-uuid.jpg?X-Goog-Algorithm=...
+             */
+            signedUrl: string;
+            /**
+             * Format: date-time
+             * @description Expiration time of the signed URL
+             * @example 2025-11-06T09:00:00.000Z
+             */
+            expiresAt: string;
+        };
+        UploadFileRequest: {
+            /**
+             * Format: binary
+             * @description File to upload
+             */
+            file: string;
+            /**
+             * @description Folder to upload the file to
+             * @example posts
+             * @enum {string}
+             */
+            folder: "profiles" | "posts" | "attachments" | "documents" | "thumbnails" | "temp";
+            /**
+             * @description Custom file name (optional)
+             * @example my-custom-name
+             */
+            customFileName: string;
+        };
+        DeleteFileRequest: {
+            /**
+             * @description Path to the file in storage
+             * @example posts/my-file-uuid.jpg
+             */
+            filePath: string;
         };
         SignInResponse: {
             /**
@@ -240,15 +851,10 @@ export interface components {
              */
             password: string;
             /**
-             * @description Your full name
-             * @example John Doe
+             * @description Your username
+             * @example johndoe
              */
-            name: string;
-            /**
-             * @description Your phone number
-             * @example +1234567890
-             */
-            phoneNumber: string;
+            username: string;
         };
         SendVerificationRequest: {
             /**
@@ -304,6 +910,283 @@ export interface components {
              * @example example@gmail.com
              */
             email: string;
+        };
+        FanDto: {
+            /**
+             * @description Fan ID
+             * @example fan-clx123abc
+             */
+            id: string;
+            /**
+             * @description Fan username
+             * @example cool_username
+             */
+            username: string;
+            /**
+             * @description Fan avatar URL
+             * @example https://storage.googleapis.com/bucket/avatars/fan-123.jpg
+             */
+            avatarUrl?: string;
+            /**
+             * @description Fan background image URL
+             * @example https://storage.googleapis.com/bucket/backgrounds/fan-123.jpg
+             */
+            backgroundUrl?: string;
+            /**
+             * @description Fan bio/description
+             * @example Music lover and K-pop enthusiast 🎵
+             */
+            bio?: string;
+            /**
+             * @description Created at timestamp
+             * @example 2024-01-01T00:00:00.000Z
+             */
+            createdAt: string;
+            /**
+             * @description Updated at timestamp
+             * @example 2024-01-01T00:00:00.000Z
+             */
+            updatedAt: string;
+        };
+        IdolDto: {
+            /**
+             * @description Idol ID
+             * @example idol-clx123abc
+             */
+            id: string;
+            /**
+             * @description Idol stage name
+             * @example StarLight
+             */
+            stageName: string;
+            /**
+             * @description Idol avatar URL
+             * @example https://storage.googleapis.com/bucket/avatars/idol-123.jpg
+             */
+            avatarUrl?: string;
+            /**
+             * @description Idol background image URL
+             * @example https://storage.googleapis.com/bucket/backgrounds/idol-123.jpg
+             */
+            backgroundUrl?: string;
+            /**
+             * @description Idol bio/description
+             * @example Professional singer and performer 🎤
+             */
+            bio?: string;
+            /**
+             * @description Group ID
+             * @example group-clx123abc
+             */
+            groupId: string;
+            /**
+             * @description Created at timestamp
+             * @example 2024-01-01T00:00:00.000Z
+             */
+            createdAt: string;
+            /**
+             * @description Updated at timestamp
+             * @example 2024-01-01T00:00:00.000Z
+             */
+            updatedAt: string;
+        };
+        UserDto: {
+            /**
+             * @description User ID
+             * @example user-123e4567
+             */
+            id: string;
+            /**
+             * @description User email
+             * @example user@example.com
+             */
+            email: string;
+            /**
+             * @description User role
+             * @example FAN
+             * @enum {string}
+             */
+            role: "FAN" | "ADMIN" | "IDOL";
+            /**
+             * @description Device token for push notifications
+             * @example device-token-xyz123
+             */
+            deviceToken?: string;
+            /**
+             * @description Online status
+             * @example true
+             */
+            isOnline: boolean;
+            /**
+             * @description Active status
+             * @example true
+             */
+            isActive: boolean;
+            /** @description Fan profile (only present if user is a FAN) */
+            fan?: components["schemas"]["FanDto"];
+            /** @description Idol profile (only present if user is an IDOL) */
+            idol?: components["schemas"]["IdolDto"];
+            /**
+             * @description Created at timestamp
+             * @example 2024-01-01T00:00:00.000Z
+             */
+            createdAt: string;
+            /**
+             * @description Updated at timestamp
+             * @example 2024-01-01T00:00:00.000Z
+             */
+            updatedAt: string;
+        };
+        GetUserResponse: {
+            /**
+             * @description Status code
+             * @example 200
+             */
+            statusCode: number;
+            /**
+             * @description Response message
+             * @example User retrieved successfully
+             */
+            message: string;
+            /** @description User data */
+            data: components["schemas"]["UserDto"];
+        };
+        UpdateUserResponse: {
+            /**
+             * @description Status code
+             * @example 200
+             */
+            statusCode: number;
+            /**
+             * @description Response message
+             * @example User updated successfully
+             */
+            message: string;
+            /** @description Updated user data */
+            data: components["schemas"]["UserDto"];
+        };
+        UpdateFanResponse: {
+            /**
+             * @description Status code
+             * @example 200
+             */
+            statusCode: number;
+            /**
+             * @description Response message
+             * @example Fan profile updated successfully
+             */
+            message: string;
+            /** @description Updated fan profile data */
+            data: components["schemas"]["FanDto"];
+        };
+        CreateFanResponse: {
+            id: string;
+            username: string;
+            avatarUrl?: string;
+            backgroundUrl?: string;
+            bio?: string;
+            userId: string;
+            /** Format: date-time */
+            createdAt: string;
+            /** Format: date-time */
+            updatedAt: string;
+        };
+        UpdateIdolResponse: {
+            /**
+             * @description Status code
+             * @example 200
+             */
+            statusCode: number;
+            /**
+             * @description Response message
+             * @example Idol profile updated successfully
+             */
+            message: string;
+            /** @description Updated idol profile data */
+            data: components["schemas"]["IdolDto"];
+        };
+        UpdateUserRequest: {
+            /**
+             * @description User email
+             * @example user@example.com
+             */
+            email?: string;
+            /**
+             * @description Device token for push notifications
+             * @example device-token-xyz123
+             */
+            deviceToken?: string;
+            /**
+             * @description Online status
+             * @example true
+             */
+            isOnline?: boolean;
+        };
+        CreateFanRequest: {
+            /**
+             * @description Fan username (required)
+             * @example cool_username
+             */
+            username: string;
+            /**
+             * @description Avatar URL
+             * @example https://storage.googleapis.com/bucket/avatars/fan-123.jpg
+             */
+            avatarUrl?: string;
+            /**
+             * @description Background image URL
+             * @example https://storage.googleapis.com/bucket/backgrounds/fan-123.jpg
+             */
+            backgroundUrl?: string;
+            /**
+             * @description Bio/description
+             * @example Music lover and K-pop enthusiast 🎵
+             */
+            bio?: string;
+        };
+        UpdateFanRequest: {
+            /**
+             * @description Fan username
+             * @example cool_username
+             */
+            username?: string;
+            /**
+             * @description Avatar URL
+             * @example https://storage.googleapis.com/bucket/avatars/fan-123.jpg
+             */
+            avatarUrl?: string;
+            /**
+             * @description Background image URL
+             * @example https://storage.googleapis.com/bucket/backgrounds/fan-123.jpg
+             */
+            backgroundUrl?: string;
+            /**
+             * @description Bio/description
+             * @example Music lover and K-pop enthusiast 🎵
+             */
+            bio?: string;
+        };
+        UpdateIdolRequest: {
+            /**
+             * @description Idol stage name
+             * @example StarLight
+             */
+            stageName?: string;
+            /**
+             * @description Avatar URL
+             * @example https://storage.googleapis.com/bucket/avatars/idol-123.jpg
+             */
+            avatarUrl?: string;
+            /**
+             * @description Background image URL
+             * @example https://storage.googleapis.com/bucket/backgrounds/idol-123.jpg
+             */
+            backgroundUrl?: string;
+            /**
+             * @description Bio/description
+             * @example Professional singer and performer 🎤
+             */
+            bio?: string;
         };
         UpdateStatusRequest: {
             /**
@@ -391,6 +1274,235 @@ export interface components {
              */
             counters: Record<string, never>;
         };
+        GetPostResponse: {
+            /**
+             * @description Post ID
+             * @example post-clx123abc
+             */
+            postId: string;
+            /**
+             * @description User ID who created the post
+             * @example user-123
+             */
+            userId: string;
+            /**
+             * @description Display name of the author
+             * @example John Doe
+             */
+            displayName: string;
+            /**
+             * @description User email
+             * @example john@example.com
+             */
+            userEmail?: string;
+            /**
+             * @description User avatar URL
+             * @example https://storage.googleapis.com/bucket/avatars/user-123.jpg
+             */
+            userAvatar?: string;
+            /**
+             * @description Post content
+             * @example Beautiful sunset at the beach! 🌅 #nature #sunset
+             */
+            content: string;
+            /**
+             * @description Media URLs
+             * @example [
+             *       "https://storage.googleapis.com/bucket/image1.jpg"
+             *     ]
+             */
+            mediaUrls: string[];
+            /**
+             * @description Hashtags
+             * @example [
+             *       "nature",
+             *       "sunset"
+             *     ]
+             */
+            hashtags: string[];
+            /**
+             * @description Mentioned user IDs
+             * @example [
+             *       "user-id-1"
+             *     ]
+             */
+            mentions: string[];
+            /**
+             * @description Location
+             * @example Santa Monica Beach, CA
+             */
+            location?: string;
+            /**
+             * @description Post visibility
+             * @example public
+             */
+            visibility: string;
+            /**
+             * @description Likes count
+             * @example 10
+             */
+            likesCount: number;
+            /**
+             * @description Comments count
+             * @example 5
+             */
+            commentsCount: number;
+            /**
+             * @description Shares count
+             * @example 2
+             */
+            sharesCount: number;
+            /**
+             * @description Creation timestamp
+             * @example 2025-11-05T10:30:00Z
+             */
+            createdAt: string;
+            /**
+             * @description Last update timestamp
+             * @example 2025-11-05T10:30:00Z
+             */
+            updatedAt: string;
+            /**
+             * @description Deletion status
+             * @example false
+             */
+            isDeleted: boolean;
+        };
+        PostDto: {
+            /**
+             * @description Post ID
+             * @example post-clx123abc
+             */
+            postId: string;
+            /**
+             * @description User ID who created the post
+             * @example user-123
+             */
+            userId: string;
+            /**
+             * @description Display name of the author
+             * @example John Doe
+             */
+            displayName: string;
+            /**
+             * @description User email
+             * @example john@example.com
+             */
+            userEmail?: string;
+            /**
+             * @description User avatar URL
+             * @example https://storage.googleapis.com/bucket/avatars/user-123.jpg
+             */
+            userAvatar?: string;
+            /**
+             * @description Post content
+             * @example Beautiful sunset at the beach! 🌅 #nature #sunset
+             */
+            content: string;
+            /**
+             * @description Media URLs
+             * @example [
+             *       "https://storage.googleapis.com/bucket/image1.jpg"
+             *     ]
+             */
+            mediaUrls: string[];
+            /**
+             * @description Hashtags
+             * @example [
+             *       "nature",
+             *       "sunset"
+             *     ]
+             */
+            hashtags: string[];
+            /**
+             * @description Mentioned user IDs
+             * @example [
+             *       "user-id-1"
+             *     ]
+             */
+            mentions: string[];
+            /**
+             * @description Location
+             * @example Santa Monica Beach, CA
+             */
+            location?: string;
+            /**
+             * @description Post visibility
+             * @example public
+             */
+            visibility: string;
+            /**
+             * @description Likes count
+             * @example 10
+             */
+            likesCount: number;
+            /**
+             * @description Comments count
+             * @example 5
+             */
+            commentsCount: number;
+            /**
+             * @description Shares count
+             * @example 2
+             */
+            sharesCount: number;
+            /**
+             * @description Creation timestamp
+             * @example 2025-11-05T10:30:00Z
+             */
+            createdAt: string;
+            /**
+             * @description Last update timestamp
+             * @example 2025-11-05T10:30:00Z
+             */
+            updatedAt: string;
+            /**
+             * @description Deletion status
+             * @example false
+             */
+            isDeleted: boolean;
+        };
+        PageInfo: Record<string, never>;
+        GetPostsResponse: {
+            /** @description Array of posts */
+            data: components["schemas"]["PostDto"][];
+            /** @description Pagination information */
+            paging: components["schemas"]["PageInfo"];
+        };
+        UpdatePostResponse: {
+            /**
+             * @description Post ID
+             * @example post-clx123abc
+             */
+            postId: string;
+            /**
+             * @description Success message
+             * @example Post updated successfully
+             */
+            message: string;
+            /**
+             * @description Update timestamp
+             * @example 2025-11-05T10:30:00Z
+             */
+            updatedAt: string;
+        };
+        DeletePostResponse: {
+            /**
+             * @description Post ID
+             * @example post-clx123abc
+             */
+            postId: string;
+            /**
+             * @description Success message
+             * @example Post deleted successfully
+             */
+            message: string;
+            /**
+             * @description Deletion timestamp
+             * @example 2025-11-05T10:30:00Z
+             */
+            deletedAt: string;
+        };
         CreatePostRequest: {
             /**
              * @description Post content/caption
@@ -433,6 +1545,260 @@ export interface components {
              */
             visibility: "public" | "followers" | "private";
         };
+        UpdatePostRequest: {
+            /**
+             * @description Post content/caption
+             * @example Updated content: Beautiful sunset at the beach! 🌅 #nature #sunset
+             */
+            content?: string;
+            /**
+             * @description Media URLs (images/videos)
+             * @example [
+             *       "https://storage.googleapis.com/bucket/image1.jpg"
+             *     ]
+             */
+            mediaUrls?: string[];
+            /**
+             * @description Hashtags
+             * @example [
+             *       "nature",
+             *       "sunset",
+             *       "photography"
+             *     ]
+             */
+            hashtags?: string[];
+            /**
+             * @description Mentioned user IDs
+             * @example [
+             *       "user-id-1",
+             *       "user-id-2"
+             *     ]
+             */
+            mentions?: string[];
+            /**
+             * @description Location
+             * @example Santa Monica Beach, CA
+             */
+            location?: string;
+            /**
+             * @description Post visibility
+             * @example public
+             * @enum {string}
+             */
+            visibility?: "public" | "followers" | "private";
+        };
+        CreateChannelRequest: {
+            /** @description Channel name (optional for direct messages) */
+            name?: string;
+            /** @description Channel description */
+            description?: string;
+            /**
+             * @description Type of chat channel
+             * @enum {string}
+             */
+            type: "DIRECT" | "GROUP" | "ANNOUNCEMENT";
+            /** @description Group ID (for group channels) */
+            groupId?: string;
+            /** @description Idol ID (for idol announcement channels) */
+            idolId?: string;
+            /**
+             * @description Whether this is an announcement channel
+             * @default false
+             */
+            isAnnouncement: boolean;
+            /** @description Array of user IDs to add as participants */
+            participantIds?: string[];
+        };
+        ChatChannelResponse: {
+            id: string;
+            name: string;
+            description: string;
+            type: string;
+            groupId: string;
+            idolId: string;
+            isAnnouncement: boolean;
+            firebaseDocId: string;
+            /** Format: date-time */
+            lastMessageAt: string;
+            /** Format: date-time */
+            createdAt: string;
+            /** Format: date-time */
+            updatedAt: string;
+            participants?: string[];
+            lastMessage?: Record<string, never>;
+            unreadCount?: number;
+        };
+        SendMessageRequest: {
+            /** @description Chat channel ID */
+            channelId: string;
+            /**
+             * @description Type of message
+             * @enum {string}
+             */
+            type: "TEXT" | "IMAGE" | "VIDEO" | "AUDIO" | "FILE" | "SYSTEM";
+            /** @description Message content */
+            content: string;
+            /** @description Media URL (for image, video, audio, file) */
+            mediaUrl?: string;
+            /** @description Thumbnail URL (for video) */
+            thumbnailUrl?: string;
+            /** @description Additional metadata */
+            metadata?: Record<string, never>;
+            /** @description Message ID to reply to */
+            replyTo?: string;
+        };
+        ChatMessageResponse: {
+            id: string;
+            channelId: string;
+            senderId: string;
+            senderName: string;
+            senderAvatar: string;
+            type: string;
+            content: string;
+            mediaUrl: string;
+            thumbnailUrl: string;
+            metadata?: Record<string, never>;
+            replyTo: string;
+            /** Format: date-time */
+            createdAt: string;
+            /** Format: date-time */
+            updatedAt: string;
+            isDeleted: boolean;
+            readBy?: string[];
+        };
+        MarkAsReadRequest: {
+            /** @description Chat channel ID */
+            channelId: string;
+            /** @description Last message ID that was read */
+            lastMessageId?: string;
+        };
+        AddParticipantsRequest: {
+            /** @description Chat channel ID */
+            channelId: string;
+            /** @description Array of user IDs to add */
+            userIds: string[];
+        };
+        AdminLoginRequest: {
+            /**
+             * @description Admin email
+             * @example admin@ventidole.com
+             */
+            email: string;
+            /**
+             * @description Admin password
+             * @example admin123
+             */
+            password: string;
+        };
+        AdminAuthResponse: {
+            userId: string;
+            email: string;
+            role: string;
+            name: string;
+            accessToken: string;
+            refreshToken: string;
+        };
+        AdminSignupRequest: {
+            /**
+             * @description Admin email
+             * @example admin@ventidole.com
+             */
+            email: string;
+            /**
+             * @description Admin password (min 6 characters)
+             * @example admin123
+             */
+            password: string;
+            /**
+             * @description Admin name/username
+             * @example Admin Name
+             */
+            name: string;
+        };
+        CreateGroupRequest: {
+            /**
+             * @description Group name
+             * @example StarLight
+             */
+            groupName: string;
+            /**
+             * @description Group description
+             * @example A talented K-pop group known for their powerful performances
+             */
+            description?: string;
+            /**
+             * @description Group logo URL
+             * @example https://res.cloudinary.com/bucket/logo.jpg
+             */
+            logoUrl?: string;
+            /**
+             * @description Group background image URL
+             * @example https://res.cloudinary.com/bucket/background.jpg
+             */
+            backgroundUrl?: string;
+        };
+        CreateGroupResponse: {
+            id: string;
+            groupName: string;
+            description: string;
+            logoUrl: string;
+            backgroundUrl: string;
+            isActive: boolean;
+            /** Format: date-time */
+            createdAt: string;
+            /** Format: date-time */
+            updatedAt: string;
+        };
+        CreateIdolRequest: {
+            /**
+             * @description Idol email for login
+             * @example idol@example.com
+             */
+            email: string;
+            /**
+             * @description Idol password (min 8 chars, must contain uppercase, lowercase, number and special char)
+             * @example Password@123456
+             */
+            password: string;
+            /**
+             * @description Idol stage name
+             * @example Luna Star
+             */
+            stageName: string;
+            /**
+             * @description Group ID that the idol belongs to
+             * @example group-id-123
+             */
+            groupId: string;
+            /**
+             * @description Avatar URL
+             * @example https://storage.googleapis.com/bucket/avatars/idol-123.jpg
+             */
+            avatarUrl?: string;
+            /**
+             * @description Background image URL
+             * @example https://storage.googleapis.com/bucket/backgrounds/idol-123.jpg
+             */
+            backgroundUrl?: string;
+            /**
+             * @description Bio/description
+             * @example Professional singer and performer 🎤✨
+             */
+            bio?: string;
+            /**
+             * @description Device token for push notifications
+             * @example FCM_DEVICE_TOKEN_HERE
+             */
+            deviceToken?: string;
+        };
+        CreateIdolResponse: {
+            userId: string;
+            email: string;
+            role: string;
+            idol: Record<string, never>;
+            accessToken: string;
+            refreshToken: string;
+        };
     };
     responses: never;
     parameters: never;
@@ -442,6 +1808,378 @@ export interface components {
 }
 export type $defs = Record<string, never>;
 export interface operations {
+    FileController_uploadFile_v1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "multipart/form-data": components["schemas"]["UploadFileRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /**
+                         * @description HTTP status code
+                         * @example 200
+                         */
+                        statusCode: number;
+                        /**
+                         * @description Response message
+                         * @example OK
+                         */
+                        message: string;
+                        /** @description Response data */
+                        data: components["schemas"]["UploadFileResponse"];
+                        /**
+                         * @description Error information (null on success)
+                         * @example null
+                         */
+                        error?: null;
+                        /** @description Error code (optional) */
+                        errorCode?: string;
+                    };
+                };
+            };
+        };
+    };
+    FileController_uploadMultipleFiles_v1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /**
+                         * @description HTTP status code
+                         * @example 200
+                         */
+                        statusCode: number;
+                        /**
+                         * @description Response message
+                         * @example OK
+                         */
+                        message: string;
+                        /** @description Response data */
+                        data: components["schemas"]["UploadFileResponse"];
+                        /**
+                         * @description Error information (null on success)
+                         * @example null
+                         */
+                        error?: null;
+                        /** @description Error code (optional) */
+                        errorCode?: string;
+                    };
+                };
+            };
+        };
+    };
+    FileController_deleteFile_v1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DeleteFileRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /**
+                         * @description HTTP status code
+                         * @example 200
+                         */
+                        statusCode: number;
+                        /**
+                         * @description Response message
+                         * @example OK
+                         */
+                        message: string;
+                        /**
+                         * @description No data returned
+                         * @example null
+                         */
+                        data: null;
+                        /**
+                         * @description Error information (null on success)
+                         * @example null
+                         */
+                        error?: null;
+                        /** @description Error code (optional) */
+                        errorCode?: string;
+                    };
+                };
+            };
+        };
+    };
+    FileController_getFileUrl_v1: {
+        parameters: {
+            query: {
+                /** @description Path to the file in storage */
+                filePath: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /**
+                         * @description HTTP status code
+                         * @example 200
+                         */
+                        statusCode: number;
+                        /**
+                         * @description Response message
+                         * @example OK
+                         */
+                        message: string;
+                        /** @description Response data */
+                        data: components["schemas"]["GetFileUrlResponse"];
+                        /**
+                         * @description Error information (null on success)
+                         * @example null
+                         */
+                        error?: null;
+                        /** @description Error code (optional) */
+                        errorCode?: string;
+                    };
+                };
+            };
+        };
+    };
+    FileController_getSignedUrl_v1: {
+        parameters: {
+            query: {
+                /** @description Path to the file in storage */
+                filePath: string;
+                /** @description Expiration time in minutes */
+                expiresInMinutes: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /**
+                         * @description HTTP status code
+                         * @example 200
+                         */
+                        statusCode: number;
+                        /**
+                         * @description Response message
+                         * @example OK
+                         */
+                        message: string;
+                        /** @description Response data */
+                        data: components["schemas"]["GetSignedUrlResponse"];
+                        /**
+                         * @description Error information (null on success)
+                         * @example null
+                         */
+                        error?: null;
+                        /** @description Error code (optional) */
+                        errorCode?: string;
+                    };
+                };
+            };
+        };
+    };
+    FileController_fileExists_v1: {
+        parameters: {
+            query: {
+                filePath: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /**
+                         * @description HTTP status code
+                         * @example 200
+                         */
+                        statusCode: number;
+                        /**
+                         * @description Response message
+                         * @example OK
+                         */
+                        message: string;
+                        /**
+                         * @description No data returned
+                         * @example null
+                         */
+                        data: null;
+                        /**
+                         * @description Error information (null on success)
+                         * @example null
+                         */
+                        error?: null;
+                        /** @description Error code (optional) */
+                        errorCode?: string;
+                    };
+                };
+            };
+        };
+    };
+    FileController_getFileMetadata_v1: {
+        parameters: {
+            query: {
+                filePath: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description File metadata retrieved successfully */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    FileController_listFiles_v1: {
+        parameters: {
+            query: {
+                folder: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /**
+                         * @description HTTP status code
+                         * @example 200
+                         */
+                        statusCode: number;
+                        /**
+                         * @description Response message
+                         * @example OK
+                         */
+                        message: string;
+                        /**
+                         * @description No data returned
+                         * @example null
+                         */
+                        data: null;
+                        /**
+                         * @description Error information (null on success)
+                         * @example null
+                         */
+                        error?: null;
+                        /** @description Error code (optional) */
+                        errorCode?: string;
+                    };
+                };
+            };
+        };
+    };
+    FileController_deleteFolder_v1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /**
+                         * @description HTTP status code
+                         * @example 200
+                         */
+                        statusCode: number;
+                        /**
+                         * @description Response message
+                         * @example OK
+                         */
+                        message: string;
+                        /**
+                         * @description No data returned
+                         * @example null
+                         */
+                        data: null;
+                        /**
+                         * @description Error information (null on success)
+                         * @example null
+                         */
+                        error?: null;
+                        /** @description Error code (optional) */
+                        errorCode?: string;
+                    };
+                };
+            };
+        };
+    };
     AuthController_signIn_v1: {
         parameters: {
             query?: never;
@@ -709,6 +2447,265 @@ export interface operations {
             };
         };
     };
+    UserController_getCurrentUser_v1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /**
+                         * @description HTTP status code
+                         * @example 200
+                         */
+                        statusCode: number;
+                        /**
+                         * @description Response message
+                         * @example OK
+                         */
+                        message: string;
+                        /** @description Response data */
+                        data: components["schemas"]["GetUserResponse"];
+                        /**
+                         * @description Error information (null on success)
+                         * @example null
+                         */
+                        error?: null;
+                        /** @description Error code (optional) */
+                        errorCode?: string;
+                    };
+                };
+            };
+        };
+    };
+    UserController_getUserById_v1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description User ID */
+                userId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /**
+                         * @description HTTP status code
+                         * @example 200
+                         */
+                        statusCode: number;
+                        /**
+                         * @description Response message
+                         * @example OK
+                         */
+                        message: string;
+                        /** @description Response data */
+                        data: components["schemas"]["GetUserResponse"];
+                        /**
+                         * @description Error information (null on success)
+                         * @example null
+                         */
+                        error?: null;
+                        /** @description Error code (optional) */
+                        errorCode?: string;
+                    };
+                };
+            };
+        };
+    };
+    UserController_updateProfile_v1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateUserRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /**
+                         * @description HTTP status code
+                         * @example 200
+                         */
+                        statusCode: number;
+                        /**
+                         * @description Response message
+                         * @example OK
+                         */
+                        message: string;
+                        /** @description Response data */
+                        data: components["schemas"]["UpdateUserResponse"];
+                        /**
+                         * @description Error information (null on success)
+                         * @example null
+                         */
+                        error?: null;
+                        /** @description Error code (optional) */
+                        errorCode?: string;
+                    };
+                };
+            };
+        };
+    };
+    UserController_createFanProfile_v1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateFanRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /**
+                         * @description HTTP status code
+                         * @example 200
+                         */
+                        statusCode: number;
+                        /**
+                         * @description Response message
+                         * @example OK
+                         */
+                        message: string;
+                        /** @description Response data */
+                        data: components["schemas"]["CreateFanResponse"];
+                        /**
+                         * @description Error information (null on success)
+                         * @example null
+                         */
+                        error?: null;
+                        /** @description Error code (optional) */
+                        errorCode?: string;
+                    };
+                };
+            };
+        };
+    };
+    UserController_updateFanProfile_v1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateFanRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /**
+                         * @description HTTP status code
+                         * @example 200
+                         */
+                        statusCode: number;
+                        /**
+                         * @description Response message
+                         * @example OK
+                         */
+                        message: string;
+                        /** @description Response data */
+                        data: components["schemas"]["UpdateFanResponse"];
+                        /**
+                         * @description Error information (null on success)
+                         * @example null
+                         */
+                        error?: null;
+                        /** @description Error code (optional) */
+                        errorCode?: string;
+                    };
+                };
+            };
+        };
+    };
+    UserController_updateIdolProfile_v1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateIdolRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /**
+                         * @description HTTP status code
+                         * @example 200
+                         */
+                        statusCode: number;
+                        /**
+                         * @description Response message
+                         * @example OK
+                         */
+                        message: string;
+                        /** @description Response data */
+                        data: components["schemas"]["UpdateIdolResponse"];
+                        /**
+                         * @description Error information (null on success)
+                         * @example null
+                         */
+                        error?: null;
+                        /** @description Error code (optional) */
+                        errorCode?: string;
+                    };
+                };
+            };
+        };
+    };
     UserController_updateStatus_v1: {
         parameters: {
             query?: never;
@@ -744,6 +2741,59 @@ export interface operations {
                          * @example null
                          */
                         data: null;
+                        /**
+                         * @description Error information (null on success)
+                         * @example null
+                         */
+                        error?: null;
+                        /** @description Error code (optional) */
+                        errorCode?: string;
+                    };
+                };
+            };
+        };
+    };
+    PostController_getPosts_v1: {
+        parameters: {
+            query?: {
+                page?: number;
+                limit?: number;
+                /** @description Filter by user ID */
+                userId?: string;
+                /** @description Filter by hashtag */
+                hashtag?: string;
+                /** @description Filter by visibility */
+                visibility?: "public" | "followers" | "private";
+                /** @description Sort by field */
+                sortBy?: "createdAt" | "likesCount" | "commentsCount";
+                /** @description Sort order */
+                sortOrder?: "asc" | "desc";
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /**
+                         * @description HTTP status code
+                         * @example 200
+                         */
+                        statusCode: number;
+                        /**
+                         * @description Response message
+                         * @example OK
+                         */
+                        message: string;
+                        /** @description Response data */
+                        data: components["schemas"]["GetPostsResponse"];
                         /**
                          * @description Error information (null on success)
                          * @example null
@@ -797,6 +2847,547 @@ export interface operations {
                         errorCode?: string;
                     };
                 };
+            };
+        };
+    };
+    PostController_getPost_v1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Post ID */
+                postId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /**
+                         * @description HTTP status code
+                         * @example 200
+                         */
+                        statusCode: number;
+                        /**
+                         * @description Response message
+                         * @example OK
+                         */
+                        message: string;
+                        /** @description Response data */
+                        data: components["schemas"]["GetPostResponse"];
+                        /**
+                         * @description Error information (null on success)
+                         * @example null
+                         */
+                        error?: null;
+                        /** @description Error code (optional) */
+                        errorCode?: string;
+                    };
+                };
+            };
+        };
+    };
+    PostController_deletePost_v1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Post ID */
+                postId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /**
+                         * @description HTTP status code
+                         * @example 200
+                         */
+                        statusCode: number;
+                        /**
+                         * @description Response message
+                         * @example OK
+                         */
+                        message: string;
+                        /** @description Response data */
+                        data: components["schemas"]["DeletePostResponse"];
+                        /**
+                         * @description Error information (null on success)
+                         * @example null
+                         */
+                        error?: null;
+                        /** @description Error code (optional) */
+                        errorCode?: string;
+                    };
+                };
+            };
+        };
+    };
+    PostController_updatePost_v1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Post ID */
+                postId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdatePostRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /**
+                         * @description HTTP status code
+                         * @example 200
+                         */
+                        statusCode: number;
+                        /**
+                         * @description Response message
+                         * @example OK
+                         */
+                        message: string;
+                        /** @description Response data */
+                        data: components["schemas"]["UpdatePostResponse"];
+                        /**
+                         * @description Error information (null on success)
+                         * @example null
+                         */
+                        error?: null;
+                        /** @description Error code (optional) */
+                        errorCode?: string;
+                    };
+                };
+            };
+        };
+    };
+    ChatController_getMyChannels: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ChatChannelResponse"][];
+                };
+            };
+        };
+    };
+    ChatController_createChannel: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateChannelRequest"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ChatChannelResponse"];
+                };
+            };
+        };
+    };
+    ChatController_getChannelById: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                channelId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ChatChannelResponse"];
+                };
+            };
+        };
+    };
+    ChatController_sendMessage: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SendMessageRequest"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ChatMessageResponse"];
+                };
+            };
+        };
+    };
+    ChatController_getMessages: {
+        parameters: {
+            query: {
+                limit: number;
+                lastMessageId: string;
+            };
+            header?: never;
+            path: {
+                channelId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ChatMessageResponse"][];
+                };
+            };
+        };
+    };
+    ChatController_markAsRead: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MarkAsReadRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    ChatController_addParticipants: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AddParticipantsRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    ChatController_leaveChannel: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                channelId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    AdminController_adminLogin: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AdminLoginRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AdminAuthResponse"];
+                };
+            };
+        };
+    };
+    AdminController_adminSignup: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AdminSignupRequest"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AdminAuthResponse"];
+                };
+            };
+        };
+    };
+    AdminController_getAllGroups: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    AdminController_createGroup: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateGroupRequest"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CreateGroupResponse"];
+                };
+            };
+        };
+    };
+    AdminController_getAllIdols: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    AdminController_createIdolAccount: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateIdolRequest"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CreateIdolResponse"];
+                };
+            };
+        };
+    };
+    AdminController_getAllFans: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    AdminController_getAllUsers: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    AdminController_getStatistics: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    AdminController_deactivateUser: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description User ID */
+                userId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    AdminController_activateUser: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description User ID */
+                userId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    AdminController_deleteUser: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description User ID */
+                userId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
         };
     };

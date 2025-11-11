@@ -5,6 +5,7 @@ const white64Color: string = 'rgba(255, 255, 255, 0.64)';
 
 const blackColor: string = 'rgba(30, 30, 30, 1)';
 const black10Color: string = 'rgba(30, 30, 30, 0.1)';
+const black20Color: string = 'rgba(30, 30, 30, 0.2)';
 const black50Color: string = 'rgba(30, 30, 30, 0.5)';
 const black1Color: string = '#0B0B0B';
 const black60Color: string = 'rgba(12, 13, 14, 0.6)';
@@ -29,6 +30,7 @@ export {
   white64Color,
   blackColor,
   black10Color,
+  black20Color,
   black50Color,
   black1Color,
   black60Color,

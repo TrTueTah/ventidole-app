@@ -1,6 +1,5 @@
 import styled from 'styled-components/native';
-import {RFValue} from 'react-native-responsive-fontsize';
-import {blackColor, grayColor, transparentBlack20Color, whiteColor} from 'constants/colors';
+import {black20Color, blackColor, whiteColor} from 'constants/colors';
 import {Montserrat400} from 'constants/fonts';
 
 export const TitleText = styled.Text`
@@ -50,5 +49,5 @@ export const InputTouchableWrappper = styled.TouchableOpacity`
   padding-right: 8px;
   padding-bottom: 8px;
   justify-content: space-between;
-  border: 1px solid ${transparentBlack20Color};
+  border: 1px solid ${black20Color};
 `;

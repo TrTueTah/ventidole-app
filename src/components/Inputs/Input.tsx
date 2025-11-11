@@ -1,7 +1,7 @@
 import { Text, TextInput, View } from 'react-native';
 import { FC, useRef } from 'react';
 import * as S from './Input.style';
-import { blackColor, errorColor, transparentBlack20Color } from 'constants/colors';
+import { black20Color, blackColor, errorColor } from 'constants/colors';
 import { InputProps } from 'typescript/interfaces';
 import WarningFill from 'assets/images/icons/warning-fill.svg'
 
@@ -16,7 +16,7 @@ const Input: FC<InputProps> = ({
   labelStyle,
   isError = false,
   placeholder,
-  placeholderTextColor = transparentBlack20Color,
+  placeholderTextColor = black20Color,
   value,
   label,
   keyboardType = 'default',

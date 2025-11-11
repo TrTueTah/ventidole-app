@@ -1,6 +1,8 @@
 export type RootStackParamList = {
   '/sign-in': undefined;
-  '/sign-up': undefined;
+  '/sign-up': {
+    email: string;
+  };
   '/reset-password': undefined;
   '/verify-email': {
     type: 'register' | 'resetPassword';

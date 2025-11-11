@@ -4,7 +4,7 @@ import { Formik } from 'formik';
 
 import * as S from './SignInScreen.style';
 import { signInSchema } from 'src/schemas/sign-in.schema';
-import { transparentBlack20Color } from 'constants/colors';
+import { black20Color } from 'constants/colors';
 import { Montserrat500 } from 'constants/fonts';
 
 import AuthTitle from 'components/AuthTitle/AuthTitle';
@@ -17,10 +17,12 @@ import EyeClosed from 'assets/images/icons/eye-closed.svg';
 import EyeOpen from 'assets/images/icons/eye-open.svg';
 import { useAppNavigation } from 'hooks/useAppNavigation';
 import { isIos } from 'constants/common';
+import { useLogin } from './hooks/useLogin';
 
 const SignInScreen = () => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const navigation = useAppNavigation();
+  const { login, isLoading } = useLogin();
 
   return (
     <S.Container>
@@ -41,7 +43,12 @@ const SignInScreen = () => {
         <Formik
           initialValues={{ email: '', password: '' }}
           validationSchema={signInSchema}
-          onSubmit={(values) => console.log('Form values:', values)}
+          onSubmit={(values) => {
+            login({
+              email: values.email,
+              password: values.password,
+            });
+          }}
         >
           {({ handleChange, handleBlur, handleSubmit, values, errors, touched }) => (
             <>
@@ -69,9 +76,9 @@ const SignInScreen = () => {
                   InputIcon={
                     <TouchableOpacity onPress={() => setIsPasswordVisible(!isPasswordVisible)}>
                       {isPasswordVisible ? (
-                        <EyeOpen color={transparentBlack20Color} />
+                        <EyeOpen color={black20Color} />
                       ) : (
-                        <EyeClosed color={transparentBlack20Color} />
+                        <EyeClosed color={black20Color} />
                       )}
                     </TouchableOpacity>
                   }
@@ -91,7 +98,12 @@ const SignInScreen = () => {
 
               {/* === BUTTONS === */}
               <S.ButtonContainer>
-                <Button title="Login" onPress={() => handleSubmit()} />
+                <Button 
+                  title="Login" 
+                  onPress={() => handleSubmit()} 
+                  disabled={isLoading}
+                  loading={isLoading}
+                />
 
                 <S.OrLoginWithContainer>
                   <S.Line />

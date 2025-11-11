@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import CommonAuthLayout from '../Layouts/CommonAuthLayout/CommonAuthLayout';
 import { Formik } from 'formik';
 import { signUpSchema } from 'src/schemas/sign-up.schema';
@@ -7,31 +7,75 @@ import Input from 'components/Inputs/Input';
 import { TouchableOpacity } from 'react-native';
 import EyeClosed from 'assets/images/icons/eye-closed.svg';
 import EyeOpen from 'assets/images/icons/eye-open.svg';
-import { transparentBlack20Color } from 'constants/colors';
-import { useAppNavigation } from 'hooks/useAppNavigation';
+import { black20Color } from 'constants/colors';
+import { useAppNavigation, useRoute } from 'hooks/useAppNavigation';
+import { RootStackParamList } from 'typescript/types';
+import { useSignUp } from './hooks/useSignUp';
+import { TermsModal } from './components/TermsModal';
+
+type SignUpRouteParams = RootStackParamList['/sign-up'];
 
 const SignUpScreen = () => {
+  const route = useRoute();
+  const params = route.params as SignUpRouteParams;
+  const { email } = params || {};
   const navigation = useAppNavigation();
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const [showTermsModal, setShowTermsModal] = useState(false);
+  const [termsAccepted, setTermsAccepted] = useState(false);
+  const [pendingSignUpData, setPendingSignUpData] = useState<any>(null);
+  
+  const { signUp, isLoading, isSuccess } = useSignUp();
+
+  // Navigate after successful sign up
+  useEffect(() => {
+    if (isSuccess) {
+      navigation.navigate('/auth-complete', {
+        type: 'register',
+        title: 'Registration Complete',
+        subtitle: 'Welcome! Discover various features to get started.'
+      });
+    }
+  }, [isSuccess, navigation]);
+
+  console.log('🚀 SignUpScreen email param:', email);
+  const handleTermsAccept = () => {
+    setTermsAccepted(true);
+    setShowTermsModal(false);
+    
+    // Submit the sign up data
+    if (pendingSignUpData) {
+      signUp({
+        email: pendingSignUpData.email,
+        password: pendingSignUpData.password,
+        name: pendingSignUpData.username,
+        phoneNumber: pendingSignUpData.phoneNumber,
+      });
+    }
+  };
+
+  const handleTermsClose = () => {
+    setShowTermsModal(false);
+  };
+
+  const handleContinue = (values: any) => {
+    // Store the form data and show terms modal
+    setPendingSignUpData(values);
+    setShowTermsModal(true);
+  };
+
   return (
-    <CommonAuthLayout
-      title={'Please, fill your information'}
-      continueButtonTitle="Continue"
-      continueButtonDisabled={false}
-      onContinuePress={() => {
-        navigation.navigate('/terms-and-use');
-      }}
-    >
+    <>
       <Formik
         initialValues={{
-          email: '',
+          email: email || '',
           username: '',
           phoneNumber: '',
           password: '',
           confirmPassword: '',
         }}
         validationSchema={signUpSchema}
-        onSubmit={values => console.log('Form values:', values)}
+        onSubmit={handleContinue}
       >
         {({
           handleChange,
@@ -41,6 +85,13 @@ const SignUpScreen = () => {
           errors,
           touched,
         }) => (
+          <CommonAuthLayout
+            title={'Please, fill your information'}
+            continueButtonTitle="Continue"
+            continueButtonDisabled={isLoading}
+            continueButtonLoading={isLoading}
+            onContinuePress={handleSubmit}
+          >
           <S.Wrapper>
             <S.InputContainer>
               <Input
@@ -85,9 +136,9 @@ const SignUpScreen = () => {
                     onPress={() => setIsPasswordVisible(!isPasswordVisible)}
                   >
                     {isPasswordVisible ? (
-                      <EyeOpen color={transparentBlack20Color} />
+                      <EyeOpen color={black20Color} />
                     ) : (
-                      <EyeClosed color={transparentBlack20Color} />
+                      <EyeClosed color={black20Color} />
                     )}
                   </TouchableOpacity>
                 }
@@ -106,18 +157,25 @@ const SignUpScreen = () => {
                     onPress={() => setIsPasswordVisible(!isPasswordVisible)}
                   >
                     {isPasswordVisible ? (
-                      <EyeOpen color={transparentBlack20Color} />
+                      <EyeOpen color={black20Color} />
                     ) : (
-                      <EyeClosed color={transparentBlack20Color} />
+                      <EyeClosed color={black20Color} />
                     )}
                   </TouchableOpacity>
                 }
               />
             </S.InputContainer>
           </S.Wrapper>
+          </CommonAuthLayout>
         )}
       </Formik>
-    </CommonAuthLayout>
+
+      <TermsModal
+        visible={showTermsModal}
+        onClose={handleTermsClose}
+        onAccept={handleTermsAccept}
+      />
+    </>
   );
 };
 

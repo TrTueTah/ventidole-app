@@ -1,5 +1,361 @@
 openapi: 3.0.0
 paths:
+  /v1/file/upload:
+    post:
+      operationId: FileController_uploadFile_v1
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/UploadFileRequest'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: number
+                    example: 200
+                    description: HTTP status code
+                  message:
+                    type: string
+                    example: OK
+                    description: Response message
+                  data:
+                    $ref: '#/components/schemas/UploadFileResponse'
+                    description: Response data
+                  error:
+                    type: 'null'
+                    example: null
+                    description: Error information (null on success)
+                  errorCode:
+                    type: string
+                    description: Error code (optional)
+                required:
+                  - statusCode
+                  - message
+                  - data
+      security: &ref_0
+        - &ref_2
+          bearer: []
+      tags: &ref_1
+        - File
+  /v1/file/upload-multiple:
+    post:
+      operationId: FileController_uploadMultipleFiles_v1
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: number
+                    example: 200
+                    description: HTTP status code
+                  message:
+                    type: string
+                    example: OK
+                    description: Response message
+                  data:
+                    $ref: '#/components/schemas/UploadFileResponse'
+                    description: Response data
+                  error:
+                    type: 'null'
+                    example: null
+                    description: Error information (null on success)
+                  errorCode:
+                    type: string
+                    description: Error code (optional)
+                required:
+                  - statusCode
+                  - message
+                  - data
+      security: *ref_0
+      tags: *ref_1
+  /v1/file/delete:
+    delete:
+      operationId: FileController_deleteFile_v1
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeleteFileRequest'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: number
+                    example: 200
+                    description: HTTP status code
+                  message:
+                    type: string
+                    example: OK
+                    description: Response message
+                  data:
+                    type: 'null'
+                    example: null
+                    description: No data returned
+                  error:
+                    type: 'null'
+                    example: null
+                    description: Error information (null on success)
+                  errorCode:
+                    type: string
+                    description: Error code (optional)
+                required:
+                  - statusCode
+                  - message
+                  - data
+      security: *ref_0
+      tags: *ref_1
+  /v1/file/url:
+    get:
+      operationId: FileController_getFileUrl_v1
+      parameters:
+        - name: filePath
+          required: true
+          in: query
+          description: Path to the file in storage
+          schema:
+            example: posts/my-file-uuid.jpg
+            type: string
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: number
+                    example: 200
+                    description: HTTP status code
+                  message:
+                    type: string
+                    example: OK
+                    description: Response message
+                  data:
+                    $ref: '#/components/schemas/GetFileUrlResponse'
+                    description: Response data
+                  error:
+                    type: 'null'
+                    example: null
+                    description: Error information (null on success)
+                  errorCode:
+                    type: string
+                    description: Error code (optional)
+                required:
+                  - statusCode
+                  - message
+                  - data
+      security: *ref_0
+      tags: *ref_1
+  /v1/file/signed-url:
+    get:
+      operationId: FileController_getSignedUrl_v1
+      parameters:
+        - name: filePath
+          required: true
+          in: query
+          description: Path to the file in storage
+          schema:
+            example: posts/my-file-uuid.jpg
+            type: string
+        - name: expiresInMinutes
+          required: true
+          in: query
+          description: Expiration time in minutes
+          schema:
+            default: 60
+            example: 60
+            type: number
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: number
+                    example: 200
+                    description: HTTP status code
+                  message:
+                    type: string
+                    example: OK
+                    description: Response message
+                  data:
+                    $ref: '#/components/schemas/GetSignedUrlResponse'
+                    description: Response data
+                  error:
+                    type: 'null'
+                    example: null
+                    description: Error information (null on success)
+                  errorCode:
+                    type: string
+                    description: Error code (optional)
+                required:
+                  - statusCode
+                  - message
+                  - data
+      security: *ref_0
+      tags: *ref_1
+  /v1/file/exists:
+    get:
+      operationId: FileController_fileExists_v1
+      parameters:
+        - name: filePath
+          required: true
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: number
+                    example: 200
+                    description: HTTP status code
+                  message:
+                    type: string
+                    example: OK
+                    description: Response message
+                  data:
+                    type: 'null'
+                    example: null
+                    description: No data returned
+                  error:
+                    type: 'null'
+                    example: null
+                    description: Error information (null on success)
+                  errorCode:
+                    type: string
+                    description: Error code (optional)
+                required:
+                  - statusCode
+                  - message
+                  - data
+      security: *ref_0
+      tags: *ref_1
+  /v1/file/metadata:
+    get:
+      operationId: FileController_getFileMetadata_v1
+      parameters:
+        - name: filePath
+          required: true
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: File metadata retrieved successfully
+      security:
+        - *ref_2
+        - bearer: []
+      summary: Get file metadata
+      tags: *ref_1
+  /v1/file/list:
+    get:
+      operationId: FileController_listFiles_v1
+      parameters:
+        - name: folder
+          required: true
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: number
+                    example: 200
+                    description: HTTP status code
+                  message:
+                    type: string
+                    example: OK
+                    description: Response message
+                  data:
+                    type: 'null'
+                    example: null
+                    description: No data returned
+                  error:
+                    type: 'null'
+                    example: null
+                    description: Error information (null on success)
+                  errorCode:
+                    type: string
+                    description: Error code (optional)
+                required:
+                  - statusCode
+                  - message
+                  - data
+      security: *ref_0
+      tags: *ref_1
+  /v1/file/folder:
+    delete:
+      operationId: FileController_deleteFolder_v1
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: number
+                    example: 200
+                    description: HTTP status code
+                  message:
+                    type: string
+                    example: OK
+                    description: Response message
+                  data:
+                    type: 'null'
+                    example: null
+                    description: No data returned
+                  error:
+                    type: 'null'
+                    example: null
+                    description: Error information (null on success)
+                  errorCode:
+                    type: string
+                    description: Error code (optional)
+                required:
+                  - statusCode
+                  - message
+                  - data
+      security: *ref_0
+      tags: *ref_1
   /v1/auth/sign-in:
     post:
       operationId: AuthController_signIn_v1
@@ -40,7 +396,7 @@ paths:
                   - statusCode
                   - message
                   - data
-      tags: &ref_0
+      tags: &ref_3
         - Authenticate
   /v1/auth/sign-up:
     post:
@@ -82,7 +438,7 @@ paths:
                   - statusCode
                   - message
                   - data
-      tags: *ref_0
+      tags: *ref_3
   /v1/auth/send-verification:
     post:
       operationId: AuthController_sendVerification_v1
@@ -123,7 +479,7 @@ paths:
                   - statusCode
                   - message
                   - data
-      tags: *ref_0
+      tags: *ref_3
   /v1/auth/confirm-verification:
     post:
       operationId: AuthController_confirmVerification_v1
@@ -164,7 +520,7 @@ paths:
                   - statusCode
                   - message
                   - data
-      tags: *ref_0
+      tags: *ref_3
   /v1/auth/refresh-token:
     post:
       operationId: AuthController_refreshNewToken_v1
@@ -205,7 +561,7 @@ paths:
                   - statusCode
                   - message
                   - data
-      tags: *ref_0
+      tags: *ref_3
   /v1/auth/reset-password:
     post:
       operationId: AuthController_resetPassword_v1
@@ -247,7 +603,254 @@ paths:
                   - statusCode
                   - message
                   - data
-      tags: *ref_0
+      tags: *ref_3
+  /v1/user/me:
+    get:
+      operationId: UserController_getCurrentUser_v1
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: number
+                    example: 200
+                    description: HTTP status code
+                  message:
+                    type: string
+                    example: OK
+                    description: Response message
+                  data:
+                    $ref: '#/components/schemas/GetUserResponse'
+                    description: Response data
+                  error:
+                    type: 'null'
+                    example: null
+                    description: Error information (null on success)
+                  errorCode:
+                    type: string
+                    description: Error code (optional)
+                required:
+                  - statusCode
+                  - message
+                  - data
+      security: &ref_4
+        - bearer: []
+      tags: &ref_5
+        - User
+  /v1/user/{userId}:
+    get:
+      operationId: UserController_getUserById_v1
+      parameters:
+        - name: userId
+          required: true
+          in: path
+          description: User ID
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: number
+                    example: 200
+                    description: HTTP status code
+                  message:
+                    type: string
+                    example: OK
+                    description: Response message
+                  data:
+                    $ref: '#/components/schemas/GetUserResponse'
+                    description: Response data
+                  error:
+                    type: 'null'
+                    example: null
+                    description: Error information (null on success)
+                  errorCode:
+                    type: string
+                    description: Error code (optional)
+                required:
+                  - statusCode
+                  - message
+                  - data
+      security: *ref_4
+      tags: *ref_5
+  /v1/user/profile:
+    patch:
+      operationId: UserController_updateProfile_v1
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateUserRequest'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: number
+                    example: 200
+                    description: HTTP status code
+                  message:
+                    type: string
+                    example: OK
+                    description: Response message
+                  data:
+                    $ref: '#/components/schemas/UpdateUserResponse'
+                    description: Response data
+                  error:
+                    type: 'null'
+                    example: null
+                    description: Error information (null on success)
+                  errorCode:
+                    type: string
+                    description: Error code (optional)
+                required:
+                  - statusCode
+                  - message
+                  - data
+      security: *ref_4
+      tags: *ref_5
+  /v1/user/fan:
+    post:
+      operationId: UserController_createFanProfile_v1
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateFanRequest'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: number
+                    example: 200
+                    description: HTTP status code
+                  message:
+                    type: string
+                    example: OK
+                    description: Response message
+                  data:
+                    $ref: '#/components/schemas/CreateFanResponse'
+                    description: Response data
+                  error:
+                    type: 'null'
+                    example: null
+                    description: Error information (null on success)
+                  errorCode:
+                    type: string
+                    description: Error code (optional)
+                required:
+                  - statusCode
+                  - message
+                  - data
+      security: *ref_4
+      tags: *ref_5
+    patch:
+      operationId: UserController_updateFanProfile_v1
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateFanRequest'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: number
+                    example: 200
+                    description: HTTP status code
+                  message:
+                    type: string
+                    example: OK
+                    description: Response message
+                  data:
+                    $ref: '#/components/schemas/UpdateFanResponse'
+                    description: Response data
+                  error:
+                    type: 'null'
+                    example: null
+                    description: Error information (null on success)
+                  errorCode:
+                    type: string
+                    description: Error code (optional)
+                required:
+                  - statusCode
+                  - message
+                  - data
+      security: *ref_4
+      tags: *ref_5
+  /v1/user/idol:
+    patch:
+      operationId: UserController_updateIdolProfile_v1
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateIdolRequest'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: number
+                    example: 200
+                    description: HTTP status code
+                  message:
+                    type: string
+                    example: OK
+                    description: Response message
+                  data:
+                    $ref: '#/components/schemas/UpdateIdolResponse'
+                    description: Response data
+                  error:
+                    type: 'null'
+                    example: null
+                    description: Error information (null on success)
+                  errorCode:
+                    type: string
+                    description: Error code (optional)
+                required:
+                  - statusCode
+                  - message
+                  - data
+      security: *ref_4
+      tags: *ref_5
   /v1/user/update-status:
     post:
       operationId: UserController_updateStatus_v1
@@ -289,10 +892,8 @@ paths:
                   - statusCode
                   - message
                   - data
-      security:
-        - bearer: []
-      tags:
-        - User
+      security: *ref_4
+      tags: *ref_5
   /v1/post:
     post:
       operationId: PostController_createPost_v1
@@ -333,10 +934,572 @@ paths:
                   - statusCode
                   - message
                   - data
+      security: &ref_6
+        - bearer: []
+      tags: &ref_7
+        - Post
+    get:
+      operationId: PostController_getPosts_v1
+      parameters:
+        - name: page
+          required: false
+          in: query
+          schema:
+            example: 1
+            type: number
+        - name: limit
+          required: false
+          in: query
+          schema:
+            example: 20
+            type: number
+        - name: userId
+          required: false
+          in: query
+          description: Filter by user ID
+          schema:
+            example: user-123
+            type: string
+        - name: hashtag
+          required: false
+          in: query
+          description: Filter by hashtag
+          schema:
+            example: nature
+            type: string
+        - name: visibility
+          required: false
+          in: query
+          description: Filter by visibility
+          schema:
+            example: public
+            type: string
+            enum:
+              - public
+              - followers
+              - private
+        - name: sortBy
+          required: false
+          in: query
+          description: Sort by field
+          schema:
+            example: createdAt
+            type: string
+            enum:
+              - createdAt
+              - likesCount
+              - commentsCount
+        - name: sortOrder
+          required: false
+          in: query
+          description: Sort order
+          schema:
+            example: desc
+            type: string
+            enum:
+              - asc
+              - desc
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: number
+                    example: 200
+                    description: HTTP status code
+                  message:
+                    type: string
+                    example: OK
+                    description: Response message
+                  data:
+                    $ref: '#/components/schemas/GetPostsResponse'
+                    description: Response data
+                  error:
+                    type: 'null'
+                    example: null
+                    description: Error information (null on success)
+                  errorCode:
+                    type: string
+                    description: Error code (optional)
+                required:
+                  - statusCode
+                  - message
+                  - data
+      security: *ref_6
+      tags: *ref_7
+  /v1/post/{postId}:
+    get:
+      operationId: PostController_getPost_v1
+      parameters:
+        - name: postId
+          required: true
+          in: path
+          description: Post ID
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: number
+                    example: 200
+                    description: HTTP status code
+                  message:
+                    type: string
+                    example: OK
+                    description: Response message
+                  data:
+                    $ref: '#/components/schemas/GetPostResponse'
+                    description: Response data
+                  error:
+                    type: 'null'
+                    example: null
+                    description: Error information (null on success)
+                  errorCode:
+                    type: string
+                    description: Error code (optional)
+                required:
+                  - statusCode
+                  - message
+                  - data
+      security: *ref_6
+      tags: *ref_7
+    patch:
+      operationId: PostController_updatePost_v1
+      parameters:
+        - name: postId
+          required: true
+          in: path
+          description: Post ID
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdatePostRequest'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: number
+                    example: 200
+                    description: HTTP status code
+                  message:
+                    type: string
+                    example: OK
+                    description: Response message
+                  data:
+                    $ref: '#/components/schemas/UpdatePostResponse'
+                    description: Response data
+                  error:
+                    type: 'null'
+                    example: null
+                    description: Error information (null on success)
+                  errorCode:
+                    type: string
+                    description: Error code (optional)
+                required:
+                  - statusCode
+                  - message
+                  - data
+      security: *ref_6
+      tags: *ref_7
+    delete:
+      operationId: PostController_deletePost_v1
+      parameters:
+        - name: postId
+          required: true
+          in: path
+          description: Post ID
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: number
+                    example: 200
+                    description: HTTP status code
+                  message:
+                    type: string
+                    example: OK
+                    description: Response message
+                  data:
+                    $ref: '#/components/schemas/DeletePostResponse'
+                    description: Response data
+                  error:
+                    type: 'null'
+                    example: null
+                    description: Error information (null on success)
+                  errorCode:
+                    type: string
+                    description: Error code (optional)
+                required:
+                  - statusCode
+                  - message
+                  - data
+      security: *ref_6
+      tags: *ref_7
+  /chat/channels:
+    post:
+      operationId: ChatController_createChannel
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateChannelRequest'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChatChannelResponse'
+      security: &ref_8
+        - bearer: []
+      summary: Create a new chat channel
+      tags: &ref_9
+        - Chat
+    get:
+      operationId: ChatController_getMyChannels
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ChatChannelResponse'
+      security: *ref_8
+      summary: Get all channels for current user
+      tags: *ref_9
+  /chat/channels/{channelId}:
+    get:
+      operationId: ChatController_getChannelById
+      parameters:
+        - name: channelId
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChatChannelResponse'
+      security: *ref_8
+      summary: Get channel details by ID
+      tags: *ref_9
+  /chat/messages:
+    post:
+      operationId: ChatController_sendMessage
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SendMessageRequest'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChatMessageResponse'
+      security: *ref_8
+      summary: Send a message to a channel
+      tags: *ref_9
+  /chat/channels/{channelId}/messages:
+    get:
+      operationId: ChatController_getMessages
+      parameters:
+        - name: channelId
+          required: true
+          in: path
+          schema:
+            type: string
+        - name: limit
+          required: true
+          in: query
+          schema:
+            type: number
+        - name: lastMessageId
+          required: true
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ChatMessageResponse'
+      security: *ref_8
+      summary: Get messages from a channel
+      tags: *ref_9
+  /chat/channels/read:
+    post:
+      operationId: ChatController_markAsRead
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MarkAsReadRequest'
+      responses:
+        '200':
+          description: ''
+      security: *ref_8
+      summary: Mark messages as read in a channel
+      tags: *ref_9
+  /chat/channels/participants:
+    post:
+      operationId: ChatController_addParticipants
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddParticipantsRequest'
+      responses:
+        '200':
+          description: ''
+      security: *ref_8
+      summary: Add participants to a channel
+      tags: *ref_9
+  /chat/channels/{channelId}/leave:
+    post:
+      operationId: ChatController_leaveChannel
+      parameters:
+        - name: channelId
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+      security: *ref_8
+      summary: Leave a channel
+      tags: *ref_9
+  /admin/login:
+    post:
+      operationId: AdminController_adminLogin
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AdminLoginRequest'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminAuthResponse'
+      summary: Admin login (bypass all verification)
+      tags: &ref_10
+        - Admin
+  /admin/signup:
+    post:
+      operationId: AdminController_adminSignup
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AdminSignupRequest'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminAuthResponse'
+      summary: Admin signup (bypass all verification, instantly active)
+      tags: *ref_10
+  /admin/groups:
+    post:
+      operationId: AdminController_createGroup
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateGroupRequest'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateGroupResponse'
       security:
         - bearer: []
-      tags:
-        - Post
+      summary: Create a new group (Admin only)
+      tags: *ref_10
+    get:
+      operationId: AdminController_getAllGroups
+      parameters: []
+      responses:
+        '200':
+          description: ''
+      security:
+        - bearer: []
+      summary: Get all groups (Admin only)
+      tags: *ref_10
+  /admin/idols:
+    post:
+      operationId: AdminController_createIdolAccount
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateIdolRequest'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateIdolResponse'
+      security:
+        - bearer: []
+      summary: Create a new idol account (Admin only)
+      tags: *ref_10
+    get:
+      operationId: AdminController_getAllIdols
+      parameters: []
+      responses:
+        '200':
+          description: ''
+      security:
+        - bearer: []
+      summary: Get all idols (Admin only)
+      tags: *ref_10
+  /admin/fans:
+    get:
+      operationId: AdminController_getAllFans
+      parameters: []
+      responses:
+        '200':
+          description: ''
+      security:
+        - bearer: []
+      summary: Get all fans (Admin only)
+      tags: *ref_10
+  /admin/users:
+    get:
+      operationId: AdminController_getAllUsers
+      parameters: []
+      responses:
+        '200':
+          description: ''
+      security:
+        - bearer: []
+      summary: Get all users with profiles (Admin only)
+      tags: *ref_10
+  /admin/statistics:
+    get:
+      operationId: AdminController_getStatistics
+      parameters: []
+      responses:
+        '200':
+          description: ''
+      security:
+        - bearer: []
+      summary: Get platform statistics (Admin only)
+      tags: *ref_10
+  /admin/users/{userId}/deactivate:
+    patch:
+      operationId: AdminController_deactivateUser
+      parameters:
+        - name: userId
+          required: true
+          in: path
+          description: User ID
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+      security:
+        - bearer: []
+      summary: Deactivate a user account (Admin only)
+      tags: *ref_10
+  /admin/users/{userId}/activate:
+    patch:
+      operationId: AdminController_activateUser
+      parameters:
+        - name: userId
+          required: true
+          in: path
+          description: User ID
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+      security:
+        - bearer: []
+      summary: Activate a user account (Admin only)
+      tags: *ref_10
+  /admin/users/{userId}:
+    delete:
+      operationId: AdminController_deleteUser
+      parameters:
+        - name: userId
+          required: true
+          in: path
+          description: User ID
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+      security:
+        - bearer: []
+      summary: Delete a user account (Admin only)
+      tags: *ref_10
 info:
   title: API Docs
   description: Custom Swagger UI in NestJS
@@ -451,12 +1614,120 @@ components:
             - AccountNotFound
             - ExistedEmail
             - ExistedPhoneNumber
+            - ExistedUsername
             - InvalidEmailOrPassword
             - InvalidTokenSecret
+            - FileNotFound
+            - FileTooLarge
+            - InvalidFileType
+            - InvalidFileName
+            - EmailAlreadyExists
+            - UsernameAlreadyExists
+            - FanProfileNotFound
+            - IdolProfileNotFound
+            - ChatChannelNotFound
+            - NotChannelParticipant
+            - NotChannelAdmin
+            - CannotSendToAnnouncementChannel
           description: Error code (optional)
       required:
         - statusCode
         - message
+    UploadFileResponse:
+      type: object
+      properties:
+        url:
+          type: string
+          description: Public URL of the uploaded file
+          example: https://storage.googleapis.com/my-bucket/posts/file-uuid.jpg
+        fileName:
+          type: string
+          description: Name of the uploaded file
+          example: file-uuid.jpg
+        filePath:
+          type: string
+          description: Full path of the file in storage
+          example: posts/file-uuid.jpg
+        size:
+          type: number
+          description: Size of the file in bytes
+          example: 102400
+        mimeType:
+          type: string
+          description: MIME type of the file
+          example: image/jpeg
+        uploadedAt:
+          format: date-time
+          type: string
+          description: Upload timestamp
+          example: '2025-11-06T08:00:00.000Z'
+      required:
+        - url
+        - fileName
+        - filePath
+        - size
+        - mimeType
+        - uploadedAt
+    GetFileUrlResponse:
+      type: object
+      properties:
+        url:
+          type: string
+          description: Public URL of the file
+          example: https://storage.googleapis.com/my-bucket/posts/file-uuid.jpg
+      required:
+        - url
+    GetSignedUrlResponse:
+      type: object
+      properties:
+        signedUrl:
+          type: string
+          description: Signed URL for temporary access
+          example: >-
+            https://storage.googleapis.com/my-bucket/posts/file-uuid.jpg?X-Goog-Algorithm=...
+        expiresAt:
+          format: date-time
+          type: string
+          description: Expiration time of the signed URL
+          example: '2025-11-06T09:00:00.000Z'
+      required:
+        - signedUrl
+        - expiresAt
+    UploadFileRequest:
+      type: object
+      properties:
+        file:
+          type: string
+          format: binary
+          description: File to upload
+        folder:
+          type: string
+          enum:
+            - profiles
+            - posts
+            - attachments
+            - documents
+            - thumbnails
+            - temp
+          description: Folder to upload the file to
+          example: posts
+        customFileName:
+          type: string
+          description: Custom file name (optional)
+          example: my-custom-name
+      required:
+        - file
+        - folder
+        - customFileName
+    DeleteFileRequest:
+      type: object
+      properties:
+        filePath:
+          type: string
+          description: Path to the file in storage
+          example: posts/my-file-uuid.jpg
+      required:
+        - filePath
     SignInResponse:
       type: object
       properties:
@@ -552,19 +1823,14 @@ components:
           type: string
           example: Password@123456
           description: Your password
-        name:
+        username:
           type: string
-          example: John Doe
-          description: Your full name
-        phoneNumber:
-          type: string
-          example: '+1234567890'
-          description: Your phone number
+          example: johndoe
+          description: Your username
       required:
         - email
         - password
-        - name
-        - phoneNumber
+        - username
     SendVerificationRequest:
       type: object
       properties:
@@ -638,6 +1904,315 @@ components:
       required:
         - password
         - email
+    FanDto:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Fan ID
+          example: fan-clx123abc
+        username:
+          type: string
+          description: Fan username
+          example: cool_username
+        avatarUrl:
+          type: string
+          description: Fan avatar URL
+          example: https://storage.googleapis.com/bucket/avatars/fan-123.jpg
+        backgroundUrl:
+          type: string
+          description: Fan background image URL
+          example: https://storage.googleapis.com/bucket/backgrounds/fan-123.jpg
+        bio:
+          type: string
+          description: Fan bio/description
+          example: Music lover and K-pop enthusiast 🎵
+        createdAt:
+          type: string
+          description: Created at timestamp
+          example: '2024-01-01T00:00:00.000Z'
+        updatedAt:
+          type: string
+          description: Updated at timestamp
+          example: '2024-01-01T00:00:00.000Z'
+      required:
+        - id
+        - username
+        - createdAt
+        - updatedAt
+    IdolDto:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Idol ID
+          example: idol-clx123abc
+        stageName:
+          type: string
+          description: Idol stage name
+          example: StarLight
+        avatarUrl:
+          type: string
+          description: Idol avatar URL
+          example: https://storage.googleapis.com/bucket/avatars/idol-123.jpg
+        backgroundUrl:
+          type: string
+          description: Idol background image URL
+          example: https://storage.googleapis.com/bucket/backgrounds/idol-123.jpg
+        bio:
+          type: string
+          description: Idol bio/description
+          example: Professional singer and performer 🎤
+        groupId:
+          type: string
+          description: Group ID
+          example: group-clx123abc
+        createdAt:
+          type: string
+          description: Created at timestamp
+          example: '2024-01-01T00:00:00.000Z'
+        updatedAt:
+          type: string
+          description: Updated at timestamp
+          example: '2024-01-01T00:00:00.000Z'
+      required:
+        - id
+        - stageName
+        - groupId
+        - createdAt
+        - updatedAt
+    UserDto:
+      type: object
+      properties:
+        id:
+          type: string
+          description: User ID
+          example: user-123e4567
+        email:
+          type: string
+          description: User email
+          example: user@example.com
+        role:
+          type: string
+          description: User role
+          enum:
+            - FAN
+            - ADMIN
+            - IDOL
+          example: FAN
+        deviceToken:
+          type: string
+          description: Device token for push notifications
+          example: device-token-xyz123
+        isOnline:
+          type: boolean
+          description: Online status
+          example: true
+        isActive:
+          type: boolean
+          description: Active status
+          example: true
+        fan:
+          description: Fan profile (only present if user is a FAN)
+          allOf:
+            - $ref: '#/components/schemas/FanDto'
+        idol:
+          description: Idol profile (only present if user is an IDOL)
+          allOf:
+            - $ref: '#/components/schemas/IdolDto'
+        createdAt:
+          type: string
+          description: Created at timestamp
+          example: '2024-01-01T00:00:00.000Z'
+        updatedAt:
+          type: string
+          description: Updated at timestamp
+          example: '2024-01-01T00:00:00.000Z'
+      required:
+        - id
+        - email
+        - role
+        - isOnline
+        - isActive
+        - createdAt
+        - updatedAt
+    GetUserResponse:
+      type: object
+      properties:
+        statusCode:
+          type: number
+          description: Status code
+          example: 200
+        message:
+          type: string
+          description: Response message
+          example: User retrieved successfully
+        data:
+          description: User data
+          allOf:
+            - $ref: '#/components/schemas/UserDto'
+      required:
+        - statusCode
+        - message
+        - data
+    UpdateUserResponse:
+      type: object
+      properties:
+        statusCode:
+          type: number
+          description: Status code
+          example: 200
+        message:
+          type: string
+          description: Response message
+          example: User updated successfully
+        data:
+          description: Updated user data
+          allOf:
+            - $ref: '#/components/schemas/UserDto'
+      required:
+        - statusCode
+        - message
+        - data
+    UpdateFanResponse:
+      type: object
+      properties:
+        statusCode:
+          type: number
+          description: Status code
+          example: 200
+        message:
+          type: string
+          description: Response message
+          example: Fan profile updated successfully
+        data:
+          description: Updated fan profile data
+          allOf:
+            - $ref: '#/components/schemas/FanDto'
+      required:
+        - statusCode
+        - message
+        - data
+    CreateFanResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        username:
+          type: string
+        avatarUrl:
+          type: string
+        backgroundUrl:
+          type: string
+        bio:
+          type: string
+        userId:
+          type: string
+        createdAt:
+          format: date-time
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+      required:
+        - id
+        - username
+        - userId
+        - createdAt
+        - updatedAt
+    UpdateIdolResponse:
+      type: object
+      properties:
+        statusCode:
+          type: number
+          description: Status code
+          example: 200
+        message:
+          type: string
+          description: Response message
+          example: Idol profile updated successfully
+        data:
+          description: Updated idol profile data
+          allOf:
+            - $ref: '#/components/schemas/IdolDto'
+      required:
+        - statusCode
+        - message
+        - data
+    UpdateUserRequest:
+      type: object
+      properties:
+        email:
+          type: string
+          example: user@example.com
+          description: User email
+        deviceToken:
+          type: string
+          example: device-token-xyz123
+          description: Device token for push notifications
+        isOnline:
+          type: boolean
+          example: true
+          description: Online status
+    CreateFanRequest:
+      type: object
+      properties:
+        username:
+          type: string
+          example: cool_username
+          description: Fan username (required)
+        avatarUrl:
+          type: string
+          example: https://storage.googleapis.com/bucket/avatars/fan-123.jpg
+          description: Avatar URL
+        backgroundUrl:
+          type: string
+          example: https://storage.googleapis.com/bucket/backgrounds/fan-123.jpg
+          description: Background image URL
+        bio:
+          type: string
+          example: Music lover and K-pop enthusiast 🎵
+          description: Bio/description
+      required:
+        - username
+    UpdateFanRequest:
+      type: object
+      properties:
+        username:
+          type: string
+          example: cool_username
+          description: Fan username
+        avatarUrl:
+          type: string
+          example: https://storage.googleapis.com/bucket/avatars/fan-123.jpg
+          description: Avatar URL
+        backgroundUrl:
+          type: string
+          example: https://storage.googleapis.com/bucket/backgrounds/fan-123.jpg
+          description: Background image URL
+        bio:
+          type: string
+          example: Music lover and K-pop enthusiast 🎵
+          description: Bio/description
+    UpdateIdolRequest:
+      type: object
+      properties:
+        stageName:
+          type: string
+          example: StarLight
+          description: Idol stage name
+        avatarUrl:
+          type: string
+          example: https://storage.googleapis.com/bucket/avatars/idol-123.jpg
+          description: Avatar URL
+        backgroundUrl:
+          type: string
+          example: https://storage.googleapis.com/bucket/backgrounds/idol-123.jpg
+          description: Background image URL
+        bio:
+          type: string
+          example: Professional singer and performer 🎤
+          description: Bio/description
     UpdateStatusRequest:
       type: object
       properties:
@@ -732,6 +2307,250 @@ components:
         - location
         - createdAt
         - counters
+    GetPostResponse:
+      type: object
+      properties:
+        postId:
+          type: string
+          description: Post ID
+          example: post-clx123abc
+        userId:
+          type: string
+          description: User ID who created the post
+          example: user-123
+        displayName:
+          type: string
+          description: Display name of the author
+          example: John Doe
+        userEmail:
+          type: string
+          description: User email
+          example: john@example.com
+        userAvatar:
+          type: string
+          description: User avatar URL
+          example: https://storage.googleapis.com/bucket/avatars/user-123.jpg
+        content:
+          type: string
+          description: Post content
+          example: 'Beautiful sunset at the beach! 🌅 #nature #sunset'
+        mediaUrls:
+          description: Media URLs
+          example: &ref_11
+            - https://storage.googleapis.com/bucket/image1.jpg
+          type: array
+          items:
+            type: string
+        hashtags:
+          description: Hashtags
+          example: &ref_12
+            - nature
+            - sunset
+          type: array
+          items:
+            type: string
+        mentions:
+          description: Mentioned user IDs
+          example: &ref_13
+            - user-id-1
+          type: array
+          items:
+            type: string
+        location:
+          type: string
+          description: Location
+          example: Santa Monica Beach, CA
+        visibility:
+          type: string
+          description: Post visibility
+          example: public
+        likesCount:
+          type: number
+          description: Likes count
+          example: 10
+        commentsCount:
+          type: number
+          description: Comments count
+          example: 5
+        sharesCount:
+          type: number
+          description: Shares count
+          example: 2
+        createdAt:
+          type: string
+          description: Creation timestamp
+          example: '2025-11-05T10:30:00Z'
+        updatedAt:
+          type: string
+          description: Last update timestamp
+          example: '2025-11-05T10:30:00Z'
+        isDeleted:
+          type: boolean
+          description: Deletion status
+          example: false
+      required:
+        - postId
+        - userId
+        - displayName
+        - content
+        - mediaUrls
+        - hashtags
+        - mentions
+        - visibility
+        - likesCount
+        - commentsCount
+        - sharesCount
+        - createdAt
+        - updatedAt
+        - isDeleted
+    PostDto:
+      type: object
+      properties:
+        postId:
+          type: string
+          description: Post ID
+          example: post-clx123abc
+        userId:
+          type: string
+          description: User ID who created the post
+          example: user-123
+        displayName:
+          type: string
+          description: Display name of the author
+          example: John Doe
+        userEmail:
+          type: string
+          description: User email
+          example: john@example.com
+        userAvatar:
+          type: string
+          description: User avatar URL
+          example: https://storage.googleapis.com/bucket/avatars/user-123.jpg
+        content:
+          type: string
+          description: Post content
+          example: 'Beautiful sunset at the beach! 🌅 #nature #sunset'
+        mediaUrls:
+          description: Media URLs
+          example: *ref_11
+          type: array
+          items:
+            type: string
+        hashtags:
+          description: Hashtags
+          example: *ref_12
+          type: array
+          items:
+            type: string
+        mentions:
+          description: Mentioned user IDs
+          example: *ref_13
+          type: array
+          items:
+            type: string
+        location:
+          type: string
+          description: Location
+          example: Santa Monica Beach, CA
+        visibility:
+          type: string
+          description: Post visibility
+          example: public
+        likesCount:
+          type: number
+          description: Likes count
+          example: 10
+        commentsCount:
+          type: number
+          description: Comments count
+          example: 5
+        sharesCount:
+          type: number
+          description: Shares count
+          example: 2
+        createdAt:
+          type: string
+          description: Creation timestamp
+          example: '2025-11-05T10:30:00Z'
+        updatedAt:
+          type: string
+          description: Last update timestamp
+          example: '2025-11-05T10:30:00Z'
+        isDeleted:
+          type: boolean
+          description: Deletion status
+          example: false
+      required:
+        - postId
+        - userId
+        - displayName
+        - content
+        - mediaUrls
+        - hashtags
+        - mentions
+        - visibility
+        - likesCount
+        - commentsCount
+        - sharesCount
+        - createdAt
+        - updatedAt
+        - isDeleted
+    PageInfo:
+      type: object
+      properties: {}
+    GetPostsResponse:
+      type: object
+      properties:
+        data:
+          description: Array of posts
+          type: array
+          items:
+            $ref: '#/components/schemas/PostDto'
+        paging:
+          description: Pagination information
+          allOf:
+            - $ref: '#/components/schemas/PageInfo'
+      required:
+        - data
+        - paging
+    UpdatePostResponse:
+      type: object
+      properties:
+        postId:
+          type: string
+          description: Post ID
+          example: post-clx123abc
+        message:
+          type: string
+          description: Success message
+          example: Post updated successfully
+        updatedAt:
+          type: string
+          description: Update timestamp
+          example: '2025-11-05T10:30:00Z'
+      required:
+        - postId
+        - message
+        - updatedAt
+    DeletePostResponse:
+      type: object
+      properties:
+        postId:
+          type: string
+          description: Post ID
+          example: post-clx123abc
+        message:
+          type: string
+          description: Success message
+          example: Post deleted successfully
+        deletedAt:
+          type: string
+          description: Deletion timestamp
+          example: '2025-11-05T10:30:00Z'
+      required:
+        - postId
+        - message
+        - deletedAt
     CreatePostRequest:
       type: object
       properties:
@@ -782,3 +2601,409 @@ components:
         - hashtags
         - location
         - visibility
+    UpdatePostRequest:
+      type: object
+      properties:
+        content:
+          type: string
+          description: Post content/caption
+          example: 'Updated content: Beautiful sunset at the beach! 🌅 #nature #sunset'
+          maxLength: 2000
+        mediaUrls:
+          description: Media URLs (images/videos)
+          example:
+            - https://storage.googleapis.com/bucket/image1.jpg
+          type: array
+          items:
+            type: string
+        hashtags:
+          description: Hashtags
+          example:
+            - nature
+            - sunset
+            - photography
+          type: array
+          items:
+            type: string
+        mentions:
+          description: Mentioned user IDs
+          example:
+            - user-id-1
+            - user-id-2
+          type: array
+          items:
+            type: string
+        location:
+          type: string
+          description: Location
+          example: Santa Monica Beach, CA
+        visibility:
+          type: string
+          description: Post visibility
+          enum:
+            - public
+            - followers
+            - private
+          example: public
+    CreateChannelRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Channel name (optional for direct messages)
+        description:
+          type: string
+          description: Channel description
+        type:
+          type: string
+          enum:
+            - DIRECT
+            - GROUP
+            - ANNOUNCEMENT
+          description: Type of chat channel
+        groupId:
+          type: string
+          description: Group ID (for group channels)
+        idolId:
+          type: string
+          description: Idol ID (for idol announcement channels)
+        isAnnouncement:
+          type: boolean
+          description: Whether this is an announcement channel
+          default: false
+        participantIds:
+          description: Array of user IDs to add as participants
+          type: array
+          items:
+            type: string
+      required:
+        - type
+    ChatChannelResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        type:
+          type: string
+        groupId:
+          type: string
+        idolId:
+          type: string
+        isAnnouncement:
+          type: boolean
+        firebaseDocId:
+          type: string
+        lastMessageAt:
+          format: date-time
+          type: string
+        createdAt:
+          format: date-time
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+        participants:
+          type: array
+          items:
+            type: string
+        lastMessage:
+          type: object
+        unreadCount:
+          type: number
+      required:
+        - id
+        - name
+        - description
+        - type
+        - groupId
+        - idolId
+        - isAnnouncement
+        - firebaseDocId
+        - lastMessageAt
+        - createdAt
+        - updatedAt
+    SendMessageRequest:
+      type: object
+      properties:
+        channelId:
+          type: string
+          description: Chat channel ID
+        type:
+          type: string
+          enum:
+            - TEXT
+            - IMAGE
+            - VIDEO
+            - AUDIO
+            - FILE
+            - SYSTEM
+          description: Type of message
+        content:
+          type: string
+          description: Message content
+        mediaUrl:
+          type: string
+          description: Media URL (for image, video, audio, file)
+        thumbnailUrl:
+          type: string
+          description: Thumbnail URL (for video)
+        metadata:
+          type: object
+          description: Additional metadata
+        replyTo:
+          type: string
+          description: Message ID to reply to
+      required:
+        - channelId
+        - type
+        - content
+    ChatMessageResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        channelId:
+          type: string
+        senderId:
+          type: string
+        senderName:
+          type: string
+        senderAvatar:
+          type: string
+        type:
+          type: string
+        content:
+          type: string
+        mediaUrl:
+          type: string
+        thumbnailUrl:
+          type: string
+        metadata:
+          type: object
+        replyTo:
+          type: string
+        createdAt:
+          format: date-time
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+        isDeleted:
+          type: boolean
+        readBy:
+          type: array
+          items:
+            type: string
+      required:
+        - id
+        - channelId
+        - senderId
+        - senderName
+        - senderAvatar
+        - type
+        - content
+        - mediaUrl
+        - thumbnailUrl
+        - replyTo
+        - createdAt
+        - updatedAt
+        - isDeleted
+    MarkAsReadRequest:
+      type: object
+      properties:
+        channelId:
+          type: string
+          description: Chat channel ID
+        lastMessageId:
+          type: string
+          description: Last message ID that was read
+      required:
+        - channelId
+    AddParticipantsRequest:
+      type: object
+      properties:
+        channelId:
+          type: string
+          description: Chat channel ID
+        userIds:
+          description: Array of user IDs to add
+          type: array
+          items:
+            type: string
+      required:
+        - channelId
+        - userIds
+    AdminLoginRequest:
+      type: object
+      properties:
+        email:
+          type: string
+          example: admin@ventidole.com
+          description: Admin email
+        password:
+          type: string
+          example: admin123
+          description: Admin password
+      required:
+        - email
+        - password
+    AdminAuthResponse:
+      type: object
+      properties:
+        userId:
+          type: string
+        email:
+          type: string
+        role:
+          type: string
+        name:
+          type: string
+        accessToken:
+          type: string
+        refreshToken:
+          type: string
+      required:
+        - userId
+        - email
+        - role
+        - name
+        - accessToken
+        - refreshToken
+    AdminSignupRequest:
+      type: object
+      properties:
+        email:
+          type: string
+          example: admin@ventidole.com
+          description: Admin email
+        password:
+          type: string
+          example: admin123
+          description: Admin password (min 6 characters)
+        name:
+          type: string
+          example: Admin Name
+          description: Admin name/username
+      required:
+        - email
+        - password
+        - name
+    CreateGroupRequest:
+      type: object
+      properties:
+        groupName:
+          type: string
+          example: StarLight
+          description: Group name
+        description:
+          type: string
+          example: A talented K-pop group known for their powerful performances
+          description: Group description
+        logoUrl:
+          type: string
+          example: https://res.cloudinary.com/bucket/logo.jpg
+          description: Group logo URL
+        backgroundUrl:
+          type: string
+          example: https://res.cloudinary.com/bucket/background.jpg
+          description: Group background image URL
+      required:
+        - groupName
+    CreateGroupResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        groupName:
+          type: string
+        description:
+          type: string
+        logoUrl:
+          type: string
+        backgroundUrl:
+          type: string
+        isActive:
+          type: boolean
+        createdAt:
+          format: date-time
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+      required:
+        - id
+        - groupName
+        - description
+        - logoUrl
+        - backgroundUrl
+        - isActive
+        - createdAt
+        - updatedAt
+    CreateIdolRequest:
+      type: object
+      properties:
+        email:
+          type: string
+          example: idol@example.com
+          description: Idol email for login
+        password:
+          type: string
+          example: Password@123456
+          description: >-
+            Idol password (min 8 chars, must contain uppercase, lowercase,
+            number and special char)
+        stageName:
+          type: string
+          example: Luna Star
+          description: Idol stage name
+        groupId:
+          type: string
+          example: group-id-123
+          description: Group ID that the idol belongs to
+        avatarUrl:
+          type: string
+          example: https://storage.googleapis.com/bucket/avatars/idol-123.jpg
+          description: Avatar URL
+        backgroundUrl:
+          type: string
+          example: https://storage.googleapis.com/bucket/backgrounds/idol-123.jpg
+          description: Background image URL
+        bio:
+          type: string
+          example: Professional singer and performer 🎤✨
+          description: Bio/description
+        deviceToken:
+          type: string
+          example: FCM_DEVICE_TOKEN_HERE
+          description: Device token for push notifications
+      required:
+        - email
+        - password
+        - stageName
+        - groupId
+    CreateIdolResponse:
+      type: object
+      properties:
+        userId:
+          type: string
+        email:
+          type: string
+        role:
+          type: string
+        idol:
+          type: object
+        accessToken:
+          type: string
+        refreshToken:
+          type: string
+      required:
+        - userId
+        - email
+        - role
+        - idol
+        - accessToken
+        - refreshToken

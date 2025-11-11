@@ -7,6 +7,6 @@ export const verifyEmailSchema = yup.object().shape({
     .required('Email is required'),
   otp: yup
     .string()
-    .length(6, 'OTP must be 6 digits')
+    .length(4, 'OTP must be 4 digits')
     .required('OTP is required'),
 });
