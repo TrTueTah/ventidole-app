@@ -48,8 +48,8 @@ const SignUpScreen = () => {
       signUp({
         email: pendingSignUpData.email,
         password: pendingSignUpData.password,
-        name: pendingSignUpData.username,
-        phoneNumber: pendingSignUpData.phoneNumber,
+        username: pendingSignUpData.username,
+        // : pendingSignUpData.phoneNumber,
       });
     }
   };

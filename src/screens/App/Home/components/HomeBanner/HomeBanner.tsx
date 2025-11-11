@@ -59,7 +59,7 @@ const HomeBanner = () => {
         data={defaultDataWith6Colors}
         defaultScrollOffsetValue={scrollOffsetValue}
         style={{ width: '100%' }}
-        onSnapToItem={(index: number) => console.log('current index:', index)}
+        onSnapToItem={(index: number) => {}}
         renderItem={renderItem}
       />
     </View>

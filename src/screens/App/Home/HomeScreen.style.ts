@@ -27,3 +27,9 @@ export const TopContainer = styled.View`
 export const TouchableZone = styled.Pressable`
 
 `;
+
+export const LoaderContainer = styled.View`
+  padding: ${RFValue(16)}px;
+  align-items: center;
+  justify-content: center;
+`;

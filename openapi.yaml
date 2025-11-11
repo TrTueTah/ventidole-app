@@ -30,16 +30,18 @@ paths:
                     $ref: '#/components/schemas/UploadFileResponse'
                     description: Response data
                   error:
-                    type: 'null'
+                    type: object
+                    nullable: true
                     example: null
                     description: Error information (null on success)
                   errorCode:
                     type: string
-                    description: Error code (optional)
+                    nullable: true
+                    example: null
+                    description: Error code (null on success)
                 required:
                   - statusCode
                   - message
-                  - data
       security: &ref_0
         - &ref_2
           bearer: []
@@ -69,28 +71,29 @@ paths:
                     $ref: '#/components/schemas/UploadFileResponse'
                     description: Response data
                   error:
-                    type: 'null'
+                    type: object
+                    nullable: true
                     example: null
                     description: Error information (null on success)
                   errorCode:
                     type: string
-                    description: Error code (optional)
+                    nullable: true
+                    example: null
+                    description: Error code (null on success)
                 required:
                   - statusCode
                   - message
-                  - data
       security: *ref_0
       tags: *ref_1
   /v1/file/delete:
     delete:
       operationId: FileController_deleteFile_v1
-      parameters: []
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/DeleteFileRequest'
+      parameters:
+        - name: filePath
+          required: true
+          in: query
+          schema:
+            type: string
       responses:
         '200':
           description: Successful Response
@@ -108,20 +111,23 @@ paths:
                     example: OK
                     description: Response message
                   data:
-                    type: 'null'
+                    type: object
+                    nullable: true
                     example: null
                     description: No data returned
                   error:
-                    type: 'null'
+                    type: object
+                    nullable: true
                     example: null
                     description: Error information (null on success)
                   errorCode:
                     type: string
-                    description: Error code (optional)
+                    nullable: true
+                    example: null
+                    description: Error code (null on success)
                 required:
                   - statusCode
                   - message
-                  - data
       security: *ref_0
       tags: *ref_1
   /v1/file/url:
@@ -155,16 +161,18 @@ paths:
                     $ref: '#/components/schemas/GetFileUrlResponse'
                     description: Response data
                   error:
-                    type: 'null'
+                    type: object
+                    nullable: true
                     example: null
                     description: Error information (null on success)
                   errorCode:
                     type: string
-                    description: Error code (optional)
+                    nullable: true
+                    example: null
+                    description: Error code (null on success)
                 required:
                   - statusCode
                   - message
-                  - data
       security: *ref_0
       tags: *ref_1
   /v1/file/signed-url:
@@ -206,16 +214,18 @@ paths:
                     $ref: '#/components/schemas/GetSignedUrlResponse'
                     description: Response data
                   error:
-                    type: 'null'
+                    type: object
+                    nullable: true
                     example: null
                     description: Error information (null on success)
                   errorCode:
                     type: string
-                    description: Error code (optional)
+                    nullable: true
+                    example: null
+                    description: Error code (null on success)
                 required:
                   - statusCode
                   - message
-                  - data
       security: *ref_0
       tags: *ref_1
   /v1/file/exists:
@@ -244,20 +254,23 @@ paths:
                     example: OK
                     description: Response message
                   data:
-                    type: 'null'
+                    type: object
+                    nullable: true
                     example: null
                     description: No data returned
                   error:
-                    type: 'null'
+                    type: object
+                    nullable: true
                     example: null
                     description: Error information (null on success)
                   errorCode:
                     type: string
-                    description: Error code (optional)
+                    nullable: true
+                    example: null
+                    description: Error code (null on success)
                 required:
                   - statusCode
                   - message
-                  - data
       security: *ref_0
       tags: *ref_1
   /v1/file/metadata:
@@ -303,26 +316,34 @@ paths:
                     example: OK
                     description: Response message
                   data:
-                    type: 'null'
+                    type: object
+                    nullable: true
                     example: null
                     description: No data returned
                   error:
-                    type: 'null'
+                    type: object
+                    nullable: true
                     example: null
                     description: Error information (null on success)
                   errorCode:
                     type: string
-                    description: Error code (optional)
+                    nullable: true
+                    example: null
+                    description: Error code (null on success)
                 required:
                   - statusCode
                   - message
-                  - data
       security: *ref_0
       tags: *ref_1
   /v1/file/folder:
     delete:
       operationId: FileController_deleteFolder_v1
-      parameters: []
+      parameters:
+        - name: folder
+          required: true
+          in: query
+          schema:
+            type: string
       responses:
         '200':
           description: Successful Response
@@ -340,20 +361,23 @@ paths:
                     example: OK
                     description: Response message
                   data:
-                    type: 'null'
+                    type: object
+                    nullable: true
                     example: null
                     description: No data returned
                   error:
-                    type: 'null'
+                    type: object
+                    nullable: true
                     example: null
                     description: Error information (null on success)
                   errorCode:
                     type: string
-                    description: Error code (optional)
+                    nullable: true
+                    example: null
+                    description: Error code (null on success)
                 required:
                   - statusCode
                   - message
-                  - data
       security: *ref_0
       tags: *ref_1
   /v1/auth/sign-in:
@@ -386,16 +410,18 @@ paths:
                     $ref: '#/components/schemas/SignInResponse'
                     description: Response data
                   error:
-                    type: 'null'
+                    type: object
+                    nullable: true
                     example: null
                     description: Error information (null on success)
                   errorCode:
                     type: string
-                    description: Error code (optional)
+                    nullable: true
+                    example: null
+                    description: Error code (null on success)
                 required:
                   - statusCode
                   - message
-                  - data
       tags: &ref_3
         - Authenticate
   /v1/auth/sign-up:
@@ -428,16 +454,18 @@ paths:
                     $ref: '#/components/schemas/SignInResponse'
                     description: Response data
                   error:
-                    type: 'null'
+                    type: object
+                    nullable: true
                     example: null
                     description: Error information (null on success)
                   errorCode:
                     type: string
-                    description: Error code (optional)
+                    nullable: true
+                    example: null
+                    description: Error code (null on success)
                 required:
                   - statusCode
                   - message
-                  - data
       tags: *ref_3
   /v1/auth/send-verification:
     post:
@@ -469,16 +497,18 @@ paths:
                     $ref: '#/components/schemas/VerificationCodeResponse'
                     description: Response data
                   error:
-                    type: 'null'
+                    type: object
+                    nullable: true
                     example: null
                     description: Error information (null on success)
                   errorCode:
                     type: string
-                    description: Error code (optional)
+                    nullable: true
+                    example: null
+                    description: Error code (null on success)
                 required:
                   - statusCode
                   - message
-                  - data
       tags: *ref_3
   /v1/auth/confirm-verification:
     post:
@@ -510,16 +540,18 @@ paths:
                     $ref: '#/components/schemas/ConfirmVerificationResponse'
                     description: Response data
                   error:
-                    type: 'null'
+                    type: object
+                    nullable: true
                     example: null
                     description: Error information (null on success)
                   errorCode:
                     type: string
-                    description: Error code (optional)
+                    nullable: true
+                    example: null
+                    description: Error code (null on success)
                 required:
                   - statusCode
                   - message
-                  - data
       tags: *ref_3
   /v1/auth/refresh-token:
     post:
@@ -551,16 +583,18 @@ paths:
                     $ref: '#/components/schemas/SignInResponse'
                     description: Response data
                   error:
-                    type: 'null'
+                    type: object
+                    nullable: true
                     example: null
                     description: Error information (null on success)
                   errorCode:
                     type: string
-                    description: Error code (optional)
+                    nullable: true
+                    example: null
+                    description: Error code (null on success)
                 required:
                   - statusCode
                   - message
-                  - data
       tags: *ref_3
   /v1/auth/reset-password:
     post:
@@ -589,20 +623,23 @@ paths:
                     example: OK
                     description: Response message
                   data:
-                    type: 'null'
+                    type: object
+                    nullable: true
                     example: null
                     description: No data returned
                   error:
-                    type: 'null'
+                    type: object
+                    nullable: true
                     example: null
                     description: Error information (null on success)
                   errorCode:
                     type: string
-                    description: Error code (optional)
+                    nullable: true
+                    example: null
+                    description: Error code (null on success)
                 required:
                   - statusCode
                   - message
-                  - data
       tags: *ref_3
   /v1/user/me:
     get:
@@ -628,16 +665,18 @@ paths:
                     $ref: '#/components/schemas/GetUserResponse'
                     description: Response data
                   error:
-                    type: 'null'
+                    type: object
+                    nullable: true
                     example: null
                     description: Error information (null on success)
                   errorCode:
                     type: string
-                    description: Error code (optional)
+                    nullable: true
+                    example: null
+                    description: Error code (null on success)
                 required:
                   - statusCode
                   - message
-                  - data
       security: &ref_4
         - bearer: []
       tags: &ref_5
@@ -672,16 +711,18 @@ paths:
                     $ref: '#/components/schemas/GetUserResponse'
                     description: Response data
                   error:
-                    type: 'null'
+                    type: object
+                    nullable: true
                     example: null
                     description: Error information (null on success)
                   errorCode:
                     type: string
-                    description: Error code (optional)
+                    nullable: true
+                    example: null
+                    description: Error code (null on success)
                 required:
                   - statusCode
                   - message
-                  - data
       security: *ref_4
       tags: *ref_5
   /v1/user/profile:
@@ -714,16 +755,18 @@ paths:
                     $ref: '#/components/schemas/UpdateUserResponse'
                     description: Response data
                   error:
-                    type: 'null'
+                    type: object
+                    nullable: true
                     example: null
                     description: Error information (null on success)
                   errorCode:
                     type: string
-                    description: Error code (optional)
+                    nullable: true
+                    example: null
+                    description: Error code (null on success)
                 required:
                   - statusCode
                   - message
-                  - data
       security: *ref_4
       tags: *ref_5
   /v1/user/fan:
@@ -756,16 +799,18 @@ paths:
                     $ref: '#/components/schemas/CreateFanResponse'
                     description: Response data
                   error:
-                    type: 'null'
+                    type: object
+                    nullable: true
                     example: null
                     description: Error information (null on success)
                   errorCode:
                     type: string
-                    description: Error code (optional)
+                    nullable: true
+                    example: null
+                    description: Error code (null on success)
                 required:
                   - statusCode
                   - message
-                  - data
       security: *ref_4
       tags: *ref_5
     patch:
@@ -797,16 +842,18 @@ paths:
                     $ref: '#/components/schemas/UpdateFanResponse'
                     description: Response data
                   error:
-                    type: 'null'
+                    type: object
+                    nullable: true
                     example: null
                     description: Error information (null on success)
                   errorCode:
                     type: string
-                    description: Error code (optional)
+                    nullable: true
+                    example: null
+                    description: Error code (null on success)
                 required:
                   - statusCode
                   - message
-                  - data
       security: *ref_4
       tags: *ref_5
   /v1/user/idol:
@@ -839,16 +886,18 @@ paths:
                     $ref: '#/components/schemas/UpdateIdolResponse'
                     description: Response data
                   error:
-                    type: 'null'
+                    type: object
+                    nullable: true
                     example: null
                     description: Error information (null on success)
                   errorCode:
                     type: string
-                    description: Error code (optional)
+                    nullable: true
+                    example: null
+                    description: Error code (null on success)
                 required:
                   - statusCode
                   - message
-                  - data
       security: *ref_4
       tags: *ref_5
   /v1/user/update-status:
@@ -878,20 +927,23 @@ paths:
                     example: OK
                     description: Response message
                   data:
-                    type: 'null'
+                    type: object
+                    nullable: true
                     example: null
                     description: No data returned
                   error:
-                    type: 'null'
+                    type: object
+                    nullable: true
                     example: null
                     description: Error information (null on success)
                   errorCode:
                     type: string
-                    description: Error code (optional)
+                    nullable: true
+                    example: null
+                    description: Error code (null on success)
                 required:
                   - statusCode
                   - message
-                  - data
       security: *ref_4
       tags: *ref_5
   /v1/post:
@@ -924,16 +976,18 @@ paths:
                     $ref: '#/components/schemas/CreatePostResponse'
                     description: Response data
                   error:
-                    type: 'null'
+                    type: object
+                    nullable: true
                     example: null
                     description: Error information (null on success)
                   errorCode:
                     type: string
-                    description: Error code (optional)
+                    nullable: true
+                    example: null
+                    description: Error code (null on success)
                 required:
                   - statusCode
                   - message
-                  - data
       security: &ref_6
         - bearer: []
       tags: &ref_7
@@ -1001,7 +1055,7 @@ paths:
               - desc
       responses:
         '200':
-          description: Successful Response
+          description: Successful paginated response
           content:
             application/json:
               schema:
@@ -1016,19 +1070,50 @@ paths:
                     example: OK
                     description: Response message
                   data:
-                    $ref: '#/components/schemas/GetPostsResponse'
-                    description: Response data
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/PostDto'
+                    description: Array of data items
+                  paging:
+                    type: object
+                    description: Pagination metadata
+                    properties:
+                      total:
+                        type: number
+                        example: 100
+                        description: Total number of items
+                      page:
+                        type: number
+                        example: 1
+                        description: Current page number
+                      limit:
+                        type: number
+                        example: 10
+                        description: Items per page
+                      totalPages:
+                        type: number
+                        example: 10
+                        description: Total number of pages
+                    required:
+                      - total
+                      - page
+                      - limit
+                      - totalPages
                   error:
-                    type: 'null'
+                    type: object
+                    nullable: true
                     example: null
                     description: Error information (null on success)
                   errorCode:
                     type: string
-                    description: Error code (optional)
+                    nullable: true
+                    example: null
+                    description: Error code (null on success)
                 required:
                   - statusCode
                   - message
                   - data
+                  - paging
       security: *ref_6
       tags: *ref_7
   /v1/post/{postId}:
@@ -1061,16 +1146,18 @@ paths:
                     $ref: '#/components/schemas/GetPostResponse'
                     description: Response data
                   error:
-                    type: 'null'
+                    type: object
+                    nullable: true
                     example: null
                     description: Error information (null on success)
                   errorCode:
                     type: string
-                    description: Error code (optional)
+                    nullable: true
+                    example: null
+                    description: Error code (null on success)
                 required:
                   - statusCode
                   - message
-                  - data
       security: *ref_6
       tags: *ref_7
     patch:
@@ -1108,16 +1195,18 @@ paths:
                     $ref: '#/components/schemas/UpdatePostResponse'
                     description: Response data
                   error:
-                    type: 'null'
+                    type: object
+                    nullable: true
                     example: null
                     description: Error information (null on success)
                   errorCode:
                     type: string
-                    description: Error code (optional)
+                    nullable: true
+                    example: null
+                    description: Error code (null on success)
                 required:
                   - statusCode
                   - message
-                  - data
       security: *ref_6
       tags: *ref_7
     delete:
@@ -1149,16 +1238,18 @@ paths:
                     $ref: '#/components/schemas/DeletePostResponse'
                     description: Response data
                   error:
-                    type: 'null'
+                    type: object
+                    nullable: true
                     example: null
                     description: Error information (null on success)
                   errorCode:
                     type: string
-                    description: Error code (optional)
+                    nullable: true
+                    example: null
+                    description: Error code (null on success)
                 required:
                   - statusCode
                   - message
-                  - data
       security: *ref_6
       tags: *ref_7
   /chat/channels:
@@ -1719,15 +1810,6 @@ components:
         - file
         - folder
         - customFileName
-    DeleteFileRequest:
-      type: object
-      properties:
-        filePath:
-          type: string
-          description: Path to the file in storage
-          example: posts/my-file-uuid.jpg
-      required:
-        - filePath
     SignInResponse:
       type: object
       properties:

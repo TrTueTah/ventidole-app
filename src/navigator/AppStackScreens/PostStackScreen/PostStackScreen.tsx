@@ -15,7 +15,9 @@ const PostStack = createStackNavigator();
 
 const PostStackScreen = ({ route }: { route: any }) => {
   const communityId = route?.params?.communityId;
+  const postId = route?.params?.postId;
   console.log('PostStackScreen communityId:', communityId);
+  console.log('PostStackScreen postId:', postId);
   return (
     <PostStack.Navigator>
       <PostStack.Screen
@@ -25,7 +27,7 @@ const PostStackScreen = ({ route }: { route: any }) => {
           headerShown: true,
           header: () => <HeaderBackButton children={<PostTitle title={'Post'} communityId={communityId} />} />,
         }}
-        initialParams={{ communityId }}
+        initialParams={{ communityId, postId }}
       />
       <PostStack.Screen
         name={replyPath}

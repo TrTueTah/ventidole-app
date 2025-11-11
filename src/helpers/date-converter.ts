@@ -1,16 +1,40 @@
 import dayjs from 'dayjs';
-import { differenceInMinutes, differenceInHours, differenceInDays, differenceInWeeks, differenceInMonths, differenceInYears } from 'date-fns';
+import {
+  differenceInMinutes,
+  differenceInHours,
+  differenceInDays,
+  differenceInWeeks,
+  differenceInMonths,
+  differenceInYears,
+} from 'date-fns';
 
 export const formatEpoch = (epoch: number): string => {
   return dayjs.unix(epoch).format('MMM DD YYYY, HH:mm');
-}
+};
+
+export const formatISODate = (isoString: string): string => {
+  const date = new Date(isoString);
+  if (isNaN(date.getTime())) return 'invalid date';
+  return dayjs(date).format('MMM DD YYYY, HH:mm');
+};
 
 export const timeAgoShort = (createdAt: string | number | Date): string => {
   const now = new Date();
-  const date =
-    typeof createdAt === 'number' && createdAt < 1e12
-      ? new Date(createdAt * 1000)
-      : new Date(createdAt);
+  let date: Date;
+
+  if (createdAt instanceof Date) {
+    date = createdAt;
+  } else if (typeof createdAt === 'number') {
+    // Nếu là epoch tính theo giây (<1e12), nhân thêm 1000
+    date = createdAt < 1e12 ? new Date(createdAt * 1000) : new Date(createdAt);
+  } else if (typeof createdAt === 'string') {
+    // Nếu là ISO string (VD: 2025-11-05T10:30:00Z)
+    const parsed = new Date(createdAt);
+    if (isNaN(parsed.getTime())) return 'invalid date';
+    date = parsed;
+  } else {
+    return 'invalid date';
+  }
 
   const diffYears = differenceInYears(now, date);
   if (diffYears >= 1) return `${diffYears}y`;

@@ -20,6 +20,28 @@ export const Container = styled.View`
   background-color: ${backgroundColor};
 `;
 
+export const LoadingContainer = styled.View`
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  background-color: ${backgroundColor};
+`;
+
+export const ErrorContainer = styled.View`
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  background-color: ${backgroundColor};
+  padding: ${RFValue(20)}px;
+`;
+
+export const ErrorText = styled.Text`
+  font-family: ${Montserrat500};
+  font-size: ${RFValue(14)}px;
+  color: ${black50Color};
+  text-align: center;
+`;
+
 export const CommentCountList = styled.FlatList.attrs({
   contentContainerStyle: {
     paddingVertical: RFValue(8),

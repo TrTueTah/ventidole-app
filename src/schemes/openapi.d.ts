@@ -762,13 +762,6 @@ export interface components {
              */
             customFileName: string;
         };
-        DeleteFileRequest: {
-            /**
-             * @description Path to the file in storage
-             * @example posts/my-file-uuid.jpg
-             */
-            filePath: string;
-        };
         SignInResponse: {
             /**
              * @description User ID
@@ -1839,14 +1832,17 @@ export interface operations {
                          */
                         message: string;
                         /** @description Response data */
-                        data: components["schemas"]["UploadFileResponse"];
+                        data?: components["schemas"]["UploadFileResponse"];
                         /**
                          * @description Error information (null on success)
                          * @example null
                          */
-                        error?: null;
-                        /** @description Error code (optional) */
-                        errorCode?: string;
+                        error?: Record<string, never> | null;
+                        /**
+                         * @description Error code (null on success)
+                         * @example null
+                         */
+                        errorCode?: string | null;
                     };
                 };
             };
@@ -1879,14 +1875,17 @@ export interface operations {
                          */
                         message: string;
                         /** @description Response data */
-                        data: components["schemas"]["UploadFileResponse"];
+                        data?: components["schemas"]["UploadFileResponse"];
                         /**
                          * @description Error information (null on success)
                          * @example null
                          */
-                        error?: null;
-                        /** @description Error code (optional) */
-                        errorCode?: string;
+                        error?: Record<string, never> | null;
+                        /**
+                         * @description Error code (null on success)
+                         * @example null
+                         */
+                        errorCode?: string | null;
                     };
                 };
             };
@@ -1894,16 +1893,14 @@ export interface operations {
     };
     FileController_deleteFile_v1: {
         parameters: {
-            query?: never;
+            query: {
+                filePath: string;
+            };
             header?: never;
             path?: never;
             cookie?: never;
         };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["DeleteFileRequest"];
-            };
-        };
+        requestBody?: never;
         responses: {
             /** @description Successful Response */
             200: {
@@ -1926,14 +1923,17 @@ export interface operations {
                          * @description No data returned
                          * @example null
                          */
-                        data: null;
+                        data?: Record<string, never> | null;
                         /**
                          * @description Error information (null on success)
                          * @example null
                          */
-                        error?: null;
-                        /** @description Error code (optional) */
-                        errorCode?: string;
+                        error?: Record<string, never> | null;
+                        /**
+                         * @description Error code (null on success)
+                         * @example null
+                         */
+                        errorCode?: string | null;
                     };
                 };
             };
@@ -1969,14 +1969,17 @@ export interface operations {
                          */
                         message: string;
                         /** @description Response data */
-                        data: components["schemas"]["GetFileUrlResponse"];
+                        data?: components["schemas"]["GetFileUrlResponse"];
                         /**
                          * @description Error information (null on success)
                          * @example null
                          */
-                        error?: null;
-                        /** @description Error code (optional) */
-                        errorCode?: string;
+                        error?: Record<string, never> | null;
+                        /**
+                         * @description Error code (null on success)
+                         * @example null
+                         */
+                        errorCode?: string | null;
                     };
                 };
             };
@@ -2014,14 +2017,17 @@ export interface operations {
                          */
                         message: string;
                         /** @description Response data */
-                        data: components["schemas"]["GetSignedUrlResponse"];
+                        data?: components["schemas"]["GetSignedUrlResponse"];
                         /**
                          * @description Error information (null on success)
                          * @example null
                          */
-                        error?: null;
-                        /** @description Error code (optional) */
-                        errorCode?: string;
+                        error?: Record<string, never> | null;
+                        /**
+                         * @description Error code (null on success)
+                         * @example null
+                         */
+                        errorCode?: string | null;
                     };
                 };
             };
@@ -2059,14 +2065,17 @@ export interface operations {
                          * @description No data returned
                          * @example null
                          */
-                        data: null;
+                        data?: Record<string, never> | null;
                         /**
                          * @description Error information (null on success)
                          * @example null
                          */
-                        error?: null;
-                        /** @description Error code (optional) */
-                        errorCode?: string;
+                        error?: Record<string, never> | null;
+                        /**
+                         * @description Error code (null on success)
+                         * @example null
+                         */
+                        errorCode?: string | null;
                     };
                 };
             };
@@ -2124,14 +2133,17 @@ export interface operations {
                          * @description No data returned
                          * @example null
                          */
-                        data: null;
+                        data?: Record<string, never> | null;
                         /**
                          * @description Error information (null on success)
                          * @example null
                          */
-                        error?: null;
-                        /** @description Error code (optional) */
-                        errorCode?: string;
+                        error?: Record<string, never> | null;
+                        /**
+                         * @description Error code (null on success)
+                         * @example null
+                         */
+                        errorCode?: string | null;
                     };
                 };
             };
@@ -2139,7 +2151,9 @@ export interface operations {
     };
     FileController_deleteFolder_v1: {
         parameters: {
-            query?: never;
+            query: {
+                folder: string;
+            };
             header?: never;
             path?: never;
             cookie?: never;
@@ -2167,14 +2181,17 @@ export interface operations {
                          * @description No data returned
                          * @example null
                          */
-                        data: null;
+                        data?: Record<string, never> | null;
                         /**
                          * @description Error information (null on success)
                          * @example null
                          */
-                        error?: null;
-                        /** @description Error code (optional) */
-                        errorCode?: string;
+                        error?: Record<string, never> | null;
+                        /**
+                         * @description Error code (null on success)
+                         * @example null
+                         */
+                        errorCode?: string | null;
                     };
                 };
             };
@@ -2211,14 +2228,17 @@ export interface operations {
                          */
                         message: string;
                         /** @description Response data */
-                        data: components["schemas"]["SignInResponse"];
+                        data?: components["schemas"]["SignInResponse"];
                         /**
                          * @description Error information (null on success)
                          * @example null
                          */
-                        error?: null;
-                        /** @description Error code (optional) */
-                        errorCode?: string;
+                        error?: Record<string, never> | null;
+                        /**
+                         * @description Error code (null on success)
+                         * @example null
+                         */
+                        errorCode?: string | null;
                     };
                 };
             };
@@ -2255,14 +2275,17 @@ export interface operations {
                          */
                         message: string;
                         /** @description Response data */
-                        data: components["schemas"]["SignInResponse"];
+                        data?: components["schemas"]["SignInResponse"];
                         /**
                          * @description Error information (null on success)
                          * @example null
                          */
-                        error?: null;
-                        /** @description Error code (optional) */
-                        errorCode?: string;
+                        error?: Record<string, never> | null;
+                        /**
+                         * @description Error code (null on success)
+                         * @example null
+                         */
+                        errorCode?: string | null;
                     };
                 };
             };
@@ -2299,14 +2322,17 @@ export interface operations {
                          */
                         message: string;
                         /** @description Response data */
-                        data: components["schemas"]["VerificationCodeResponse"];
+                        data?: components["schemas"]["VerificationCodeResponse"];
                         /**
                          * @description Error information (null on success)
                          * @example null
                          */
-                        error?: null;
-                        /** @description Error code (optional) */
-                        errorCode?: string;
+                        error?: Record<string, never> | null;
+                        /**
+                         * @description Error code (null on success)
+                         * @example null
+                         */
+                        errorCode?: string | null;
                     };
                 };
             };
@@ -2343,14 +2369,17 @@ export interface operations {
                          */
                         message: string;
                         /** @description Response data */
-                        data: components["schemas"]["ConfirmVerificationResponse"];
+                        data?: components["schemas"]["ConfirmVerificationResponse"];
                         /**
                          * @description Error information (null on success)
                          * @example null
                          */
-                        error?: null;
-                        /** @description Error code (optional) */
-                        errorCode?: string;
+                        error?: Record<string, never> | null;
+                        /**
+                         * @description Error code (null on success)
+                         * @example null
+                         */
+                        errorCode?: string | null;
                     };
                 };
             };
@@ -2387,14 +2416,17 @@ export interface operations {
                          */
                         message: string;
                         /** @description Response data */
-                        data: components["schemas"]["SignInResponse"];
+                        data?: components["schemas"]["SignInResponse"];
                         /**
                          * @description Error information (null on success)
                          * @example null
                          */
-                        error?: null;
-                        /** @description Error code (optional) */
-                        errorCode?: string;
+                        error?: Record<string, never> | null;
+                        /**
+                         * @description Error code (null on success)
+                         * @example null
+                         */
+                        errorCode?: string | null;
                     };
                 };
             };
@@ -2434,14 +2466,17 @@ export interface operations {
                          * @description No data returned
                          * @example null
                          */
-                        data: null;
+                        data?: Record<string, never> | null;
                         /**
                          * @description Error information (null on success)
                          * @example null
                          */
-                        error?: null;
-                        /** @description Error code (optional) */
-                        errorCode?: string;
+                        error?: Record<string, never> | null;
+                        /**
+                         * @description Error code (null on success)
+                         * @example null
+                         */
+                        errorCode?: string | null;
                     };
                 };
             };
@@ -2474,14 +2509,17 @@ export interface operations {
                          */
                         message: string;
                         /** @description Response data */
-                        data: components["schemas"]["GetUserResponse"];
+                        data?: components["schemas"]["GetUserResponse"];
                         /**
                          * @description Error information (null on success)
                          * @example null
                          */
-                        error?: null;
-                        /** @description Error code (optional) */
-                        errorCode?: string;
+                        error?: Record<string, never> | null;
+                        /**
+                         * @description Error code (null on success)
+                         * @example null
+                         */
+                        errorCode?: string | null;
                     };
                 };
             };
@@ -2517,14 +2555,17 @@ export interface operations {
                          */
                         message: string;
                         /** @description Response data */
-                        data: components["schemas"]["GetUserResponse"];
+                        data?: components["schemas"]["GetUserResponse"];
                         /**
                          * @description Error information (null on success)
                          * @example null
                          */
-                        error?: null;
-                        /** @description Error code (optional) */
-                        errorCode?: string;
+                        error?: Record<string, never> | null;
+                        /**
+                         * @description Error code (null on success)
+                         * @example null
+                         */
+                        errorCode?: string | null;
                     };
                 };
             };
@@ -2561,14 +2602,17 @@ export interface operations {
                          */
                         message: string;
                         /** @description Response data */
-                        data: components["schemas"]["UpdateUserResponse"];
+                        data?: components["schemas"]["UpdateUserResponse"];
                         /**
                          * @description Error information (null on success)
                          * @example null
                          */
-                        error?: null;
-                        /** @description Error code (optional) */
-                        errorCode?: string;
+                        error?: Record<string, never> | null;
+                        /**
+                         * @description Error code (null on success)
+                         * @example null
+                         */
+                        errorCode?: string | null;
                     };
                 };
             };
@@ -2605,14 +2649,17 @@ export interface operations {
                          */
                         message: string;
                         /** @description Response data */
-                        data: components["schemas"]["CreateFanResponse"];
+                        data?: components["schemas"]["CreateFanResponse"];
                         /**
                          * @description Error information (null on success)
                          * @example null
                          */
-                        error?: null;
-                        /** @description Error code (optional) */
-                        errorCode?: string;
+                        error?: Record<string, never> | null;
+                        /**
+                         * @description Error code (null on success)
+                         * @example null
+                         */
+                        errorCode?: string | null;
                     };
                 };
             };
@@ -2649,14 +2696,17 @@ export interface operations {
                          */
                         message: string;
                         /** @description Response data */
-                        data: components["schemas"]["UpdateFanResponse"];
+                        data?: components["schemas"]["UpdateFanResponse"];
                         /**
                          * @description Error information (null on success)
                          * @example null
                          */
-                        error?: null;
-                        /** @description Error code (optional) */
-                        errorCode?: string;
+                        error?: Record<string, never> | null;
+                        /**
+                         * @description Error code (null on success)
+                         * @example null
+                         */
+                        errorCode?: string | null;
                     };
                 };
             };
@@ -2693,14 +2743,17 @@ export interface operations {
                          */
                         message: string;
                         /** @description Response data */
-                        data: components["schemas"]["UpdateIdolResponse"];
+                        data?: components["schemas"]["UpdateIdolResponse"];
                         /**
                          * @description Error information (null on success)
                          * @example null
                          */
-                        error?: null;
-                        /** @description Error code (optional) */
-                        errorCode?: string;
+                        error?: Record<string, never> | null;
+                        /**
+                         * @description Error code (null on success)
+                         * @example null
+                         */
+                        errorCode?: string | null;
                     };
                 };
             };
@@ -2740,14 +2793,17 @@ export interface operations {
                          * @description No data returned
                          * @example null
                          */
-                        data: null;
+                        data?: Record<string, never> | null;
                         /**
                          * @description Error information (null on success)
                          * @example null
                          */
-                        error?: null;
-                        /** @description Error code (optional) */
-                        errorCode?: string;
+                        error?: Record<string, never> | null;
+                        /**
+                         * @description Error code (null on success)
+                         * @example null
+                         */
+                        errorCode?: string | null;
                     };
                 };
             };
@@ -2775,7 +2831,7 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Successful Response */
+            /** @description Successful paginated response */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -2792,15 +2848,41 @@ export interface operations {
                          * @example OK
                          */
                         message: string;
-                        /** @description Response data */
-                        data: components["schemas"]["GetPostsResponse"];
+                        /** @description Array of data items */
+                        data: components["schemas"]["PostDto"][];
+                        /** @description Pagination metadata */
+                        paging: {
+                            /**
+                             * @description Total number of items
+                             * @example 100
+                             */
+                            total: number;
+                            /**
+                             * @description Current page number
+                             * @example 1
+                             */
+                            page: number;
+                            /**
+                             * @description Items per page
+                             * @example 10
+                             */
+                            limit: number;
+                            /**
+                             * @description Total number of pages
+                             * @example 10
+                             */
+                            totalPages: number;
+                        };
                         /**
                          * @description Error information (null on success)
                          * @example null
                          */
-                        error?: null;
-                        /** @description Error code (optional) */
-                        errorCode?: string;
+                        error?: Record<string, never> | null;
+                        /**
+                         * @description Error code (null on success)
+                         * @example null
+                         */
+                        errorCode?: string | null;
                     };
                 };
             };
@@ -2837,14 +2919,17 @@ export interface operations {
                          */
                         message: string;
                         /** @description Response data */
-                        data: components["schemas"]["CreatePostResponse"];
+                        data?: components["schemas"]["CreatePostResponse"];
                         /**
                          * @description Error information (null on success)
                          * @example null
                          */
-                        error?: null;
-                        /** @description Error code (optional) */
-                        errorCode?: string;
+                        error?: Record<string, never> | null;
+                        /**
+                         * @description Error code (null on success)
+                         * @example null
+                         */
+                        errorCode?: string | null;
                     };
                 };
             };
@@ -2880,14 +2965,17 @@ export interface operations {
                          */
                         message: string;
                         /** @description Response data */
-                        data: components["schemas"]["GetPostResponse"];
+                        data?: components["schemas"]["GetPostResponse"];
                         /**
                          * @description Error information (null on success)
                          * @example null
                          */
-                        error?: null;
-                        /** @description Error code (optional) */
-                        errorCode?: string;
+                        error?: Record<string, never> | null;
+                        /**
+                         * @description Error code (null on success)
+                         * @example null
+                         */
+                        errorCode?: string | null;
                     };
                 };
             };
@@ -2923,14 +3011,17 @@ export interface operations {
                          */
                         message: string;
                         /** @description Response data */
-                        data: components["schemas"]["DeletePostResponse"];
+                        data?: components["schemas"]["DeletePostResponse"];
                         /**
                          * @description Error information (null on success)
                          * @example null
                          */
-                        error?: null;
-                        /** @description Error code (optional) */
-                        errorCode?: string;
+                        error?: Record<string, never> | null;
+                        /**
+                         * @description Error code (null on success)
+                         * @example null
+                         */
+                        errorCode?: string | null;
                     };
                 };
             };
@@ -2970,14 +3061,17 @@ export interface operations {
                          */
                         message: string;
                         /** @description Response data */
-                        data: components["schemas"]["UpdatePostResponse"];
+                        data?: components["schemas"]["UpdatePostResponse"];
                         /**
                          * @description Error information (null on success)
                          * @example null
                          */
-                        error?: null;
-                        /** @description Error code (optional) */
-                        errorCode?: string;
+                        error?: Record<string, never> | null;
+                        /**
+                         * @description Error code (null on success)
+                         * @example null
+                         */
+                        errorCode?: string | null;
                     };
                 };
             };

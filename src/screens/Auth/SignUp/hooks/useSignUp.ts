@@ -7,13 +7,6 @@ import { showToast } from 'src/helpers/showToast';
 type SignUpRequest = components['schemas']['SignUpRequest'];
 type SignInResponse = components['schemas']['SignInResponse'];
 
-interface SignUpCredentials {
-  email: string;
-  password: string;
-  name: string;
-  phoneNumber: string;
-}
-
 export const useSignUp = () => {
   const backendApi = useContext(BackendApiContext);
   const { setAccessToken, setRefreshToken, setIsLogin, setUserMetadata } = useAuthStore();
@@ -42,9 +35,9 @@ export const useSignUp = () => {
   });
 
   return {
-    signUp: (credentials: SignUpCredentials) => {
+    signUp: (credentials: SignUpRequest) => {
       signUpMutation.mutate({
-        body: credentials as SignUpRequest,
+        body: credentials,
       });
     },
     isLoading: signUpMutation.isPending,
