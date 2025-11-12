@@ -13,17 +13,8 @@ interface UsePostsParams {
   sortOrder?: 'asc' | 'desc';
 }
 
-interface CachedPage {
-  page: number;
-  data: PostDto[];
-  paging: any;
-}
-
 export const usePosts = (params: UsePostsParams = {}) => {
   const backendApi = useContext(BackendApiContext);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [cachedPages, setCachedPages] = useState<Map<number, CachedPage>>(new Map());
-  const [hasMore, setHasMore] = useState(true);
 
   const {
     limit = 20,
@@ -34,85 +25,86 @@ export const usePosts = (params: UsePostsParams = {}) => {
     sortOrder = 'desc',
   } = params;
 
-  // Query for current page with React Query caching
-  const { data, isLoading, error } = backendApi.useQuery(
+  // Build query params
+  const baseQueryParams = useMemo(() => {
+    const params: any = {
+      limit,
+      sortBy,
+      sortOrder,
+    };
+    
+    if (userId !== undefined) params.userId = userId;
+    if (hashtag !== undefined) params.hashtag = hashtag;
+    if (visibility !== undefined) params.visibility = visibility;
+    
+    return params;
+  }, [limit, userId, hashtag, visibility, sortBy, sortOrder]);
+
+  const { data, fetchNextPage, hasNextPage, isFetching, isLoading, error, refetch } = backendApi.useInfiniteQuery(
     'get',
     '/v1/post',
     {
       params: {
-        query: {
-          page: currentPage,
-          limit,
-          userId,
-          hashtag,
-          visibility,
-          sortBy,
-          sortOrder,
-        },
+        query: baseQueryParams,
       },
     },
+    {
+      initialPageParam: 1,
+      pageParamName: 'page',
+      getNextPageParam: (lastPage: any) => {
+        console.log('usePosts - lastPage:', lastPage);
+        const pagingInfo = lastPage?.paging;
+        if (pagingInfo && typeof pagingInfo === 'object' && 'totalPages' in pagingInfo && 'page' in pagingInfo) {
+          const nextPage = pagingInfo.page + 1;
+          return nextPage <= pagingInfo.totalPages ? nextPage : undefined;
+        }
+        return undefined;
+      },
+    }
   );
 
-  // Cache pages and update pagination state
   useEffect(() => {
-    if (data?.data) {
-      const newPosts = data.data as PostDto[];
-      const pagingInfo = (data as any).paging;
-      
-      // Cache this page
-      setCachedPages((prev) => {
-        const newCache = new Map(prev);
-        newCache.set(currentPage, {
-          page: currentPage,
-          data: newPosts,
-          paging: pagingInfo,
-        });
-        console.log('usePosts - Cached pages count:', newCache.size);
-        return newCache;
-      });
-      
-      // Update hasMore based on paging info
-      if (pagingInfo && typeof pagingInfo === 'object' && 'totalPages' in pagingInfo && 'page' in pagingInfo) {
-        const hasMorePages = pagingInfo.page < pagingInfo.totalPages;
-        console.log('usePosts - hasMore:', hasMorePages, `(${pagingInfo.page} < ${pagingInfo.totalPages})`);
-        setHasMore(hasMorePages);
-      } else {
-        const hasMoreData = newPosts.length >= limit;
-        console.log('usePosts - hasMore (fallback):', hasMoreData);
-        setHasMore(hasMoreData);
-      }
-    }
-  }, [data, currentPage, limit]);
+    console.log('usePosts - isLoading:', isLoading);
+  }, [data]);
 
-  // Flatten all cached pages into posts array
+  console.log('usePosts - data:', data);
+  console.log('usePosts - data.pages:', data?.pages);
+
+  // Flatten all pages into posts array
   const posts = useMemo(() => {
-    const sortedPages = Array.from(cachedPages.values()).sort((a, b) => a.page - b.page);
-    const allPosts = sortedPages.flatMap((page) => page.data);
-    return allPosts;
-  }, [cachedPages]);
-
-  // Load more posts (for infinite scroll)
-  const loadMore = useCallback(() => {
-    if (hasMore && !isLoading) {
-      const nextPage = currentPage + 1;
-      console.log('loadMore - Loading page:', nextPage);
-      setCurrentPage(nextPage);
+    if (!data?.pages) {
+      console.log('usePosts - No pages data');
+      return [];
     }
-  }, [hasMore, isLoading, currentPage]);
+    
+    const allPosts = data.pages.flatMap((page: any) => {
+      console.log('usePosts - Page data:', page);
+      return page.data || [];
+    });
+    
+    console.log('usePosts - Flattened posts:', allPosts);
+    return allPosts;
+  }, [data]);
 
-  // Refresh posts (pull to refresh)
+  // Load more posts
+  const loadMore = useCallback(() => {
+    if (hasNextPage && !isFetching) {
+      console.log('loadMore - Fetching next page');
+      fetchNextPage();
+    }
+  }, [hasNextPage, isFetching, fetchNextPage]);
+
+  // Refresh posts
   const refresh = useCallback(() => {
-    setCachedPages(new Map());
-    setHasMore(true);
-    setCurrentPage(1); // tự động trigger fetch page=1
-  }, []);
+    refetch();
+  }, [refetch]);
 
   return {
     posts,
-    isLoading: isLoading && currentPage === 1,
-    isLoadingMore: isLoading && currentPage > 1,
+    isLoading,
+    isLoadingMore: isFetching && !isLoading,
     error,
-    hasMore,
+    hasMore: hasNextPage,
     loadMore,
     refresh,
   };

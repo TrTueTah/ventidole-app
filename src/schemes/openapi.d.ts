@@ -373,6 +373,102 @@ export interface paths {
         patch: operations["PostController_updatePost_v1"];
         trace?: never;
     };
+    "/v1/comment": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["CommentController_createComment_v1"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/comment/post/{postId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["CommentController_getComments_v1"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/comment/{commentId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["CommentController_getComment_v1"];
+        put?: never;
+        post?: never;
+        delete: operations["CommentController_deleteComment_v1"];
+        options?: never;
+        head?: never;
+        patch: operations["CommentController_updateComment_v1"];
+        trace?: never;
+    };
+    "/v1/reply": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["ReplyController_createReply_v1"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/reply/comment/{commentId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["ReplyController_getReplies_v1"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/reply/{replyId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["ReplyController_getReply_v1"];
+        put?: never;
+        post?: never;
+        delete: operations["ReplyController_deleteReply_v1"];
+        options?: never;
+        head?: never;
+        patch: operations["ReplyController_updateReply_v1"];
+        trace?: never;
+    };
     "/chat/channels": {
         parameters: {
             query?: never;
@@ -1579,6 +1675,402 @@ export interface components {
              * @enum {string}
              */
             visibility?: "public" | "followers" | "private";
+        };
+        UserInfoDto: {
+            /**
+             * @description User ID
+             * @example user-123
+             */
+            userId: string;
+            /**
+             * @description Username
+             * @example johndoe
+             */
+            username: string;
+            /**
+             * @description Display name
+             * @example John Doe
+             */
+            displayName: string;
+            /**
+             * @description User avatar URL
+             * @example https://storage.googleapis.com/bucket/avatars/user-123.jpg
+             */
+            avatarUrl?: string;
+        };
+        CreateCommentResponse: {
+            /**
+             * @description Comment ID
+             * @example comment-clx456def
+             */
+            commentId: string;
+            /**
+             * @description Post ID
+             * @example post-clx123abc
+             */
+            postId: string;
+            /**
+             * @description Parent comment ID (for replies)
+             * @example comment-clx789ghi
+             */
+            parentCommentId?: string;
+            /**
+             * @description Comment content
+             * @example Great post! I love it 🔥
+             */
+            content: string;
+            /** @description User information */
+            user: components["schemas"]["UserInfoDto"];
+            /**
+             * @description Number of likes
+             * @example 5
+             */
+            likesCount: number;
+            /**
+             * @description Number of replies
+             * @example 2
+             */
+            repliesCount: number;
+            /**
+             * Format: date-time
+             * @description Creation timestamp
+             * @example 2025-11-12T10:30:00Z
+             */
+            createdAt: string;
+            /**
+             * Format: date-time
+             * @description Last update timestamp
+             * @example 2025-11-12T10:35:00Z
+             */
+            updatedAt: string;
+            /**
+             * @description Whether comment is deleted
+             * @example false
+             */
+            isDeleted: boolean;
+            /**
+             * @description Success message
+             * @example Comment created successfully
+             */
+            message: string;
+        };
+        UpdateCommentResponse: {
+            /**
+             * @description Comment ID
+             * @example comment-clx456def
+             */
+            commentId: string;
+            /**
+             * @description Post ID
+             * @example post-clx123abc
+             */
+            postId: string;
+            /**
+             * @description Parent comment ID (for replies)
+             * @example comment-clx789ghi
+             */
+            parentCommentId?: string;
+            /**
+             * @description Comment content
+             * @example Great post! I love it 🔥
+             */
+            content: string;
+            /** @description User information */
+            user: components["schemas"]["UserInfoDto"];
+            /**
+             * @description Number of likes
+             * @example 5
+             */
+            likesCount: number;
+            /**
+             * @description Number of replies
+             * @example 2
+             */
+            repliesCount: number;
+            /**
+             * Format: date-time
+             * @description Creation timestamp
+             * @example 2025-11-12T10:30:00Z
+             */
+            createdAt: string;
+            /**
+             * Format: date-time
+             * @description Last update timestamp
+             * @example 2025-11-12T10:35:00Z
+             */
+            updatedAt: string;
+            /**
+             * @description Whether comment is deleted
+             * @example false
+             */
+            isDeleted: boolean;
+            /**
+             * @description Success message
+             * @example Comment updated successfully
+             */
+            message: string;
+        };
+        DeleteCommentResponse: {
+            /**
+             * @description Success message
+             * @example Comment deleted successfully
+             */
+            message: string;
+            /**
+             * @description Deleted comment ID
+             * @example comment-clx456def
+             */
+            commentId: string;
+        };
+        CommentDto: {
+            /**
+             * @description Comment ID
+             * @example comment-clx456def
+             */
+            commentId: string;
+            /**
+             * @description Post ID
+             * @example post-clx123abc
+             */
+            postId: string;
+            /**
+             * @description Parent comment ID (for replies)
+             * @example comment-clx789ghi
+             */
+            parentCommentId?: string;
+            /**
+             * @description Comment content
+             * @example Great post! I love it 🔥
+             */
+            content: string;
+            /** @description User information */
+            user: components["schemas"]["UserInfoDto"];
+            /**
+             * @description Number of likes
+             * @example 5
+             */
+            likesCount: number;
+            /**
+             * @description Number of replies
+             * @example 2
+             */
+            repliesCount: number;
+            /**
+             * Format: date-time
+             * @description Creation timestamp
+             * @example 2025-11-12T10:30:00Z
+             */
+            createdAt: string;
+            /**
+             * Format: date-time
+             * @description Last update timestamp
+             * @example 2025-11-12T10:35:00Z
+             */
+            updatedAt: string;
+            /**
+             * @description Whether comment is deleted
+             * @example false
+             */
+            isDeleted: boolean;
+        };
+        GetCommentResponse: {
+            /** @description Comment data */
+            data: components["schemas"]["CommentDto"];
+        };
+        GetCommentsResponse: {
+            /** @description List of comments */
+            data: components["schemas"]["CommentDto"][];
+        };
+        CreateCommentRequest: {
+            /**
+             * @description Post ID to comment on
+             * @example post-clx123abc
+             */
+            postId: string;
+            /**
+             * @description Comment content
+             * @example Great post! I love it 🔥
+             */
+            content: string;
+        };
+        UpdateCommentRequest: {
+            /**
+             * @description Updated comment content
+             * @example Updated comment text
+             */
+            content: string;
+        };
+        CreateReplyResponse: {
+            /**
+             * @description Reply ID
+             * @example reply-clx789ghi
+             */
+            replyId: string;
+            /**
+             * @description Comment ID
+             * @example comment-clx456def
+             */
+            commentId: string;
+            /**
+             * @description Reply content
+             * @example Thank you! 😊
+             */
+            content: string;
+            /** @description User information */
+            user: components["schemas"]["UserInfoDto"];
+            /**
+             * @description Number of likes
+             * @example 3
+             */
+            likesCount: number;
+            /**
+             * Format: date-time
+             * @description Creation timestamp
+             * @example 2025-11-12T10:30:00Z
+             */
+            createdAt: string;
+            /**
+             * Format: date-time
+             * @description Last update timestamp
+             * @example 2025-11-12T10:35:00Z
+             */
+            updatedAt: string;
+            /**
+             * @description Whether reply is deleted
+             * @example false
+             */
+            isDeleted: boolean;
+            /**
+             * @description Success message
+             * @example Reply created successfully
+             */
+            message: string;
+        };
+        UpdateReplyResponse: {
+            /**
+             * @description Reply ID
+             * @example reply-clx789ghi
+             */
+            replyId: string;
+            /**
+             * @description Comment ID
+             * @example comment-clx456def
+             */
+            commentId: string;
+            /**
+             * @description Reply content
+             * @example Thank you! 😊
+             */
+            content: string;
+            /** @description User information */
+            user: components["schemas"]["UserInfoDto"];
+            /**
+             * @description Number of likes
+             * @example 3
+             */
+            likesCount: number;
+            /**
+             * Format: date-time
+             * @description Creation timestamp
+             * @example 2025-11-12T10:30:00Z
+             */
+            createdAt: string;
+            /**
+             * Format: date-time
+             * @description Last update timestamp
+             * @example 2025-11-12T10:35:00Z
+             */
+            updatedAt: string;
+            /**
+             * @description Whether reply is deleted
+             * @example false
+             */
+            isDeleted: boolean;
+            /**
+             * @description Success message
+             * @example Reply updated successfully
+             */
+            message: string;
+        };
+        DeleteReplyResponse: {
+            /**
+             * @description Success message
+             * @example Reply deleted successfully
+             */
+            message: string;
+            /**
+             * @description Deleted reply ID
+             * @example reply-clx789ghi
+             */
+            replyId: string;
+        };
+        ReplyDto: {
+            /**
+             * @description Reply ID
+             * @example reply-clx789ghi
+             */
+            replyId: string;
+            /**
+             * @description Comment ID
+             * @example comment-clx456def
+             */
+            commentId: string;
+            /**
+             * @description Reply content
+             * @example Thank you! 😊
+             */
+            content: string;
+            /** @description User information */
+            user: components["schemas"]["UserInfoDto"];
+            /**
+             * @description Number of likes
+             * @example 3
+             */
+            likesCount: number;
+            /**
+             * Format: date-time
+             * @description Creation timestamp
+             * @example 2025-11-12T10:30:00Z
+             */
+            createdAt: string;
+            /**
+             * Format: date-time
+             * @description Last update timestamp
+             * @example 2025-11-12T10:35:00Z
+             */
+            updatedAt: string;
+            /**
+             * @description Whether reply is deleted
+             * @example false
+             */
+            isDeleted: boolean;
+        };
+        GetReplyResponse: {
+            /** @description Reply data */
+            data: components["schemas"]["ReplyDto"];
+        };
+        GetRepliesResponse: {
+            /** @description List of replies */
+            data: components["schemas"]["ReplyDto"][];
+        };
+        CreateReplyRequest: {
+            /**
+             * @description Comment ID to reply to
+             * @example comment-clx456def
+             */
+            commentId: string;
+            /**
+             * @description Reply content
+             * @example Thank you! 😊
+             */
+            content: string;
+        };
+        UpdateReplyRequest: {
+            /**
+             * @description Updated reply content
+             * @example Updated reply text
+             */
+            content: string;
         };
         CreateChannelRequest: {
             /** @description Channel name (optional for direct messages) */
@@ -3062,6 +3554,536 @@ export interface operations {
                         message: string;
                         /** @description Response data */
                         data?: components["schemas"]["UpdatePostResponse"];
+                        /**
+                         * @description Error information (null on success)
+                         * @example null
+                         */
+                        error?: Record<string, never> | null;
+                        /**
+                         * @description Error code (null on success)
+                         * @example null
+                         */
+                        errorCode?: string | null;
+                    };
+                };
+            };
+        };
+    };
+    CommentController_createComment_v1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateCommentRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /**
+                         * @description HTTP status code
+                         * @example 200
+                         */
+                        statusCode: number;
+                        /**
+                         * @description Response message
+                         * @example OK
+                         */
+                        message: string;
+                        /** @description Response data */
+                        data?: components["schemas"]["CreateCommentResponse"];
+                        /**
+                         * @description Error information (null on success)
+                         * @example null
+                         */
+                        error?: Record<string, never> | null;
+                        /**
+                         * @description Error code (null on success)
+                         * @example null
+                         */
+                        errorCode?: string | null;
+                    };
+                };
+            };
+        };
+    };
+    CommentController_getComments_v1: {
+        parameters: {
+            query?: {
+                page?: number;
+                limit?: number;
+                /** @description Sort by field */
+                sortBy?: "createdAt" | "likesCount";
+                /** @description Sort order */
+                sortOrder?: "asc" | "desc";
+            };
+            header?: never;
+            path: {
+                /** @description Post ID */
+                postId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful paginated response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /**
+                         * @description HTTP status code
+                         * @example 200
+                         */
+                        statusCode: number;
+                        /**
+                         * @description Response message
+                         * @example OK
+                         */
+                        message: string;
+                        /** @description Array of data items */
+                        data: components["schemas"]["CommentDto"][];
+                        /** @description Pagination metadata */
+                        paging: {
+                            /**
+                             * @description Total number of items
+                             * @example 100
+                             */
+                            total: number;
+                            /**
+                             * @description Current page number
+                             * @example 1
+                             */
+                            page: number;
+                            /**
+                             * @description Items per page
+                             * @example 10
+                             */
+                            limit: number;
+                            /**
+                             * @description Total number of pages
+                             * @example 10
+                             */
+                            totalPages: number;
+                        };
+                        /**
+                         * @description Error information (null on success)
+                         * @example null
+                         */
+                        error?: Record<string, never> | null;
+                        /**
+                         * @description Error code (null on success)
+                         * @example null
+                         */
+                        errorCode?: string | null;
+                    };
+                };
+            };
+        };
+    };
+    CommentController_getComment_v1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Comment ID */
+                commentId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /**
+                         * @description HTTP status code
+                         * @example 200
+                         */
+                        statusCode: number;
+                        /**
+                         * @description Response message
+                         * @example OK
+                         */
+                        message: string;
+                        /** @description Response data */
+                        data?: components["schemas"]["GetCommentResponse"];
+                        /**
+                         * @description Error information (null on success)
+                         * @example null
+                         */
+                        error?: Record<string, never> | null;
+                        /**
+                         * @description Error code (null on success)
+                         * @example null
+                         */
+                        errorCode?: string | null;
+                    };
+                };
+            };
+        };
+    };
+    CommentController_deleteComment_v1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Comment ID */
+                commentId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /**
+                         * @description HTTP status code
+                         * @example 200
+                         */
+                        statusCode: number;
+                        /**
+                         * @description Response message
+                         * @example OK
+                         */
+                        message: string;
+                        /** @description Response data */
+                        data?: components["schemas"]["DeleteCommentResponse"];
+                        /**
+                         * @description Error information (null on success)
+                         * @example null
+                         */
+                        error?: Record<string, never> | null;
+                        /**
+                         * @description Error code (null on success)
+                         * @example null
+                         */
+                        errorCode?: string | null;
+                    };
+                };
+            };
+        };
+    };
+    CommentController_updateComment_v1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Comment ID */
+                commentId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateCommentRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /**
+                         * @description HTTP status code
+                         * @example 200
+                         */
+                        statusCode: number;
+                        /**
+                         * @description Response message
+                         * @example OK
+                         */
+                        message: string;
+                        /** @description Response data */
+                        data?: components["schemas"]["UpdateCommentResponse"];
+                        /**
+                         * @description Error information (null on success)
+                         * @example null
+                         */
+                        error?: Record<string, never> | null;
+                        /**
+                         * @description Error code (null on success)
+                         * @example null
+                         */
+                        errorCode?: string | null;
+                    };
+                };
+            };
+        };
+    };
+    ReplyController_createReply_v1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateReplyRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /**
+                         * @description HTTP status code
+                         * @example 200
+                         */
+                        statusCode: number;
+                        /**
+                         * @description Response message
+                         * @example OK
+                         */
+                        message: string;
+                        /** @description Response data */
+                        data?: components["schemas"]["CreateReplyResponse"];
+                        /**
+                         * @description Error information (null on success)
+                         * @example null
+                         */
+                        error?: Record<string, never> | null;
+                        /**
+                         * @description Error code (null on success)
+                         * @example null
+                         */
+                        errorCode?: string | null;
+                    };
+                };
+            };
+        };
+    };
+    ReplyController_getReplies_v1: {
+        parameters: {
+            query?: {
+                page?: number;
+                limit?: number;
+                /** @description Sort by field */
+                sortBy?: "createdAt" | "likesCount";
+                /** @description Sort order */
+                sortOrder?: "asc" | "desc";
+            };
+            header?: never;
+            path: {
+                /** @description Comment ID */
+                commentId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful paginated response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /**
+                         * @description HTTP status code
+                         * @example 200
+                         */
+                        statusCode: number;
+                        /**
+                         * @description Response message
+                         * @example OK
+                         */
+                        message: string;
+                        /** @description Array of data items */
+                        data: components["schemas"]["ReplyDto"][];
+                        /** @description Pagination metadata */
+                        paging: {
+                            /**
+                             * @description Total number of items
+                             * @example 100
+                             */
+                            total: number;
+                            /**
+                             * @description Current page number
+                             * @example 1
+                             */
+                            page: number;
+                            /**
+                             * @description Items per page
+                             * @example 10
+                             */
+                            limit: number;
+                            /**
+                             * @description Total number of pages
+                             * @example 10
+                             */
+                            totalPages: number;
+                        };
+                        /**
+                         * @description Error information (null on success)
+                         * @example null
+                         */
+                        error?: Record<string, never> | null;
+                        /**
+                         * @description Error code (null on success)
+                         * @example null
+                         */
+                        errorCode?: string | null;
+                    };
+                };
+            };
+        };
+    };
+    ReplyController_getReply_v1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Reply ID */
+                replyId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /**
+                         * @description HTTP status code
+                         * @example 200
+                         */
+                        statusCode: number;
+                        /**
+                         * @description Response message
+                         * @example OK
+                         */
+                        message: string;
+                        /** @description Response data */
+                        data?: components["schemas"]["GetReplyResponse"];
+                        /**
+                         * @description Error information (null on success)
+                         * @example null
+                         */
+                        error?: Record<string, never> | null;
+                        /**
+                         * @description Error code (null on success)
+                         * @example null
+                         */
+                        errorCode?: string | null;
+                    };
+                };
+            };
+        };
+    };
+    ReplyController_deleteReply_v1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Reply ID */
+                replyId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /**
+                         * @description HTTP status code
+                         * @example 200
+                         */
+                        statusCode: number;
+                        /**
+                         * @description Response message
+                         * @example OK
+                         */
+                        message: string;
+                        /** @description Response data */
+                        data?: components["schemas"]["DeleteReplyResponse"];
+                        /**
+                         * @description Error information (null on success)
+                         * @example null
+                         */
+                        error?: Record<string, never> | null;
+                        /**
+                         * @description Error code (null on success)
+                         * @example null
+                         */
+                        errorCode?: string | null;
+                    };
+                };
+            };
+        };
+    };
+    ReplyController_updateReply_v1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Reply ID */
+                replyId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateReplyRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /**
+                         * @description HTTP status code
+                         * @example 200
+                         */
+                        statusCode: number;
+                        /**
+                         * @description Response message
+                         * @example OK
+                         */
+                        message: string;
+                        /** @description Response data */
+                        data?: components["schemas"]["UpdateReplyResponse"];
                         /**
                          * @description Error information (null on success)
                          * @example null

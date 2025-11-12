@@ -28,7 +28,6 @@ const HomeScreen = () => {
 
   // Debug: Log posts data
   console.log('HomeScreen - posts:', posts);
-  console.log('HomeScreen - posts length:', posts.length);
   console.log('HomeScreen - isLoading:', isLoading);
 
   const handlePostPress = useCallback(
