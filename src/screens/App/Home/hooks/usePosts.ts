@@ -40,7 +40,7 @@ export const usePosts = (params: UsePostsParams = {}) => {
     return params;
   }, [limit, userId, hashtag, visibility, sortBy, sortOrder]);
 
-  const { data, fetchNextPage, hasNextPage, isFetching, isLoading, error, refetch } = backendApi.useInfiniteQuery(
+  const { data, fetchNextPage, hasNextPage, isFetching, isLoading, isRefetching, error, refetch } = backendApi.useInfiniteQuery(
     'get',
     '/v1/post',
     {
@@ -103,6 +103,7 @@ export const usePosts = (params: UsePostsParams = {}) => {
     posts,
     isLoading,
     isLoadingMore: isFetching && !isLoading,
+    isRefreshing: isRefetching,
     error,
     hasMore: hasNextPage,
     loadMore,

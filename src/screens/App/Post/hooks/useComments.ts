@@ -2,8 +2,6 @@ import { useCallback, useContext, useMemo } from 'react';
 import { BackendApiContext } from 'src/contexts/BackendApiContex';
 import { components } from 'src/schemes/openapi';
 
-type CommentDto = components['schemas']['CommentDto'];
-
 interface UseCommentsParams {
   postId: string;
   limit?: number;
@@ -68,39 +66,34 @@ export const useComments = (params: UseCommentsParams) => {
     }
   );
 
-  console.log('useComments - data:', data);
-  console.log('useComments - data.pages:', data?.pages);
-
   // Flatten all pages into comments array
   const comments = useMemo(() => {
     if (!data?.pages) {
-      console.log('useComments - No pages data');
       return [];
     }
     
     const allComments = data.pages.flatMap((page: any) => {
-      console.log('useComments - Page data:', page);
       return page.data || [];
     });
-    
-    console.log('useComments - Flattened comments:', allComments);
     return allComments;
   }, [data]);
-
-  console.log('useComments - Total comments loaded:', comments.length);
-  console.log('useComments - Total pages loaded:', data?.pages.length ?? 0);
 
   // Load more comments (for infinite scroll)
   const loadMore = useCallback(() => {
     if (hasNextPage && !isFetching) {
-      console.log('loadMore - Fetching next page of comments');
       fetchNextPage();
     }
   }, [hasNextPage, isFetching, fetchNextPage]);
 
   // Refresh comments (pull to refresh)
   const refresh = useCallback(async () => {
-    console.log('refresh - Refreshing comments from page 1');
+    refetch();
+  }, [refetch]);
+
+  // Add new comment to the top of the list (optimistic update)
+  const addNewComment = useCallback((newComment: components['schemas']['CommentDto']) => {
+    // Force a refetch to get the most up-to-date comments
+    // This ensures the new comment appears at the top with proper sorting
     refetch();
   }, [refetch]);
 
@@ -112,6 +105,7 @@ export const useComments = (params: UseCommentsParams) => {
     hasMore: hasNextPage ?? false,
     loadMore,
     refresh,
+    addNewComment,
     totalComments: data?.pages?.[0]?.paging?.total ?? 0,
   };
 };

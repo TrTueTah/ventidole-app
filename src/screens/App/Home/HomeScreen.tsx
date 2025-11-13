@@ -3,6 +3,8 @@ import { ActivityIndicator, RefreshControl } from 'react-native';
 import * as S from './HomeScreen.style';
 import ArtistCommunityList from './components/ArtistCommunityList/ArtistCommunityList';
 import HomeBanner from './components/HomeBanner/HomeBanner';
+import LoadingSkeletons from './components/LoadingSkeletons/LoadingSkeletons';
+import EmptyState from './components/EmptyState/EmptyState';
 import PostCard from 'components/Card/PostCard/PostCard';
 import { useAppNavigation } from 'hooks/useAppNavigation';
 import { usePosts } from './hooks/usePosts';
@@ -17,6 +19,7 @@ const HomeScreen = () => {
     posts,
     isLoading,
     isLoadingMore,
+    isRefreshing,
     hasMore,
     loadMore,
     refresh,
@@ -25,10 +28,6 @@ const HomeScreen = () => {
     sortBy: 'createdAt',
     sortOrder: 'desc',
   });
-
-  // Debug: Log posts data
-  console.log('HomeScreen - posts:', posts);
-  console.log('HomeScreen - isLoading:', isLoading);
 
   const handlePostPress = useCallback(
     (postId: string, userId: string) => {
@@ -77,6 +76,7 @@ const HomeScreen = () => {
           <S.TopContainer>
             <ArtistCommunityList />
             <HomeBanner />
+            {(isLoading || isRefreshing) && <LoadingSkeletons />}
           </S.TopContainer>
         }
         renderItem={renderItem}
@@ -84,6 +84,7 @@ const HomeScreen = () => {
         onEndReached={handleEndReached}
         onEndReachedThreshold={0.5}
         ListFooterComponent={renderFooter}
+        ListEmptyComponent={!isLoading ? <EmptyState /> : null}
         refreshControl={
           <RefreshControl
             refreshing={isLoading}

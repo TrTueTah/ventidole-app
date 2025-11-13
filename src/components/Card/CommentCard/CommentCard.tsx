@@ -1,13 +1,14 @@
 import { COMMENTS } from 'src/mock';
 import * as S from './CommentCard.style';
-import { formatEpoch } from 'helpers/date-converter';
+import { formatEpoch, formatISODate } from 'helpers/date-converter';
 import { blackColor } from 'constants/colors';
 import { formatNumber } from 'helpers/format-number';
 import HeartOutline from 'assets/images/icons/heart-outline.svg';
 import Comment from 'assets/images/icons/comment.svg';
+import { components } from 'src/schemes/openapi';
 
 type CommentCardProps = {
-  comment: (typeof COMMENTS)[0];
+  comment: components['schemas']['CommentDto'];
   onCommentClick?: () => void;
   onLikeClick?: () => void;
 };
@@ -19,19 +20,19 @@ const CommentCard = ({
 }: CommentCardProps) => {
   return (
     <S.CommentCardContainer>
-      <S.CommentAvatar source={{ uri: comment.author.avatarUrl }} />
+      <S.CommentAvatar source={{ uri: comment.user.avatarUrl }} />
       <S.CommentCardWrapper>
         <S.CommentInfoContainer>
           <S.InfoColumn>
             <S.CommentAuthorNameWrapper>
-              <S.CommentAuthorName>{comment.author.name}</S.CommentAuthorName>
+              <S.CommentAuthorName>{comment.user.displayName}</S.CommentAuthorName>
               {/* <VerifyIcon
               color={primaryColor}
               width={RFValue(14)}
               height={RFValue(14)}
             /> */}
             </S.CommentAuthorNameWrapper>
-            <S.CommentDate>{formatEpoch(comment.createdAt)}</S.CommentDate>
+            <S.CommentDate>{formatISODate(comment.createdAt)}</S.CommentDate>
           </S.InfoColumn>
         </S.CommentInfoContainer>
         <S.CommentContentContainer>
@@ -42,7 +43,7 @@ const CommentCard = ({
             <S.ButtonWrapper onPress={onLikeClick}>
               <HeartOutline color={blackColor} />
               <S.CommentFooterText>
-                {formatNumber(comment.totalLike)}
+                {formatNumber(comment.likesCount)}
               </S.CommentFooterText>
             </S.ButtonWrapper>
           </S.CommentFooterSection>
@@ -50,7 +51,7 @@ const CommentCard = ({
             <S.ButtonWrapper onPress={onCommentClick}>
               <Comment color={blackColor} />
               <S.CommentFooterText>
-                {formatNumber(comment.totalReply)}
+                {formatNumber(comment.repliesCount)}
               </S.CommentFooterText>
             </S.ButtonWrapper>
           </S.CommentFooterSection>

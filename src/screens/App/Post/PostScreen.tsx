@@ -5,6 +5,7 @@ import { KeyboardAvoidingView } from 'react-native-keyboard-controller';
 import { ActivityIndicator, Platform, RefreshControl } from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { formatNumber } from 'helpers/format-number';
+import { showToast } from 'helpers/showToast';
 import HeartOutline from 'assets/images/icons/heart-outline.svg';
 import SendIcon from 'assets/images/icons/send.svg';
 import { blackColor, primaryColor } from 'constants/colors';
@@ -12,9 +13,13 @@ import CommentCard from 'components/Card/CommentCard/CommentCard';
 import { useAppNavigation } from 'hooks/useAppNavigation';
 import { usePostDetail } from './hooks/usePostDetail';
 import { useComments } from './hooks/useComments';
+import { useCreateComment } from './hooks/useCreateComment';
 import { useRoute, RouteProp } from '@react-navigation/native';
 import { RootStackParamList } from 'src/typescript/types';
 import { components } from 'src/schemes/openapi';
+import { PostSkeleton } from 'components/skeleton';
+import CommentLoadingSkeletons from './components/CommentLoadingSkeletons/CommentLoadingSkeletons';
+import EmptyComments from './components/EmptyComments/EmptyComments';
 
 type PostScreenRouteProp = RouteProp<RootStackParamList, '/post-stack'>;
 type CommentDto = components['schemas']['CommentDto'];
@@ -33,12 +38,27 @@ const PostScreen = () => {
     hasMore, 
     loadMore, 
     refresh: refreshComments,
+    addNewComment,
     totalComments 
   } = useComments({ 
     postId, 
     limit: 20, 
     sortBy: 'createdAt', 
     sortOrder: 'desc' 
+  });
+
+  const { createComment, isCreating } = useCreateComment({
+    onSuccess: (response) => {
+      // Clear the comment input
+      setCommentText('');
+      // Refresh comments to show the new comment at the top
+      addNewComment(response as any); // We'll type this properly later
+      showToast('success', 'Comment posted successfully!');
+    },
+    onError: (error) => {
+      console.error('Failed to create comment:', error);
+      showToast('warning', 'Failed to post comment. Please try again.');
+    },
   });
 
   const handleEndReached = useCallback(() => {
@@ -51,6 +71,18 @@ const PostScreen = () => {
     await refreshComments();
   }, [refreshComments]);
 
+  const handleSubmitComment = useCallback(() => {
+    const trimmedComment = commentText.trim();
+    if (!trimmedComment || isCreating) {
+      return;
+    }
+
+    createComment({
+      postId,
+      content: trimmedComment,
+    });
+  }, [commentText, postId, createComment, isCreating]);
+
   const renderCommentFooter = useCallback(() => {
     if (!isLoadingMore) return null;
     return (
@@ -61,39 +93,39 @@ const PostScreen = () => {
   }, [isLoadingMore]);
 
   const renderComment = useCallback(({ item }: { item: CommentDto }) => {
-    // Map CommentDto to the format expected by CommentCard
-    const mappedComment = {
-      id: item.commentId,
-      author: {
-        id: item.user.userId,
-        name: item.user.displayName,
-        avatarUrl: item.user.avatarUrl || '',
-      },
-      content: item.content,
-      totalLike: item.likesCount,
-      totalReply: item.repliesCount,
-      createdAt: new Date(item.createdAt).getTime() / 1000, // Convert to Unix timestamp
-    };
-
     return (
       <CommentCard 
-        comment={mappedComment} 
+        comment={item} 
         onCommentClick={() => navigation.navigate('/post-stack/reply', { replyId: item.commentId })} 
       />
     );
   }, [navigation]);
 
-  if (postLoading) {
-    return (
-      <S.Container>
-        <S.LoadingContainer>
-          <ActivityIndicator size="large" color={primaryColor} />
-        </S.LoadingContainer>
-      </S.Container>
-    );
-  }
+  const renderListHeader = useCallback(() => (
+    <S.HeaderWrapper>
+      {postLoading ? (
+        <PostSkeleton />
+      ) : post ? (
+        <PostCard post={post} />
+      ) : null}
+      <S.CommentSection>
+        <S.CommentHeader>
+          <S.CommentHeaderTitle>Comments</S.CommentHeaderTitle>
+          <S.CommentCount>
+            ({formatNumber(totalComments || post?.commentsCount || 0)})
+          </S.CommentCount>
+        </S.CommentHeader>
+      </S.CommentSection>
+      {commentsLoading && <CommentLoadingSkeletons />}
+    </S.HeaderWrapper>
+  ), [postLoading, post, totalComments, commentsLoading]);
 
-  if (postError || !post) {
+  const renderEmptyComments = useCallback(() => {
+    if (commentsLoading) return null;
+    return <EmptyComments />;
+  }, [commentsLoading]);
+
+  if (postError || (post === null && !postLoading)) {
     return (
       <S.Container>
         <S.ErrorContainer>
@@ -114,26 +146,15 @@ const PostScreen = () => {
           data={comments}
           keyExtractor={(item: CommentDto) => item.commentId}
           showsVerticalScrollIndicator={false}
-          ListHeaderComponent={
-            <S.HeaderWrapper>
-              <PostCard post={post} />
-              <S.CommentSection>
-                <S.CommentHeader>
-                  <S.CommentHeaderTitle>Comments</S.CommentHeaderTitle>
-                  <S.CommentCount>
-                    ({formatNumber(totalComments || post.commentsCount)})
-                  </S.CommentCount>
-                </S.CommentHeader>
-              </S.CommentSection>
-            </S.HeaderWrapper>
-          }
+          ListHeaderComponent={renderListHeader}
           renderItem={renderComment}
           onEndReached={handleEndReached}
           onEndReachedThreshold={0.5}
           ListFooterComponent={renderCommentFooter}
+          ListEmptyComponent={renderEmptyComments}
           refreshControl={
             <RefreshControl
-              refreshing={commentsLoading}
+              refreshing={commentsLoading && !postLoading}
               onRefresh={handleRefresh}
               tintColor={blackColor}
             />
@@ -149,9 +170,19 @@ const PostScreen = () => {
               value={commentText}
               onChangeText={setCommentText}
               numberOfLines={4}
+              editable={!isCreating}
+              returnKeyType="send"
+              onSubmitEditing={handleSubmitComment}
+              blurOnSubmit={false}
             />
           </S.CommentInputWrapper>
-          <SendIcon width={RFValue(24)} height={RFValue(24)} color={primaryColor} />
+          <S.SendButton onPress={handleSubmitComment} disabled={!commentText.trim() || isCreating}>
+            {isCreating ? (
+              <ActivityIndicator size="small" color={primaryColor} />
+            ) : (
+              <SendIcon width={RFValue(24)} height={RFValue(24)} color={commentText.trim() ? primaryColor : blackColor} />
+            )}
+          </S.SendButton>
         </S.CommentInputContainer>
       </S.Container>
     </KeyboardAvoidingView>

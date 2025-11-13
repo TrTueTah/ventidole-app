@@ -42,6 +42,92 @@ export const ErrorText = styled.Text`
   text-align: center;
 `;
 
+// Post Skeleton Styles
+export const PostSkeletonContainer = styled.View`
+  background-color: ${whiteColor};
+  border-radius: ${RFValue(20)}px;
+  padding: ${RFValue(12)}px;
+  margin-bottom: ${RFValue(12)}px;
+  shadow-color: #000;
+  shadow-offset: 0px 2px;
+  shadow-opacity: 0.1;
+  shadow-radius: 4px;
+  elevation: 3;
+`;
+
+export const PostSkeletonHeader = styled.View`
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: ${RFValue(12)}px;
+`;
+
+export const PostSkeletonAvatar = styled.View`
+  width: ${RFValue(40)}px;
+  height: ${RFValue(40)}px;
+  border-radius: ${RFValue(20)}px;
+  background-color: #E1E9EE;
+  margin-right: ${RFValue(12)}px;
+`;
+
+export const PostSkeletonTextContainer = styled.View`
+  flex: 1;
+`;
+
+export const PostSkeletonText = styled.View`
+  height: ${RFValue(14)}px;
+  background-color: #E1E9EE;
+  border-radius: ${RFValue(4)}px;
+  margin-bottom: ${RFValue(8)}px;
+`;
+
+export const PostSkeletonTextShort = styled(PostSkeletonText)`
+  width: 60%;
+`;
+
+export const PostSkeletonContent = styled.View`
+  height: ${RFValue(16)}px;
+  background-color: #E1E9EE;
+  border-radius: ${RFValue(4)}px;
+  margin-bottom: ${RFValue(12)}px;
+`;
+
+export const PostSkeletonContentShort = styled(PostSkeletonContent)`
+  width: 80%;
+  margin-bottom: ${RFValue(16)}px;
+`;
+
+export const PostSkeletonImage = styled.View`
+  height: ${RFValue(200)}px;
+  background-color: #E1E9EE;
+  border-radius: ${RFValue(12)}px;
+  margin-bottom: ${RFValue(12)}px;
+`;
+
+// Empty State Styles
+export const EmptyCommentsContainer = styled.View`
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  padding: ${RFValue(40)}px;
+  margin-top: ${RFValue(20)}px;
+`;
+
+export const EmptyCommentsText = styled.Text`
+  font-family: ${Montserrat500};
+  font-size: ${RFValue(16)}px;
+  color: ${black50Color};
+  text-align: center;
+  margin-bottom: ${RFValue(8)}px;
+`;
+
+export const EmptyCommentsSubText = styled.Text`
+  font-family: ${Montserrat300};
+  font-size: ${RFValue(14)}px;
+  color: ${black50Color};
+  text-align: center;
+  opacity: 0.7;
+`;
+
 export const CommentCountList = styled.FlatList.attrs({
   contentContainerStyle: {
     paddingVertical: RFValue(8),
@@ -192,4 +278,13 @@ export const CommentInput = styled(TextInput)`
   font-size: ${RFValue(12)}px;
   line-height: ${RFValue(12)}px;
   width: 100%;
+`;
+
+export const SendButton = styled.Pressable`
+  width: ${RFValue(40)}px;
+  height: ${RFValue(40)}px;
+  border-radius: ${RFValue(20)}px;
+  align-items: center;
+  justify-content: center;
+  background-color: ${(props: { disabled?: boolean }) => props.disabled ? 'transparent' : 'transparent'};
 `;

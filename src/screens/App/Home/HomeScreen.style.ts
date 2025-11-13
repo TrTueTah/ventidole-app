@@ -33,3 +33,27 @@ export const LoaderContainer = styled.View`
   align-items: center;
   justify-content: center;
 `;
+
+export const EmptyContainer = styled.View`
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  padding: ${RFValue(40)}px;
+  margin-top: ${RFValue(60)}px;
+`;
+
+export const EmptyText = styled.Text`
+  font-family: ${Montserrat300};
+  font-size: ${RFValue(16)}px;
+  color: ${black50Color};
+  text-align: center;
+  margin-bottom: ${RFValue(8)}px;
+`;
+
+export const EmptySubText = styled.Text`
+  font-family: ${Montserrat300};
+  font-size: ${RFValue(14)}px;
+  color: ${black50Color};
+  text-align: center;
+  opacity: 0.7;
+`;
