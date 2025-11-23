@@ -373,6 +373,38 @@ export interface paths {
         patch: operations["PostController_updatePost_v1"];
         trace?: never;
     };
+    "/v1/post/{postId}/like": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["PostController_likePost_v1"];
+        delete: operations["PostController_unlikePost_v1"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/post/community/{communityId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["PostController_getPostsByCommunity_v1"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/comment": {
         parameters: {
             query?: never;
@@ -515,10 +547,12 @@ export interface paths {
         put?: never;
         /** Send a message to a channel */
         post: operations["ChatController_sendMessage"];
-        delete?: never;
+        /** Delete a message */
+        delete: operations["ChatController_deleteMessage"];
         options?: never;
         head?: never;
-        patch?: never;
+        /** Update a message */
+        patch: operations["ChatController_updateMessage"];
         trace?: never;
     };
     "/chat/channels/{channelId}/messages": {
@@ -528,7 +562,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Get messages from a channel */
+        /** Get messages from a channel with pagination */
         get: operations["ChatController_getMessages"];
         put?: never;
         post?: never;
@@ -589,7 +623,24 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/admin/login": {
+    "/chat/channels/archive": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Archive a channel */
+        post: operations["ChatController_archiveChannel"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/authentication/login": {
         parameters: {
             query?: never;
             header?: never;
@@ -599,14 +650,14 @@ export interface paths {
         get?: never;
         put?: never;
         /** Admin login (bypass all verification) */
-        post: operations["AdminController_adminLogin"];
+        post: operations["AdminAuthController_adminLogin_v1"];
         delete?: never;
         options?: never;
         head?: never;
         patch?: never;
         trace?: never;
     };
-    "/admin/signup": {
+    "/v1/admin/authentication/signup": {
         parameters: {
             query?: never;
             header?: never;
@@ -616,50 +667,50 @@ export interface paths {
         get?: never;
         put?: never;
         /** Admin signup (bypass all verification, instantly active) */
-        post: operations["AdminController_adminSignup"];
+        post: operations["AdminAuthController_adminSignup_v1"];
         delete?: never;
         options?: never;
         head?: never;
         patch?: never;
         trace?: never;
     };
-    "/admin/groups": {
+    "/v1/admin/communities": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        /** Get all groups (Admin only) */
-        get: operations["AdminController_getAllGroups"];
+        /** Get all communities with pagination (Admin only) */
+        get: operations["AdminCommunitiesController_getAllCommunities_v1"];
         put?: never;
-        /** Create a new group (Admin only) */
-        post: operations["AdminController_createGroup"];
+        /** Create a new community (Admin only) */
+        post: operations["AdminCommunitiesController_createCommunity_v1"];
         delete?: never;
         options?: never;
         head?: never;
         patch?: never;
         trace?: never;
     };
-    "/admin/idols": {
+    "/v1/admin/idols": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        /** Get all idols (Admin only) */
-        get: operations["AdminController_getAllIdols"];
+        /** Get all idols with pagination (Admin only) */
+        get: operations["AdminIdolsController_getAllIdols_v1"];
         put?: never;
         /** Create a new idol account (Admin only) */
-        post: operations["AdminController_createIdolAccount"];
+        post: operations["AdminIdolsController_createIdolAccount_v1"];
         delete?: never;
         options?: never;
         head?: never;
         patch?: never;
         trace?: never;
     };
-    "/admin/fans": {
+    "/v1/admin/users/fans": {
         parameters: {
             query?: never;
             header?: never;
@@ -667,7 +718,7 @@ export interface paths {
             cookie?: never;
         };
         /** Get all fans (Admin only) */
-        get: operations["AdminController_getAllFans"];
+        get: operations["AdminUsersController_getAllFans_v1"];
         put?: never;
         post?: never;
         delete?: never;
@@ -676,7 +727,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/admin/users": {
+    "/v1/admin/users": {
         parameters: {
             query?: never;
             header?: never;
@@ -684,7 +735,7 @@ export interface paths {
             cookie?: never;
         };
         /** Get all users with profiles (Admin only) */
-        get: operations["AdminController_getAllUsers"];
+        get: operations["AdminUsersController_getAllUsers_v1"];
         put?: never;
         post?: never;
         delete?: never;
@@ -693,24 +744,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/admin/statistics": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Get platform statistics (Admin only) */
-        get: operations["AdminController_getStatistics"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/admin/users/{userId}/deactivate": {
+    "/v1/admin/users/{userId}/deactivate": {
         parameters: {
             query?: never;
             header?: never;
@@ -724,10 +758,10 @@ export interface paths {
         options?: never;
         head?: never;
         /** Deactivate a user account (Admin only) */
-        patch: operations["AdminController_deactivateUser"];
+        patch: operations["AdminUsersController_deactivateUser_v1"];
         trace?: never;
     };
-    "/admin/users/{userId}/activate": {
+    "/v1/admin/users/{userId}/activate": {
         parameters: {
             query?: never;
             header?: never;
@@ -741,10 +775,10 @@ export interface paths {
         options?: never;
         head?: never;
         /** Activate a user account (Admin only) */
-        patch: operations["AdminController_activateUser"];
+        patch: operations["AdminUsersController_activateUser_v1"];
         trace?: never;
     };
-    "/admin/users/{userId}": {
+    "/v1/admin/users/{userId}": {
         parameters: {
             query?: never;
             header?: never;
@@ -755,7 +789,122 @@ export interface paths {
         put?: never;
         post?: never;
         /** Delete a user account (Admin only) */
-        delete: operations["AdminController_deleteUser"];
+        delete: operations["AdminUsersController_deleteUser_v1"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/statistics": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get platform statistics (Admin only) */
+        get: operations["AdminStatisticsController_getStatistics_v1"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/products": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get all products with pagination (Admin only) */
+        get: operations["ProductController_getAllProducts_v1"];
+        put?: never;
+        /** Create a new product (Admin only) */
+        post: operations["ProductController_createProduct_v1"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/community": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get communities
+         * @description Get communities with optional filtering. Use filter=joined to get only joined communities, or filter=all to get all communities with isJoin field.
+         */
+        get: operations["CommunityController_getCommunities_v1"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/community/join": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Join a community
+         * @description Join a community by providing the community ID
+         */
+        post: operations["CommunityController_joinCommunity_v1"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/community/leave": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /**
+         * Leave a community
+         * @description Leave a community by providing the community ID
+         */
+        delete: operations["CommunityController_leaveCommunity_v1"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/community/{communityId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get community detail
+         * @description Get detailed information about a community including idols and follower count
+         */
+        get: operations["CommunityController_getCommunityDetail_v1"];
+        put?: never;
+        post?: never;
+        delete?: never;
         options?: never;
         head?: never;
         patch?: never;
@@ -1038,46 +1187,21 @@ export interface components {
             updatedAt: string;
         };
         IdolDto: {
-            /**
-             * @description Idol ID
-             * @example idol-clx123abc
-             */
             id: string;
-            /**
-             * @description Idol stage name
-             * @example StarLight
-             */
             stageName: string;
-            /**
-             * @description Idol avatar URL
-             * @example https://storage.googleapis.com/bucket/avatars/idol-123.jpg
-             */
-            avatarUrl?: string;
-            /**
-             * @description Idol background image URL
-             * @example https://storage.googleapis.com/bucket/backgrounds/idol-123.jpg
-             */
-            backgroundUrl?: string;
-            /**
-             * @description Idol bio/description
-             * @example Professional singer and performer 🎤
-             */
-            bio?: string;
-            /**
-             * @description Group ID
-             * @example group-clx123abc
-             */
+            avatarUrl: string;
+            backgroundUrl: string;
+            bio: string;
             groupId: string;
-            /**
-             * @description Created at timestamp
-             * @example 2024-01-01T00:00:00.000Z
-             */
+            userId: string;
+            isActive: boolean;
+            /** Format: date-time */
             createdAt: string;
-            /**
-             * @description Updated at timestamp
-             * @example 2024-01-01T00:00:00.000Z
-             */
+            /** Format: date-time */
             updatedAt: string;
+            version: number;
+            user: components["schemas"]["UserSummaryDto"];
+            group: components["schemas"]["GroupSummaryDto"];
         };
         UserDto: {
             /**
@@ -1337,13 +1461,6 @@ export interface components {
              */
             hashtags: string[];
             /**
-             * @description Mentioned user IDs
-             * @example [
-             *       "user-id-1"
-             *     ]
-             */
-            mentions: string[];
-            /**
              * @description Location
              * @example Santa Monica Beach, CA
              */
@@ -1409,13 +1526,6 @@ export interface components {
              *     ]
              */
             hashtags: string[];
-            /**
-             * @description Mentioned user IDs
-             * @example [
-             *       "user-id-1"
-             *     ]
-             */
-            mentions: string[];
             /**
              * @description Location
              * @example Santa Monica Beach, CA
@@ -1503,13 +1613,6 @@ export interface components {
              *     ]
              */
             hashtags: string[];
-            /**
-             * @description Mentioned user IDs
-             * @example [
-             *       "user-id-1"
-             *     ]
-             */
-            mentions: string[];
             /**
              * @description Location
              * @example Santa Monica Beach, CA
@@ -1615,14 +1718,6 @@ export interface components {
              */
             hashtags: string[];
             /**
-             * @description Mentioned user IDs
-             * @example [
-             *       "user-id-1",
-             *       "user-id-2"
-             *     ]
-             */
-            mentions?: string[];
-            /**
              * @description Location/place name
              * @example Santa Monica Beach, CA
              */
@@ -1656,14 +1751,6 @@ export interface components {
              *     ]
              */
             hashtags?: string[];
-            /**
-             * @description Mentioned user IDs
-             * @example [
-             *       "user-id-1",
-             *       "user-id-2"
-             *     ]
-             */
-            mentions?: string[];
             /**
              * @description Location
              * @example Santa Monica Beach, CA
@@ -2163,6 +2250,30 @@ export interface components {
             /** @description Array of user IDs to add */
             userIds: string[];
         };
+        UpdateMessageRequest: {
+            /** @description Message ID to update */
+            messageId: string;
+            /** @description New message content */
+            content: string;
+        };
+        DeleteMessageRequest: {
+            /** @description Message ID to delete */
+            messageId: string;
+            /** @description Channel ID */
+            channelId: string;
+        };
+        ArchiveChannelRequest: {
+            /** @description Channel ID to archive */
+            channelId: string;
+        };
+        AdminAuthResponse: {
+            userId: string;
+            email: string;
+            role: string;
+            name: string;
+            accessToken: string;
+            refreshToken: string;
+        };
         AdminLoginRequest: {
             /**
              * @description Admin email
@@ -2174,14 +2285,6 @@ export interface components {
              * @example admin123
              */
             password: string;
-        };
-        AdminAuthResponse: {
-            userId: string;
-            email: string;
-            role: string;
-            name: string;
-            accessToken: string;
-            refreshToken: string;
         };
         AdminSignupRequest: {
             /**
@@ -2200,39 +2303,64 @@ export interface components {
              */
             name: string;
         };
-        CreateGroupRequest: {
+        CreateCommunityRequest: {
             /**
-             * @description Group name
+             * @description Community name
              * @example StarLight
              */
-            groupName: string;
+            name: string;
             /**
-             * @description Group description
-             * @example A talented K-pop group known for their powerful performances
+             * @description Community description
+             * @example A talented K-pop community known for their powerful performances
              */
             description?: string;
             /**
-             * @description Group logo URL
-             * @example https://res.cloudinary.com/bucket/logo.jpg
+             * @description Community avatar URL
+             * @example https://res.cloudinary.com/bucket/avatar.jpg
              */
-            logoUrl?: string;
+            avatarUrl?: string;
             /**
-             * @description Group background image URL
+             * @description Community background image URL
              * @example https://res.cloudinary.com/bucket/background.jpg
              */
             backgroundUrl?: string;
         };
-        CreateGroupResponse: {
+        CreateCommunityResponse: {
             id: string;
-            groupName: string;
+            name: string;
             description: string;
-            logoUrl: string;
+            avatarUrl: string;
             backgroundUrl: string;
             isActive: boolean;
             /** Format: date-time */
             createdAt: string;
             /** Format: date-time */
             updatedAt: string;
+            version: number;
+        };
+        IdolSummaryDto: {
+            id: string;
+            stageName: string;
+            avatarUrl: string;
+        };
+        CommunityCountDto: {
+            idols: number;
+            followers: number;
+        };
+        CommunityDto: {
+            id: string;
+            name: string;
+            description: string;
+            avatarUrl: string;
+            backgroundUrl: string;
+            isActive: boolean;
+            /** Format: date-time */
+            createdAt: string;
+            /** Format: date-time */
+            updatedAt: string;
+            version: number;
+            idols: components["schemas"]["IdolSummaryDto"][];
+            _count: components["schemas"]["CommunityCountDto"];
         };
         CreateIdolRequest: {
             /**
@@ -2276,13 +2404,291 @@ export interface components {
              */
             deviceToken?: string;
         };
+        CreatedIdolDto: {
+            id: string;
+            stageName: string;
+            avatarUrl: string;
+            backgroundUrl: string;
+            bio: string;
+            groupId: string;
+            userId: string;
+            isActive: boolean;
+            /** Format: date-time */
+            createdAt: string;
+            /** Format: date-time */
+            updatedAt: string;
+            version: number;
+        };
         CreateIdolResponse: {
             userId: string;
             email: string;
             role: string;
-            idol: Record<string, never>;
+            idol: components["schemas"]["CreatedIdolDto"];
             accessToken: string;
             refreshToken: string;
+        };
+        UserSummaryDto: {
+            id: string;
+            email: string;
+            role: string;
+            isOnline: boolean;
+            isActive: boolean;
+            /** Format: date-time */
+            createdAt: string;
+        };
+        GroupSummaryDto: {
+            id: string;
+            groupName: string;
+            logoUrl: string;
+        };
+        CreateProductVariantRequest: {
+            /**
+             * @description Product variant name
+             * @example Standard Version
+             */
+            name: string;
+            /**
+             * @description Product variant price
+             * @example 29.99
+             */
+            price_money: number;
+            /**
+             * @description Total supply/stock for this variant
+             * @example 100
+             */
+            total_supply: number;
+            /**
+             * @description Remaining supply (defaults to total_supply if not provided)
+             * @example 100
+             */
+            remaining_supply?: number;
+        };
+        CreateProductRequest: {
+            /**
+             * @description Product name
+             * @example BTS Official Light Stick
+             */
+            name: string;
+            /**
+             * @description Product description
+             * @example Official BTS light stick for concerts and fan events. High quality and long-lasting.
+             */
+            description?: string;
+            /**
+             * @description Product cover image URL
+             * @example https://res.cloudinary.com/bucket/bts-lightstick.jpg
+             */
+            cover_image?: string;
+            /**
+             * @description Product category ID
+             * @example cmi64epuq0000p5wb5q352lws
+             */
+            product_category_id: string;
+            /**
+             * @description Product variants (at least one variant is required)
+             * @example [
+             *       {
+             *         "name": "Standard Version",
+             *         "price_money": 29.99,
+             *         "total_supply": 100,
+             *         "remaining_supply": 100
+             *       },
+             *       {
+             *         "name": "Premium Version",
+             *         "price_money": 35.99,
+             *         "total_supply": 50,
+             *         "remaining_supply": 50
+             *       }
+             *     ]
+             */
+            variants: components["schemas"]["CreateProductVariantRequest"][];
+        };
+        ProductCategoryDto: {
+            /**
+             * @description Category ID
+             * @example clz1234567890
+             */
+            id: string;
+            /**
+             * @description Category name
+             * @example Merchandise
+             */
+            name: string;
+            /**
+             * @description Whether the category is active
+             * @example true
+             */
+            isActive: boolean;
+            /**
+             * Format: date-time
+             * @description Creation timestamp
+             * @example 2023-11-19T10:00:00.000Z
+             */
+            createdAt: string;
+        };
+        ProductVariantDto: {
+            /**
+             * @description Variant ID
+             * @example cmi64xyz987654321
+             */
+            id: string;
+            /**
+             * @description Variant name
+             * @example Standard Version
+             */
+            name: string;
+            /**
+             * @description Product variant price
+             * @example 29.99
+             */
+            price_money: number;
+            /**
+             * @description Total supply/stock
+             * @example 100
+             */
+            total_supply: number;
+            /**
+             * @description Remaining supply/stock
+             * @example 85
+             */
+            remaining_supply: number;
+            /**
+             * @description Whether the variant is active
+             * @example true
+             */
+            isActive: boolean;
+            /**
+             * Format: date-time
+             * @description Creation timestamp
+             * @example 2023-11-19T10:30:00.000Z
+             */
+            createdAt: string;
+        };
+        CreateProductResponse: {
+            /**
+             * @description Created product ID
+             * @example clz1234567890
+             */
+            id: string;
+            /**
+             * @description Product name
+             * @example BTS Official Light Stick
+             */
+            name: string;
+            /**
+             * @description Product description
+             * @example Official BTS light stick for concerts and fan events.
+             */
+            description: Record<string, never>;
+            /**
+             * @description Product cover image URL
+             * @example https://res.cloudinary.com/bucket/bts-lightstick.jpg
+             */
+            cover_image: Record<string, never>;
+            /** @description Product category */
+            category: components["schemas"]["ProductCategoryDto"];
+            /** @description Created product variants */
+            variants: components["schemas"]["ProductVariantDto"][];
+            /**
+             * Format: date-time
+             * @description Creation timestamp
+             * @example 2023-11-19T10:00:00.000Z
+             */
+            createdAt: string;
+        };
+        ProductDto: {
+            /**
+             * @description Product ID
+             * @example clz1234567890
+             */
+            id: string;
+            /**
+             * @description Product name
+             * @example BTS Official Light Stick
+             */
+            name: string;
+            /**
+             * @description Product description
+             * @example Official BTS light stick for concerts and fan events. High quality and long-lasting.
+             */
+            description?: Record<string, never>;
+            /**
+             * @description Product cover image URL
+             * @example https://res.cloudinary.com/bucket/bts-lightstick.jpg
+             */
+            cover_image?: Record<string, never>;
+            /** @description Product category */
+            category: components["schemas"]["ProductCategoryDto"];
+            /** @description Product variants */
+            variants: components["schemas"]["ProductVariantDto"][];
+            /**
+             * @description Whether the product is active
+             * @example true
+             */
+            isActive: boolean;
+            /**
+             * Format: date-time
+             * @description Creation timestamp
+             * @example 2023-11-19T10:00:00.000Z
+             */
+            createdAt: string;
+            /**
+             * Format: date-time
+             * @description Last update timestamp
+             * @example 2023-11-19T10:30:00.000Z
+             */
+            updatedAt: string;
+            /**
+             * @description Version for optimistic locking
+             * @example 0
+             */
+            version: number;
+        };
+        GetCommunitiesResponse: {
+            id: string;
+            name: string;
+            avatarUrl?: string;
+            backgroundUrl?: string;
+            /** @description Indicates if the current user has joined this community */
+            isJoin: boolean;
+            /** @description Total number of followers in the community */
+            followerCount: number;
+            /** Format: date-time */
+            createdAt: string;
+            /** Format: date-time */
+            updatedAt: string;
+        };
+        IdolInfo: {
+            id: string;
+            userId: string;
+            stageName: string;
+            bio?: string;
+            avatarUrl?: string;
+        };
+        GetCommunityDetailResponse: {
+            id: string;
+            name: string;
+            description?: string;
+            avatarUrl?: string;
+            backgroundUrl?: string;
+            /** @description Total number of followers in the community */
+            followerCount: number;
+            /** @description Indicates if the current user is following this community */
+            isFollowing: boolean;
+            /** @description List of idols in this community */
+            idols: components["schemas"]["IdolInfo"][];
+            /** Format: date-time */
+            createdAt: string;
+            /** Format: date-time */
+            updatedAt: string;
+        };
+        JoinCommunityRequest: {
+            /** @description The ID of the community to join */
+            communityId: string;
+        };
+        LeaveCommunityRequest: {
+            /** @description The ID of the community to leave */
+            communityId: string;
         };
     };
     responses: never;
@@ -3569,6 +3975,128 @@ export interface operations {
             };
         };
     };
+    PostController_likePost_v1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Post ID */
+                postId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    PostController_unlikePost_v1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Post ID */
+                postId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    PostController_getPostsByCommunity_v1: {
+        parameters: {
+            query?: {
+                page?: number;
+                limit?: number;
+                /** @description Filter by user ID */
+                userId?: string;
+                /** @description Filter by hashtag */
+                hashtag?: string;
+                /** @description Filter by visibility */
+                visibility?: "public" | "followers" | "private";
+                /** @description Sort by field */
+                sortBy?: "createdAt" | "likesCount" | "commentsCount";
+                /** @description Sort order */
+                sortOrder?: "asc" | "desc";
+            };
+            header?: never;
+            path: {
+                /** @description Community ID */
+                communityId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful paginated response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /**
+                         * @description HTTP status code
+                         * @example 200
+                         */
+                        statusCode: number;
+                        /**
+                         * @description Response message
+                         * @example OK
+                         */
+                        message: string;
+                        /** @description Array of data items */
+                        data: components["schemas"]["PostDto"][];
+                        /** @description Pagination metadata */
+                        paging: {
+                            /**
+                             * @description Total number of items
+                             * @example 100
+                             */
+                            total: number;
+                            /**
+                             * @description Current page number
+                             * @example 1
+                             */
+                            page: number;
+                            /**
+                             * @description Items per page
+                             * @example 10
+                             */
+                            limit: number;
+                            /**
+                             * @description Total number of pages
+                             * @example 10
+                             */
+                            totalPages: number;
+                        };
+                        /**
+                         * @description Error information (null on success)
+                         * @example null
+                         */
+                        error?: Record<string, never> | null;
+                        /**
+                         * @description Error code (null on success)
+                         * @example null
+                         */
+                        errorCode?: string | null;
+                    };
+                };
+            };
+        };
+    };
     CommentController_createComment_v1: {
         parameters: {
             query?: never;
@@ -4185,6 +4713,50 @@ export interface operations {
             };
         };
     };
+    ChatController_deleteMessage: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DeleteMessageRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    ChatController_updateMessage: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateMessageRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ChatMessageResponse"];
+                };
+            };
+        };
+    };
     ChatController_getMessages: {
         parameters: {
             query: {
@@ -4203,9 +4775,7 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content: {
-                    "application/json": components["schemas"]["ChatMessageResponse"][];
-                };
+                content?: never;
             };
         };
     };
@@ -4270,7 +4840,28 @@ export interface operations {
             };
         };
     };
-    AdminController_adminLogin: {
+    ChatController_archiveChannel: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ArchiveChannelRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    AdminAuthController_adminLogin_v1: {
         parameters: {
             query?: never;
             header?: never;
@@ -4283,17 +4874,41 @@ export interface operations {
             };
         };
         responses: {
+            /** @description Successful Response */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["AdminAuthResponse"];
+                    "application/json": {
+                        /**
+                         * @description HTTP status code
+                         * @example 200
+                         */
+                        statusCode: number;
+                        /**
+                         * @description Response message
+                         * @example OK
+                         */
+                        message: string;
+                        /** @description Response data */
+                        data?: components["schemas"]["AdminAuthResponse"];
+                        /**
+                         * @description Error information (null on success)
+                         * @example null
+                         */
+                        error?: Record<string, never> | null;
+                        /**
+                         * @description Error code (null on success)
+                         * @example null
+                         */
+                        errorCode?: string | null;
+                    };
                 };
             };
         };
     };
-    AdminController_adminSignup: {
+    AdminAuthController_adminSignup_v1: {
         parameters: {
             query?: never;
             header?: never;
@@ -4306,34 +4921,114 @@ export interface operations {
             };
         };
         responses: {
-            201: {
+            /** @description Successful Response */
+            200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["AdminAuthResponse"];
+                    "application/json": {
+                        /**
+                         * @description HTTP status code
+                         * @example 200
+                         */
+                        statusCode: number;
+                        /**
+                         * @description Response message
+                         * @example OK
+                         */
+                        message: string;
+                        /** @description Response data */
+                        data?: components["schemas"]["AdminAuthResponse"];
+                        /**
+                         * @description Error information (null on success)
+                         * @example null
+                         */
+                        error?: Record<string, never> | null;
+                        /**
+                         * @description Error code (null on success)
+                         * @example null
+                         */
+                        errorCode?: string | null;
+                    };
                 };
             };
         };
     };
-    AdminController_getAllGroups: {
+    AdminCommunitiesController_getAllCommunities_v1: {
         parameters: {
-            query?: never;
+            query?: {
+                page?: number;
+                limit?: number;
+                /** @description Sort by field */
+                sortBy?: "createdAt";
+                /** @description Sort order */
+                sortOrder?: "asc" | "desc";
+            };
             header?: never;
             path?: never;
             cookie?: never;
         };
         requestBody?: never;
         responses: {
+            /** @description Successful paginated response */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": {
+                        /**
+                         * @description HTTP status code
+                         * @example 200
+                         */
+                        statusCode: number;
+                        /**
+                         * @description Response message
+                         * @example OK
+                         */
+                        message: string;
+                        /** @description Array of data items */
+                        data: components["schemas"]["CommunityDto"][];
+                        /** @description Pagination metadata */
+                        paging: {
+                            /**
+                             * @description Total number of items
+                             * @example 100
+                             */
+                            total: number;
+                            /**
+                             * @description Current page number
+                             * @example 1
+                             */
+                            page: number;
+                            /**
+                             * @description Items per page
+                             * @example 10
+                             */
+                            limit: number;
+                            /**
+                             * @description Total number of pages
+                             * @example 10
+                             */
+                            totalPages: number;
+                        };
+                        /**
+                         * @description Error information (null on success)
+                         * @example null
+                         */
+                        error?: Record<string, never> | null;
+                        /**
+                         * @description Error code (null on success)
+                         * @example null
+                         */
+                        errorCode?: string | null;
+                    };
+                };
             };
         };
     };
-    AdminController_createGroup: {
+    AdminCommunitiesController_createCommunity_v1: {
         parameters: {
             query?: never;
             header?: never;
@@ -4342,7 +5037,7 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["CreateGroupRequest"];
+                "application/json": components["schemas"]["CreateCommunityRequest"];
             };
         };
         responses: {
@@ -4351,29 +5046,87 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["CreateGroupResponse"];
+                    "application/json": components["schemas"]["CreateCommunityResponse"];
                 };
             };
         };
     };
-    AdminController_getAllIdols: {
+    AdminIdolsController_getAllIdols_v1: {
         parameters: {
-            query?: never;
+            query?: {
+                page?: number;
+                limit?: number;
+                /** @description Search by username */
+                search?: string;
+                /** @description Sort by field */
+                sortBy?: "createdAt" | "stageName";
+                /** @description Sort order */
+                sortOrder?: "asc" | "desc";
+            };
             header?: never;
             path?: never;
             cookie?: never;
         };
         requestBody?: never;
         responses: {
+            /** @description Successful paginated response */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": {
+                        /**
+                         * @description HTTP status code
+                         * @example 200
+                         */
+                        statusCode: number;
+                        /**
+                         * @description Response message
+                         * @example OK
+                         */
+                        message: string;
+                        /** @description Array of data items */
+                        data: components["schemas"]["IdolDto"][];
+                        /** @description Pagination metadata */
+                        paging: {
+                            /**
+                             * @description Total number of items
+                             * @example 100
+                             */
+                            total: number;
+                            /**
+                             * @description Current page number
+                             * @example 1
+                             */
+                            page: number;
+                            /**
+                             * @description Items per page
+                             * @example 10
+                             */
+                            limit: number;
+                            /**
+                             * @description Total number of pages
+                             * @example 10
+                             */
+                            totalPages: number;
+                        };
+                        /**
+                         * @description Error information (null on success)
+                         * @example null
+                         */
+                        error?: Record<string, never> | null;
+                        /**
+                         * @description Error code (null on success)
+                         * @example null
+                         */
+                        errorCode?: string | null;
+                    };
+                };
             };
         };
     };
-    AdminController_createIdolAccount: {
+    AdminIdolsController_createIdolAccount_v1: {
         parameters: {
             query?: never;
             header?: never;
@@ -4396,7 +5149,7 @@ export interface operations {
             };
         };
     };
-    AdminController_getAllFans: {
+    AdminUsersController_getAllFans_v1: {
         parameters: {
             query?: never;
             header?: never;
@@ -4413,7 +5166,7 @@ export interface operations {
             };
         };
     };
-    AdminController_getAllUsers: {
+    AdminUsersController_getAllUsers_v1: {
         parameters: {
             query?: never;
             header?: never;
@@ -4430,24 +5183,7 @@ export interface operations {
             };
         };
     };
-    AdminController_getStatistics: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-        };
-    };
-    AdminController_deactivateUser: {
+    AdminUsersController_deactivateUser_v1: {
         parameters: {
             query?: never;
             header?: never;
@@ -4467,7 +5203,7 @@ export interface operations {
             };
         };
     };
-    AdminController_activateUser: {
+    AdminUsersController_activateUser_v1: {
         parameters: {
             query?: never;
             header?: never;
@@ -4487,7 +5223,7 @@ export interface operations {
             };
         };
     };
-    AdminController_deleteUser: {
+    AdminUsersController_deleteUser_v1: {
         parameters: {
             query?: never;
             header?: never;
@@ -4504,6 +5240,342 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content?: never;
+            };
+        };
+    };
+    AdminStatisticsController_getStatistics_v1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    ProductController_getAllProducts_v1: {
+        parameters: {
+            query?: {
+                page?: number;
+                limit?: number;
+                /** @description Sort by field */
+                sortBy?: "createdAt" | "name" | "updatedAt";
+                /** @description Sort order */
+                order?: "asc" | "desc";
+                /** @description Filter by category ID */
+                category_id?: string;
+                /** @description Search by product name */
+                search?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful paginated response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /**
+                         * @description HTTP status code
+                         * @example 200
+                         */
+                        statusCode: number;
+                        /**
+                         * @description Response message
+                         * @example OK
+                         */
+                        message: string;
+                        /** @description Array of data items */
+                        data: components["schemas"]["ProductDto"][];
+                        /** @description Pagination metadata */
+                        paging: {
+                            /**
+                             * @description Total number of items
+                             * @example 100
+                             */
+                            total: number;
+                            /**
+                             * @description Current page number
+                             * @example 1
+                             */
+                            page: number;
+                            /**
+                             * @description Items per page
+                             * @example 10
+                             */
+                            limit: number;
+                            /**
+                             * @description Total number of pages
+                             * @example 10
+                             */
+                            totalPages: number;
+                        };
+                        /**
+                         * @description Error information (null on success)
+                         * @example null
+                         */
+                        error?: Record<string, never> | null;
+                        /**
+                         * @description Error code (null on success)
+                         * @example null
+                         */
+                        errorCode?: string | null;
+                    };
+                };
+            };
+        };
+    };
+    ProductController_createProduct_v1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateProductRequest"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CreateProductResponse"];
+                };
+            };
+        };
+    };
+    CommunityController_getCommunities_v1: {
+        parameters: {
+            query?: {
+                page?: number;
+                limit?: number;
+                /** @description Filter communities by join status. "all" returns all communities with isJoin field, "joined" returns only joined communities */
+                filter?: "all" | "joined";
+                /** @description Search communities by name (case-insensitive partial match) */
+                search?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful paginated response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /**
+                         * @description HTTP status code
+                         * @example 200
+                         */
+                        statusCode: number;
+                        /**
+                         * @description Response message
+                         * @example OK
+                         */
+                        message: string;
+                        /** @description Array of data items */
+                        data: components["schemas"]["GetCommunitiesResponse"][];
+                        /** @description Pagination metadata */
+                        paging: {
+                            /**
+                             * @description Total number of items
+                             * @example 100
+                             */
+                            total: number;
+                            /**
+                             * @description Current page number
+                             * @example 1
+                             */
+                            page: number;
+                            /**
+                             * @description Items per page
+                             * @example 10
+                             */
+                            limit: number;
+                            /**
+                             * @description Total number of pages
+                             * @example 10
+                             */
+                            totalPages: number;
+                        };
+                        /**
+                         * @description Error information (null on success)
+                         * @example null
+                         */
+                        error?: Record<string, never> | null;
+                        /**
+                         * @description Error code (null on success)
+                         * @example null
+                         */
+                        errorCode?: string | null;
+                    };
+                };
+            };
+        };
+    };
+    CommunityController_joinCommunity_v1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["JoinCommunityRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /**
+                         * @description HTTP status code
+                         * @example 200
+                         */
+                        statusCode: number;
+                        /**
+                         * @description Response message
+                         * @example OK
+                         */
+                        message: string;
+                        /**
+                         * @description No data returned
+                         * @example null
+                         */
+                        data?: Record<string, never> | null;
+                        /**
+                         * @description Error information (null on success)
+                         * @example null
+                         */
+                        error?: Record<string, never> | null;
+                        /**
+                         * @description Error code (null on success)
+                         * @example null
+                         */
+                        errorCode?: string | null;
+                    };
+                };
+            };
+        };
+    };
+    CommunityController_leaveCommunity_v1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["LeaveCommunityRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /**
+                         * @description HTTP status code
+                         * @example 200
+                         */
+                        statusCode: number;
+                        /**
+                         * @description Response message
+                         * @example OK
+                         */
+                        message: string;
+                        /**
+                         * @description No data returned
+                         * @example null
+                         */
+                        data?: Record<string, never> | null;
+                        /**
+                         * @description Error information (null on success)
+                         * @example null
+                         */
+                        error?: Record<string, never> | null;
+                        /**
+                         * @description Error code (null on success)
+                         * @example null
+                         */
+                        errorCode?: string | null;
+                    };
+                };
+            };
+        };
+    };
+    CommunityController_getCommunityDetail_v1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Community ID */
+                communityId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /**
+                         * @description HTTP status code
+                         * @example 200
+                         */
+                        statusCode: number;
+                        /**
+                         * @description Response message
+                         * @example OK
+                         */
+                        message: string;
+                        /** @description Response data */
+                        data?: components["schemas"]["GetCommunityDetailResponse"];
+                        /**
+                         * @description Error information (null on success)
+                         * @example null
+                         */
+                        error?: Record<string, never> | null;
+                        /**
+                         * @description Error code (null on success)
+                         * @example null
+                         */
+                        errorCode?: string | null;
+                    };
+                };
             };
         };
     };

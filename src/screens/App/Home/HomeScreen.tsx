@@ -10,6 +10,7 @@ import { useAppNavigation } from 'hooks/useAppNavigation';
 import { usePosts } from './hooks/usePosts';
 import { components } from 'src/schemes/openapi';
 import { blackColor } from 'constants/colors';
+import { useCommunities } from './components/ArtistCommunityList/hooks/useComunities';
 
 type PostDto = components['schemas']['PostDto'];
 
@@ -17,12 +18,12 @@ const HomeScreen = () => {
   const navigation = useAppNavigation();
   const {
     posts,
-    isLoading,
-    isLoadingMore,
-    isRefreshing,
-    hasMore,
-    loadMore,
-    refresh,
+    isLoading: isLoadingPosts,
+    isLoadingMore: isLoadingMorePosts,
+    isRefreshing: isRefreshingPosts,
+    hasMore: hasMorePosts,
+    loadMore: loadMorePosts,
+    refresh: refreshPosts,
   } = usePosts({
     limit: 8,
     sortBy: 'createdAt',
@@ -38,19 +39,19 @@ const HomeScreen = () => {
   );
 
   const handleEndReached = useCallback(() => {
-    if (hasMore && !isLoadingMore) {
-      loadMore();
+    if (hasMorePosts && !isLoadingMorePosts) {
+      loadMorePosts();
     }
-  }, [hasMore, isLoadingMore, loadMore]);
+  }, [hasMorePosts, isLoadingMorePosts, loadMorePosts]);
 
   const renderFooter = useCallback(() => {
-    if (!isLoadingMore) return null;
+    if (!isLoadingMorePosts) return null;
     return (
       <S.LoaderContainer>
         <ActivityIndicator size="small" color={blackColor} />
       </S.LoaderContainer>
     );
-  }, [isLoadingMore]);
+  }, [isLoadingMorePosts]);
 
   const renderItem = useCallback(
     ({ item }: { item: PostDto }) => {
@@ -58,10 +59,7 @@ const HomeScreen = () => {
         <S.TouchableZone
           onPress={() => handlePostPress(item.postId, item.userId)}
         >
-          <PostCard
-            post={item}
-            containerStyle={{ borderRadius: 20 }}
-          />
+          <PostCard post={item} containerStyle={{ borderRadius: 20 }} />
         </S.TouchableZone>
       );
     },
@@ -76,7 +74,7 @@ const HomeScreen = () => {
           <S.TopContainer>
             <ArtistCommunityList />
             <HomeBanner />
-            {(isLoading || isRefreshing) && <LoadingSkeletons />}
+            {(isLoadingPosts || isRefreshingPosts) && <LoadingSkeletons />}
           </S.TopContainer>
         }
         renderItem={renderItem}
@@ -84,11 +82,11 @@ const HomeScreen = () => {
         onEndReached={handleEndReached}
         onEndReachedThreshold={0.5}
         ListFooterComponent={renderFooter}
-        ListEmptyComponent={!isLoading ? <EmptyState /> : null}
+        ListEmptyComponent={!isLoadingPosts ? <EmptyState /> : null}
         refreshControl={
           <RefreshControl
-            refreshing={isLoading}
-            onRefresh={refresh}
+            refreshing={isLoadingPosts}
+            onRefresh={refreshPosts}
             tintColor={blackColor}
           />
         }

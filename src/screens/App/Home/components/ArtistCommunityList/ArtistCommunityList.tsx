@@ -2,6 +2,10 @@ import { primaryColor } from 'constants/colors';
 import * as S from './ArtistCommunityList.style';
 import PlusIcon from 'assets/images/icons/plus.svg';
 import { useAppNavigation } from 'hooks/useAppNavigation';
+import { useCommunities } from './hooks/useComunities';
+import LoadingSkeletons from './components/LoadingSkeletons/LoadingSkeletons';
+import ArtistCommunityModal from '../ArtistCommunityModal/ArtistCommunityModal';
+import { useState } from 'react';
 
 const SAMPLE_DATA = [
   {
@@ -38,20 +42,41 @@ const SAMPLE_DATA = [
 
 const ArtistCommunityList = () => {
   const navigation = useAppNavigation();
+  const [isModalVisible, setModalVisible] = useState(false);
+  const {
+    communities,
+    isLoading: isLoadingCommunities,
+    isLoadingMore: isLoadingMoreCommunities,
+    isRefreshing: isRefreshingCommunities,
+    hasMore: hasMoreCommunities,
+    loadMore: loadMoreCommunities,
+    refresh: refreshCommunities,
+  } = useCommunities({
+    limit: 8,
+    filter: 'joined', // Show only joined communities in the home screen
+  });
   return (
     <S.ArtistContainer>
       <S.ArtistList
         contentContainerStyle={{ gap: 12, justifyContent: 'flex-start' }}
         ListHeaderComponent={
-          <S.AddButton>
-            <PlusIcon width={40} height={40} color={primaryColor} />
-          </S.AddButton>
+          <S.HeaderWrapper>
+            <S.AddButton onPress={() => setModalVisible(true)}>
+              <PlusIcon width={40} height={40} color={primaryColor} />
+            </S.AddButton>
+            {isLoadingCommunities && <LoadingSkeletons />}
+            <ArtistCommunityModal visible={isModalVisible} onClose={() => setModalVisible(false)} />
+          </S.HeaderWrapper>
         }
-        data={SAMPLE_DATA}
+        data={communities}
         keyExtractor={(item: any) => item.id}
         renderItem={({ item }: { item: any }) => (
-          <S.ArtistItem onPress={() => navigation.navigate('/community-stack', { communityId: item.id })}>
-            <S.ArtistImage source={{ uri: item.imageUrl }} />
+          <S.ArtistItem
+            onPress={() =>
+              navigation.navigate('/community-stack', { communityId: item.id })
+            }
+          >
+            <S.ArtistImage source={{ uri: item.avatarUrl }} />
             <S.ArtistName>{item.name}</S.ArtistName>
           </S.ArtistItem>
         )}

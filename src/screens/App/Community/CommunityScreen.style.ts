@@ -86,3 +86,39 @@ export const PostItem = styled.View`
 export const PostTitle = styled.Text`
   font-size: 16px;
 `;
+
+export const FloatingButton = styled.TouchableOpacity`
+  position: absolute;
+  bottom: ${RFValue(24)}px;
+  right: ${RFValue(24)}px;
+  width: ${RFValue(56)}px;
+  height: ${RFValue(56)}px;
+  border-radius: ${RFValue(28)}px;
+  background-color: ${blackColor};
+  justify-content: center;
+  align-items: center;
+  elevation: 8;
+  shadow-color: #000;
+  shadow-offset: 0px 4px;
+  shadow-opacity: 0.3;
+  shadow-radius: 4px;
+`;
+
+export const LoadingContainer = styled.View`
+  padding: ${RFValue(20)}px;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const EmptyContainer = styled.View`
+  padding: ${RFValue(40)}px ${RFValue(20)}px;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const EmptyText = styled.Text`
+  font-family: ${Montserrat300};
+  font-size: ${RFValue(14)}px;
+  color: ${blackColor};
+  text-align: center;
+`;

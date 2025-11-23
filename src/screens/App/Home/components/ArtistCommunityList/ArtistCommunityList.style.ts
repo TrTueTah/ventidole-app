@@ -3,6 +3,11 @@ import { Montserrat300 } from "constants/fonts";
 import { RFValue } from "react-native-responsive-fontsize";
 import styled from "styled-components/native";
 
+export const HeaderWrapper = styled.View`
+  flex-direction: row;
+  gap: ${RFValue(12)}px;
+`;
+
 export const ArtistContainer = styled.View`
   background-color: ${whiteColor};
   border-radius: 12px;
@@ -50,7 +55,10 @@ export const AddButton = styled.TouchableOpacity`
   padding: ${RFValue(8)}px;
   background-color: ${whiteColor};
   border-radius: ${RFValue(100)}px;
-
+  width: ${RFValue(52)}px;
+  height: ${RFValue(52)}px;
+  justify-content: center;
+  align-items: center;
   shadow-color: ${shadow1Color};
   shadow-offset: 0px 0px;
   shadow-opacity: 1;

@@ -1252,6 +1252,166 @@ paths:
                   - message
       security: *ref_6
       tags: *ref_7
+  /v1/post/{postId}/like:
+    post:
+      operationId: PostController_likePost_v1
+      parameters:
+        - name: postId
+          required: true
+          in: path
+          description: Post ID
+          schema:
+            type: string
+      responses:
+        '201':
+          description: ''
+      security: *ref_6
+      tags: *ref_7
+    delete:
+      operationId: PostController_unlikePost_v1
+      parameters:
+        - name: postId
+          required: true
+          in: path
+          description: Post ID
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+      security: *ref_6
+      tags: *ref_7
+  /v1/post/community/{communityId}:
+    get:
+      operationId: PostController_getPostsByCommunity_v1
+      parameters:
+        - name: communityId
+          required: true
+          in: path
+          description: Community ID
+          schema:
+            type: string
+        - name: page
+          required: false
+          in: query
+          schema:
+            example: 1
+            type: number
+        - name: limit
+          required: false
+          in: query
+          schema:
+            example: 20
+            type: number
+        - name: userId
+          required: false
+          in: query
+          description: Filter by user ID
+          schema:
+            example: user-123
+            type: string
+        - name: hashtag
+          required: false
+          in: query
+          description: Filter by hashtag
+          schema:
+            example: nature
+            type: string
+        - name: visibility
+          required: false
+          in: query
+          description: Filter by visibility
+          schema:
+            example: public
+            type: string
+            enum:
+              - public
+              - followers
+              - private
+        - name: sortBy
+          required: false
+          in: query
+          description: Sort by field
+          schema:
+            example: createdAt
+            type: string
+            enum:
+              - createdAt
+              - likesCount
+              - commentsCount
+        - name: sortOrder
+          required: false
+          in: query
+          description: Sort order
+          schema:
+            example: desc
+            type: string
+            enum:
+              - asc
+              - desc
+      responses:
+        '200':
+          description: Successful paginated response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: number
+                    example: 200
+                    description: HTTP status code
+                  message:
+                    type: string
+                    example: OK
+                    description: Response message
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/PostDto'
+                    description: Array of data items
+                  paging:
+                    type: object
+                    description: Pagination metadata
+                    properties:
+                      total:
+                        type: number
+                        example: 100
+                        description: Total number of items
+                      page:
+                        type: number
+                        example: 1
+                        description: Current page number
+                      limit:
+                        type: number
+                        example: 10
+                        description: Items per page
+                      totalPages:
+                        type: number
+                        example: 10
+                        description: Total number of pages
+                    required:
+                      - total
+                      - page
+                      - limit
+                      - totalPages
+                  error:
+                    type: object
+                    nullable: true
+                    example: null
+                    description: Error information (null on success)
+                  errorCode:
+                    type: string
+                    nullable: true
+                    example: null
+                    description: Error code (null on success)
+                required:
+                  - statusCode
+                  - message
+                  - data
+                  - paging
+      security: *ref_6
+      tags: *ref_7
   /v1/comment:
     post:
       operationId: CommentController_createComment_v1
@@ -1902,6 +2062,40 @@ paths:
       security: *ref_12
       summary: Send a message to a channel
       tags: *ref_13
+    patch:
+      operationId: ChatController_updateMessage
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateMessageRequest'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChatMessageResponse'
+      security: *ref_12
+      summary: Update a message
+      tags: *ref_13
+    delete:
+      operationId: ChatController_deleteMessage
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeleteMessageRequest'
+      responses:
+        '200':
+          description: ''
+      security: *ref_12
+      summary: Delete a message
+      tags: *ref_13
   /chat/channels/{channelId}/messages:
     get:
       operationId: ChatController_getMessages
@@ -1924,14 +2118,8 @@ paths:
       responses:
         '200':
           description: ''
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/ChatMessageResponse'
       security: *ref_12
-      summary: Get messages from a channel
+      summary: Get messages from a channel with pagination
       tags: *ref_13
   /chat/channels/read:
     post:
@@ -1980,9 +2168,25 @@ paths:
       security: *ref_12
       summary: Leave a channel
       tags: *ref_13
-  /admin/login:
+  /chat/channels/archive:
     post:
-      operationId: AdminController_adminLogin
+      operationId: ChatController_archiveChannel
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ArchiveChannelRequest'
+      responses:
+        '200':
+          description: ''
+      security: *ref_12
+      summary: Archive a channel
+      tags: *ref_13
+  /v1/admin/authentication/login:
+    post:
+      operationId: AdminAuthController_adminLogin_v1
       parameters: []
       requestBody:
         required: true
@@ -1992,17 +2196,42 @@ paths:
               $ref: '#/components/schemas/AdminLoginRequest'
       responses:
         '200':
-          description: ''
+          description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AdminAuthResponse'
+                type: object
+                properties:
+                  statusCode:
+                    type: number
+                    example: 200
+                    description: HTTP status code
+                  message:
+                    type: string
+                    example: OK
+                    description: Response message
+                  data:
+                    $ref: '#/components/schemas/AdminAuthResponse'
+                    description: Response data
+                  error:
+                    type: object
+                    nullable: true
+                    example: null
+                    description: Error information (null on success)
+                  errorCode:
+                    type: string
+                    nullable: true
+                    example: null
+                    description: Error code (null on success)
+                required:
+                  - statusCode
+                  - message
       summary: Admin login (bypass all verification)
       tags: &ref_14
-        - Admin
-  /admin/signup:
+        - Admin Auth
+  /v1/admin/authentication/signup:
     post:
-      operationId: AdminController_adminSignup
+      operationId: AdminAuthController_adminSignup_v1
       parameters: []
       requestBody:
         required: true
@@ -2011,48 +2240,162 @@ paths:
             schema:
               $ref: '#/components/schemas/AdminSignupRequest'
       responses:
-        '201':
-          description: ''
+        '200':
+          description: Successful Response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AdminAuthResponse'
+                type: object
+                properties:
+                  statusCode:
+                    type: number
+                    example: 200
+                    description: HTTP status code
+                  message:
+                    type: string
+                    example: OK
+                    description: Response message
+                  data:
+                    $ref: '#/components/schemas/AdminAuthResponse'
+                    description: Response data
+                  error:
+                    type: object
+                    nullable: true
+                    example: null
+                    description: Error information (null on success)
+                  errorCode:
+                    type: string
+                    nullable: true
+                    example: null
+                    description: Error code (null on success)
+                required:
+                  - statusCode
+                  - message
       summary: Admin signup (bypass all verification, instantly active)
       tags: *ref_14
-  /admin/groups:
+  /v1/admin/communities:
     post:
-      operationId: AdminController_createGroup
+      operationId: AdminCommunitiesController_createCommunity_v1
       parameters: []
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CreateGroupRequest'
+              $ref: '#/components/schemas/CreateCommunityRequest'
       responses:
         '201':
           description: ''
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CreateGroupResponse'
-      security:
+                $ref: '#/components/schemas/CreateCommunityResponse'
+      security: &ref_15
         - bearer: []
-      summary: Create a new group (Admin only)
-      tags: *ref_14
+      summary: Create a new community (Admin only)
+      tags: &ref_16
+        - Admin Communities
     get:
-      operationId: AdminController_getAllGroups
-      parameters: []
+      operationId: AdminCommunitiesController_getAllCommunities_v1
+      parameters:
+        - name: page
+          required: false
+          in: query
+          schema:
+            example: 1
+            type: number
+        - name: limit
+          required: false
+          in: query
+          schema:
+            example: 20
+            type: number
+        - name: sortBy
+          required: false
+          in: query
+          description: Sort by field
+          schema:
+            example: createdAt
+            type: string
+            enum:
+              - createdAt
+        - name: sortOrder
+          required: false
+          in: query
+          description: Sort order
+          schema:
+            example: desc
+            type: string
+            enum:
+              - asc
+              - desc
       responses:
         '200':
-          description: ''
-      security:
-        - bearer: []
-      summary: Get all groups (Admin only)
-      tags: *ref_14
-  /admin/idols:
+          description: Successful paginated response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: number
+                    example: 200
+                    description: HTTP status code
+                  message:
+                    type: string
+                    example: OK
+                    description: Response message
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/CommunityDto'
+                    description: Array of data items
+                  paging:
+                    type: object
+                    description: Pagination metadata
+                    properties:
+                      total:
+                        type: number
+                        example: 100
+                        description: Total number of items
+                      page:
+                        type: number
+                        example: 1
+                        description: Current page number
+                      limit:
+                        type: number
+                        example: 10
+                        description: Items per page
+                      totalPages:
+                        type: number
+                        example: 10
+                        description: Total number of pages
+                    required:
+                      - total
+                      - page
+                      - limit
+                      - totalPages
+                  error:
+                    type: object
+                    nullable: true
+                    example: null
+                    description: Error information (null on success)
+                  errorCode:
+                    type: string
+                    nullable: true
+                    example: null
+                    description: Error code (null on success)
+                required:
+                  - statusCode
+                  - message
+                  - data
+                  - paging
+      security: *ref_15
+      summary: Get all communities with pagination (Admin only)
+      tags: *ref_16
+  /v1/admin/idols:
     post:
-      operationId: AdminController_createIdolAccount
+      operationId: AdminIdolsController_createIdolAccount_v1
       parameters: []
       requestBody:
         required: true
@@ -2070,20 +2413,118 @@ paths:
       security:
         - bearer: []
       summary: Create a new idol account (Admin only)
-      tags: *ref_14
+      tags: &ref_17
+        - Admin Idols
     get:
-      operationId: AdminController_getAllIdols
-      parameters: []
+      operationId: AdminIdolsController_getAllIdols_v1
+      parameters:
+        - name: page
+          required: false
+          in: query
+          schema:
+            example: 1
+            type: number
+        - name: limit
+          required: false
+          in: query
+          schema:
+            example: 20
+            type: number
+        - name: search
+          required: false
+          in: query
+          description: Search by username
+          schema:
+            example: ''
+            type: string
+        - name: sortBy
+          required: false
+          in: query
+          description: Sort by field
+          schema:
+            example: createdAt
+            type: string
+            enum:
+              - createdAt
+              - stageName
+        - name: sortOrder
+          required: false
+          in: query
+          description: Sort order
+          schema:
+            example: desc
+            type: string
+            enum:
+              - asc
+              - desc
       responses:
         '200':
-          description: ''
+          description: Successful paginated response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: number
+                    example: 200
+                    description: HTTP status code
+                  message:
+                    type: string
+                    example: OK
+                    description: Response message
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/IdolDto'
+                    description: Array of data items
+                  paging:
+                    type: object
+                    description: Pagination metadata
+                    properties:
+                      total:
+                        type: number
+                        example: 100
+                        description: Total number of items
+                      page:
+                        type: number
+                        example: 1
+                        description: Current page number
+                      limit:
+                        type: number
+                        example: 10
+                        description: Items per page
+                      totalPages:
+                        type: number
+                        example: 10
+                        description: Total number of pages
+                    required:
+                      - total
+                      - page
+                      - limit
+                      - totalPages
+                  error:
+                    type: object
+                    nullable: true
+                    example: null
+                    description: Error information (null on success)
+                  errorCode:
+                    type: string
+                    nullable: true
+                    example: null
+                    description: Error code (null on success)
+                required:
+                  - statusCode
+                  - message
+                  - data
+                  - paging
       security:
         - bearer: []
-      summary: Get all idols (Admin only)
-      tags: *ref_14
-  /admin/fans:
+      summary: Get all idols with pagination (Admin only)
+      tags: *ref_17
+  /v1/admin/users/fans:
     get:
-      operationId: AdminController_getAllFans
+      operationId: AdminUsersController_getAllFans_v1
       parameters: []
       responses:
         '200':
@@ -2091,10 +2532,11 @@ paths:
       security:
         - bearer: []
       summary: Get all fans (Admin only)
-      tags: *ref_14
-  /admin/users:
+      tags: &ref_18
+        - Admin Users
+  /v1/admin/users:
     get:
-      operationId: AdminController_getAllUsers
+      operationId: AdminUsersController_getAllUsers_v1
       parameters: []
       responses:
         '200':
@@ -2102,21 +2544,10 @@ paths:
       security:
         - bearer: []
       summary: Get all users with profiles (Admin only)
-      tags: *ref_14
-  /admin/statistics:
-    get:
-      operationId: AdminController_getStatistics
-      parameters: []
-      responses:
-        '200':
-          description: ''
-      security:
-        - bearer: []
-      summary: Get platform statistics (Admin only)
-      tags: *ref_14
-  /admin/users/{userId}/deactivate:
+      tags: *ref_18
+  /v1/admin/users/{userId}/deactivate:
     patch:
-      operationId: AdminController_deactivateUser
+      operationId: AdminUsersController_deactivateUser_v1
       parameters:
         - name: userId
           required: true
@@ -2130,10 +2561,10 @@ paths:
       security:
         - bearer: []
       summary: Deactivate a user account (Admin only)
-      tags: *ref_14
-  /admin/users/{userId}/activate:
+      tags: *ref_18
+  /v1/admin/users/{userId}/activate:
     patch:
-      operationId: AdminController_activateUser
+      operationId: AdminUsersController_activateUser_v1
       parameters:
         - name: userId
           required: true
@@ -2147,10 +2578,10 @@ paths:
       security:
         - bearer: []
       summary: Activate a user account (Admin only)
-      tags: *ref_14
-  /admin/users/{userId}:
+      tags: *ref_18
+  /v1/admin/users/{userId}:
     delete:
-      operationId: AdminController_deleteUser
+      operationId: AdminUsersController_deleteUser_v1
       parameters:
         - name: userId
           required: true
@@ -2164,7 +2595,404 @@ paths:
       security:
         - bearer: []
       summary: Delete a user account (Admin only)
-      tags: *ref_14
+      tags: *ref_18
+  /v1/admin/statistics:
+    get:
+      operationId: AdminStatisticsController_getStatistics_v1
+      parameters: []
+      responses:
+        '200':
+          description: ''
+      security:
+        - bearer: []
+      summary: Get platform statistics (Admin only)
+      tags:
+        - Admin Statistics
+  /v1/admin/products:
+    post:
+      operationId: ProductController_createProduct_v1
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateProductRequest'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateProductResponse'
+      security: &ref_19
+        - bearer: []
+      summary: Create a new product (Admin only)
+      tags: &ref_20
+        - Admin Products
+    get:
+      operationId: ProductController_getAllProducts_v1
+      parameters:
+        - name: page
+          required: false
+          in: query
+          schema:
+            example: 1
+            type: number
+        - name: limit
+          required: false
+          in: query
+          schema:
+            example: 20
+            type: number
+        - name: sortBy
+          required: false
+          in: query
+          description: Sort by field
+          schema:
+            example: createdAt
+            type: string
+            enum:
+              - createdAt
+              - name
+              - updatedAt
+        - name: order
+          required: false
+          in: query
+          description: Sort order
+          schema:
+            example: desc
+            type: string
+            enum:
+              - asc
+              - desc
+        - name: category_id
+          required: false
+          in: query
+          description: Filter by category ID
+          schema:
+            example: cmi64epuq0000p5wb5q352lws
+            type: string
+        - name: search
+          required: false
+          in: query
+          description: Search by product name
+          schema:
+            example: BTS
+            type: string
+      responses:
+        '200':
+          description: Successful paginated response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: number
+                    example: 200
+                    description: HTTP status code
+                  message:
+                    type: string
+                    example: OK
+                    description: Response message
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ProductDto'
+                    description: Array of data items
+                  paging:
+                    type: object
+                    description: Pagination metadata
+                    properties:
+                      total:
+                        type: number
+                        example: 100
+                        description: Total number of items
+                      page:
+                        type: number
+                        example: 1
+                        description: Current page number
+                      limit:
+                        type: number
+                        example: 10
+                        description: Items per page
+                      totalPages:
+                        type: number
+                        example: 10
+                        description: Total number of pages
+                    required:
+                      - total
+                      - page
+                      - limit
+                      - totalPages
+                  error:
+                    type: object
+                    nullable: true
+                    example: null
+                    description: Error information (null on success)
+                  errorCode:
+                    type: string
+                    nullable: true
+                    example: null
+                    description: Error code (null on success)
+                required:
+                  - statusCode
+                  - message
+                  - data
+                  - paging
+      security: *ref_19
+      summary: Get all products with pagination (Admin only)
+      tags: *ref_20
+  /v1/community:
+    get:
+      description: >-
+        Get communities with optional filtering. Use filter=joined to get only
+        joined communities, or filter=all to get all communities with isJoin
+        field.
+      operationId: CommunityController_getCommunities_v1
+      parameters:
+        - name: page
+          required: false
+          in: query
+          schema:
+            example: 1
+            type: number
+        - name: limit
+          required: false
+          in: query
+          schema:
+            example: 20
+            type: number
+        - name: filter
+          required: false
+          in: query
+          description: >-
+            Filter communities by join status. "all" returns all communities
+            with isJoin field, "joined" returns only joined communities
+          schema:
+            default: joined
+            type: string
+            enum:
+              - all
+              - joined
+        - name: search
+          required: false
+          in: query
+          description: Search communities by name (case-insensitive partial match)
+          schema:
+            example: K-pop
+            type: string
+      responses:
+        '200':
+          description: Successful paginated response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: number
+                    example: 200
+                    description: HTTP status code
+                  message:
+                    type: string
+                    example: OK
+                    description: Response message
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/GetCommunitiesResponse'
+                    description: Array of data items
+                  paging:
+                    type: object
+                    description: Pagination metadata
+                    properties:
+                      total:
+                        type: number
+                        example: 100
+                        description: Total number of items
+                      page:
+                        type: number
+                        example: 1
+                        description: Current page number
+                      limit:
+                        type: number
+                        example: 10
+                        description: Items per page
+                      totalPages:
+                        type: number
+                        example: 10
+                        description: Total number of pages
+                    required:
+                      - total
+                      - page
+                      - limit
+                      - totalPages
+                  error:
+                    type: object
+                    nullable: true
+                    example: null
+                    description: Error information (null on success)
+                  errorCode:
+                    type: string
+                    nullable: true
+                    example: null
+                    description: Error code (null on success)
+                required:
+                  - statusCode
+                  - message
+                  - data
+                  - paging
+      security: &ref_21
+        - bearer: []
+      summary: Get communities
+      tags: &ref_22
+        - Community
+  /v1/community/join:
+    post:
+      description: Join a community by providing the community ID
+      operationId: CommunityController_joinCommunity_v1
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/JoinCommunityRequest'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: number
+                    example: 200
+                    description: HTTP status code
+                  message:
+                    type: string
+                    example: OK
+                    description: Response message
+                  data:
+                    type: object
+                    nullable: true
+                    example: null
+                    description: No data returned
+                  error:
+                    type: object
+                    nullable: true
+                    example: null
+                    description: Error information (null on success)
+                  errorCode:
+                    type: string
+                    nullable: true
+                    example: null
+                    description: Error code (null on success)
+                required:
+                  - statusCode
+                  - message
+      security: *ref_21
+      summary: Join a community
+      tags: *ref_22
+  /v1/community/leave:
+    delete:
+      description: Leave a community by providing the community ID
+      operationId: CommunityController_leaveCommunity_v1
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LeaveCommunityRequest'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: number
+                    example: 200
+                    description: HTTP status code
+                  message:
+                    type: string
+                    example: OK
+                    description: Response message
+                  data:
+                    type: object
+                    nullable: true
+                    example: null
+                    description: No data returned
+                  error:
+                    type: object
+                    nullable: true
+                    example: null
+                    description: Error information (null on success)
+                  errorCode:
+                    type: string
+                    nullable: true
+                    example: null
+                    description: Error code (null on success)
+                required:
+                  - statusCode
+                  - message
+      security: *ref_21
+      summary: Leave a community
+      tags: *ref_22
+  /v1/community/{communityId}:
+    get:
+      description: >-
+        Get detailed information about a community including idols and follower
+        count
+      operationId: CommunityController_getCommunityDetail_v1
+      parameters:
+        - name: communityId
+          required: true
+          in: path
+          description: Community ID
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: number
+                    example: 200
+                    description: HTTP status code
+                  message:
+                    type: string
+                    example: OK
+                    description: Response message
+                  data:
+                    $ref: '#/components/schemas/GetCommunityDetailResponse'
+                    description: Response data
+                  error:
+                    type: object
+                    nullable: true
+                    example: null
+                    description: Error information (null on success)
+                  errorCode:
+                    type: string
+                    nullable: true
+                    example: null
+                    description: Error code (null on success)
+                required:
+                  - statusCode
+                  - message
+      security: *ref_21
+      summary: Get community detail
+      tags: *ref_22
 info:
   title: API Docs
   description: Custom Swagger UI in NestJS
@@ -2601,42 +3429,46 @@ components:
       properties:
         id:
           type: string
-          description: Idol ID
-          example: idol-clx123abc
         stageName:
           type: string
-          description: Idol stage name
-          example: StarLight
         avatarUrl:
           type: string
-          description: Idol avatar URL
-          example: https://storage.googleapis.com/bucket/avatars/idol-123.jpg
         backgroundUrl:
           type: string
-          description: Idol background image URL
-          example: https://storage.googleapis.com/bucket/backgrounds/idol-123.jpg
         bio:
           type: string
-          description: Idol bio/description
-          example: Professional singer and performer 🎤
         groupId:
           type: string
-          description: Group ID
-          example: group-clx123abc
+        userId:
+          type: string
+        isActive:
+          type: boolean
         createdAt:
+          format: date-time
           type: string
-          description: Created at timestamp
-          example: '2024-01-01T00:00:00.000Z'
         updatedAt:
+          format: date-time
           type: string
-          description: Updated at timestamp
-          example: '2024-01-01T00:00:00.000Z'
+        version:
+          type: number
+        user:
+          $ref: '#/components/schemas/UserSummaryDto'
+        group:
+          $ref: '#/components/schemas/GroupSummaryDto'
       required:
         - id
         - stageName
+        - avatarUrl
+        - backgroundUrl
+        - bio
         - groupId
+        - userId
+        - isActive
         - createdAt
         - updatedAt
+        - version
+        - user
+        - group
     UserDto:
       type: object
       properties:
@@ -2928,13 +3760,6 @@ components:
           type: array
           items:
             type: string
-        mentions:
-          description: Mentioned user IDs
-          example:
-            - user-id-1
-          type: array
-          items:
-            type: string
         location:
           type: string
           description: Location
@@ -2959,7 +3784,6 @@ components:
         - content
         - mediaUrls
         - hashtags
-        - mentions
         - location
         - createdAt
         - counters
@@ -2992,23 +3816,16 @@ components:
           example: 'Beautiful sunset at the beach! 🌅 #nature #sunset'
         mediaUrls:
           description: Media URLs
-          example: &ref_15
+          example: &ref_23
             - https://storage.googleapis.com/bucket/image1.jpg
           type: array
           items:
             type: string
         hashtags:
           description: Hashtags
-          example: &ref_16
+          example: &ref_24
             - nature
             - sunset
-          type: array
-          items:
-            type: string
-        mentions:
-          description: Mentioned user IDs
-          example: &ref_17
-            - user-id-1
           type: array
           items:
             type: string
@@ -3051,7 +3868,6 @@ components:
         - content
         - mediaUrls
         - hashtags
-        - mentions
         - visibility
         - likesCount
         - commentsCount
@@ -3088,19 +3904,13 @@ components:
           example: 'Beautiful sunset at the beach! 🌅 #nature #sunset'
         mediaUrls:
           description: Media URLs
-          example: *ref_15
+          example: *ref_23
           type: array
           items:
             type: string
         hashtags:
           description: Hashtags
-          example: *ref_16
-          type: array
-          items:
-            type: string
-        mentions:
-          description: Mentioned user IDs
-          example: *ref_17
+          example: *ref_24
           type: array
           items:
             type: string
@@ -3143,7 +3953,6 @@ components:
         - content
         - mediaUrls
         - hashtags
-        - mentions
         - visibility
         - likesCount
         - commentsCount
@@ -3231,14 +4040,6 @@ components:
           type: array
           items:
             type: string
-        mentions:
-          description: Mentioned user IDs
-          example:
-            - user-id-1
-            - user-id-2
-          type: array
-          items:
-            type: string
         location:
           type: string
           description: Location/place name
@@ -3278,14 +4079,6 @@ components:
             - nature
             - sunset
             - photography
-          type: array
-          items:
-            type: string
-        mentions:
-          description: Mentioned user IDs
-          example:
-            - user-id-1
-            - user-id-2
           type: array
           items:
             type: string
@@ -3955,20 +4748,38 @@ components:
       required:
         - channelId
         - userIds
-    AdminLoginRequest:
+    UpdateMessageRequest:
       type: object
       properties:
-        email:
+        messageId:
           type: string
-          example: admin@ventidole.com
-          description: Admin email
-        password:
+          description: Message ID to update
+        content:
           type: string
-          example: admin123
-          description: Admin password
+          description: New message content
       required:
-        - email
-        - password
+        - messageId
+        - content
+    DeleteMessageRequest:
+      type: object
+      properties:
+        messageId:
+          type: string
+          description: Message ID to delete
+        channelId:
+          type: string
+          description: Channel ID
+      required:
+        - messageId
+        - channelId
+    ArchiveChannelRequest:
+      type: object
+      properties:
+        channelId:
+          type: string
+          description: Channel ID to archive
+      required:
+        - channelId
     AdminAuthResponse:
       type: object
       properties:
@@ -3991,6 +4802,20 @@ components:
         - name
         - accessToken
         - refreshToken
+    AdminLoginRequest:
+      type: object
+      properties:
+        email:
+          type: string
+          example: admin@ventidole.com
+          description: Admin email
+        password:
+          type: string
+          example: admin123
+          description: Admin password
+      required:
+        - email
+        - password
     AdminSignupRequest:
       type: object
       properties:
@@ -4010,37 +4835,37 @@ components:
         - email
         - password
         - name
-    CreateGroupRequest:
+    CreateCommunityRequest:
       type: object
       properties:
-        groupName:
+        name:
           type: string
           example: StarLight
-          description: Group name
+          description: Community name
         description:
           type: string
-          example: A talented K-pop group known for their powerful performances
-          description: Group description
-        logoUrl:
+          example: A talented K-pop community known for their powerful performances
+          description: Community description
+        avatarUrl:
           type: string
-          example: https://res.cloudinary.com/bucket/logo.jpg
-          description: Group logo URL
+          example: https://res.cloudinary.com/bucket/avatar.jpg
+          description: Community avatar URL
         backgroundUrl:
           type: string
           example: https://res.cloudinary.com/bucket/background.jpg
-          description: Group background image URL
+          description: Community background image URL
       required:
-        - groupName
-    CreateGroupResponse:
+        - name
+    CreateCommunityResponse:
       type: object
       properties:
         id:
           type: string
-        groupName:
+        name:
           type: string
         description:
           type: string
-        logoUrl:
+        avatarUrl:
           type: string
         backgroundUrl:
           type: string
@@ -4052,15 +4877,82 @@ components:
         updatedAt:
           format: date-time
           type: string
+        version:
+          type: number
       required:
         - id
-        - groupName
+        - name
         - description
-        - logoUrl
+        - avatarUrl
         - backgroundUrl
         - isActive
         - createdAt
         - updatedAt
+        - version
+    IdolSummaryDto:
+      type: object
+      properties:
+        id:
+          type: string
+        stageName:
+          type: string
+        avatarUrl:
+          type: string
+      required:
+        - id
+        - stageName
+        - avatarUrl
+    CommunityCountDto:
+      type: object
+      properties:
+        idols:
+          type: number
+        followers:
+          type: number
+      required:
+        - idols
+        - followers
+    CommunityDto:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        avatarUrl:
+          type: string
+        backgroundUrl:
+          type: string
+        isActive:
+          type: boolean
+        createdAt:
+          format: date-time
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+        version:
+          type: number
+        idols:
+          type: array
+          items:
+            $ref: '#/components/schemas/IdolSummaryDto'
+        _count:
+          $ref: '#/components/schemas/CommunityCountDto'
+      required:
+        - id
+        - name
+        - description
+        - avatarUrl
+        - backgroundUrl
+        - isActive
+        - createdAt
+        - updatedAt
+        - version
+        - idols
+        - _count
     CreateIdolRequest:
       type: object
       properties:
@@ -4103,6 +4995,45 @@ components:
         - password
         - stageName
         - groupId
+    CreatedIdolDto:
+      type: object
+      properties:
+        id:
+          type: string
+        stageName:
+          type: string
+        avatarUrl:
+          type: string
+        backgroundUrl:
+          type: string
+        bio:
+          type: string
+        groupId:
+          type: string
+        userId:
+          type: string
+        isActive:
+          type: boolean
+        createdAt:
+          format: date-time
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+        version:
+          type: number
+      required:
+        - id
+        - stageName
+        - avatarUrl
+        - backgroundUrl
+        - bio
+        - groupId
+        - userId
+        - isActive
+        - createdAt
+        - updatedAt
+        - version
     CreateIdolResponse:
       type: object
       properties:
@@ -4113,7 +5044,7 @@ components:
         role:
           type: string
         idol:
-          type: object
+          $ref: '#/components/schemas/CreatedIdolDto'
         accessToken:
           type: string
         refreshToken:
@@ -4125,3 +5056,365 @@ components:
         - idol
         - accessToken
         - refreshToken
+    UserSummaryDto:
+      type: object
+      properties:
+        id:
+          type: string
+        email:
+          type: string
+        role:
+          type: string
+        isOnline:
+          type: boolean
+        isActive:
+          type: boolean
+        createdAt:
+          format: date-time
+          type: string
+      required:
+        - id
+        - email
+        - role
+        - isOnline
+        - isActive
+        - createdAt
+    GroupSummaryDto:
+      type: object
+      properties:
+        id:
+          type: string
+        groupName:
+          type: string
+        logoUrl:
+          type: string
+      required:
+        - id
+        - groupName
+        - logoUrl
+    CreateProductVariantRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Standard Version
+          description: Product variant name
+        price_money:
+          type: number
+          example: 29.99
+          description: Product variant price
+        total_supply:
+          type: number
+          example: 100
+          description: Total supply/stock for this variant
+        remaining_supply:
+          type: number
+          example: 100
+          description: Remaining supply (defaults to total_supply if not provided)
+      required:
+        - name
+        - price_money
+        - total_supply
+    CreateProductRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          example: BTS Official Light Stick
+          description: Product name
+        description:
+          type: string
+          example: >-
+            Official BTS light stick for concerts and fan events. High quality
+            and long-lasting.
+          description: Product description
+        cover_image:
+          type: string
+          example: https://res.cloudinary.com/bucket/bts-lightstick.jpg
+          description: Product cover image URL
+        product_category_id:
+          type: string
+          example: cmi64epuq0000p5wb5q352lws
+          description: Product category ID
+        variants:
+          description: Product variants (at least one variant is required)
+          example:
+            - name: Standard Version
+              price_money: 29.99
+              total_supply: 100
+              remaining_supply: 100
+            - name: Premium Version
+              price_money: 35.99
+              total_supply: 50
+              remaining_supply: 50
+          type: array
+          items:
+            $ref: '#/components/schemas/CreateProductVariantRequest'
+      required:
+        - name
+        - product_category_id
+        - variants
+    ProductCategoryDto:
+      type: object
+      properties:
+        id:
+          type: string
+          example: clz1234567890
+          description: Category ID
+        name:
+          type: string
+          example: Merchandise
+          description: Category name
+        isActive:
+          type: boolean
+          example: true
+          description: Whether the category is active
+        createdAt:
+          format: date-time
+          type: string
+          example: '2023-11-19T10:00:00.000Z'
+          description: Creation timestamp
+      required:
+        - id
+        - name
+        - isActive
+        - createdAt
+    ProductVariantDto:
+      type: object
+      properties:
+        id:
+          type: string
+          example: cmi64xyz987654321
+          description: Variant ID
+        name:
+          type: string
+          example: Standard Version
+          description: Variant name
+        price_money:
+          type: number
+          example: 29.99
+          description: Product variant price
+        total_supply:
+          type: number
+          example: 100
+          description: Total supply/stock
+        remaining_supply:
+          type: number
+          example: 85
+          description: Remaining supply/stock
+        isActive:
+          type: boolean
+          example: true
+          description: Whether the variant is active
+        createdAt:
+          format: date-time
+          type: string
+          example: '2023-11-19T10:30:00.000Z'
+          description: Creation timestamp
+      required:
+        - id
+        - name
+        - price_money
+        - total_supply
+        - remaining_supply
+        - isActive
+        - createdAt
+    CreateProductResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          example: clz1234567890
+          description: Created product ID
+        name:
+          type: string
+          example: BTS Official Light Stick
+          description: Product name
+        description:
+          type: object
+          example: Official BTS light stick for concerts and fan events.
+          description: Product description
+        cover_image:
+          type: object
+          example: https://res.cloudinary.com/bucket/bts-lightstick.jpg
+          description: Product cover image URL
+        category:
+          description: Product category
+          allOf:
+            - $ref: '#/components/schemas/ProductCategoryDto'
+        variants:
+          description: Created product variants
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductVariantDto'
+        createdAt:
+          format: date-time
+          type: string
+          example: '2023-11-19T10:00:00.000Z'
+          description: Creation timestamp
+      required:
+        - id
+        - name
+        - description
+        - cover_image
+        - category
+        - variants
+        - createdAt
+    ProductDto:
+      type: object
+      properties:
+        id:
+          type: string
+          example: clz1234567890
+          description: Product ID
+        name:
+          type: string
+          example: BTS Official Light Stick
+          description: Product name
+        description:
+          type: object
+          example: >-
+            Official BTS light stick for concerts and fan events. High quality
+            and long-lasting.
+          description: Product description
+        cover_image:
+          type: object
+          example: https://res.cloudinary.com/bucket/bts-lightstick.jpg
+          description: Product cover image URL
+        category:
+          description: Product category
+          allOf:
+            - $ref: '#/components/schemas/ProductCategoryDto'
+        variants:
+          description: Product variants
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductVariantDto'
+        isActive:
+          type: boolean
+          example: true
+          description: Whether the product is active
+        createdAt:
+          format: date-time
+          type: string
+          example: '2023-11-19T10:00:00.000Z'
+          description: Creation timestamp
+        updatedAt:
+          format: date-time
+          type: string
+          example: '2023-11-19T10:30:00.000Z'
+          description: Last update timestamp
+        version:
+          type: number
+          example: 0
+          description: Version for optimistic locking
+      required:
+        - id
+        - name
+        - category
+        - variants
+        - isActive
+        - createdAt
+        - updatedAt
+        - version
+    GetCommunitiesResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        avatarUrl:
+          type: string
+        backgroundUrl:
+          type: string
+        isJoin:
+          type: boolean
+          description: Indicates if the current user has joined this community
+        followerCount:
+          type: number
+          description: Total number of followers in the community
+        createdAt:
+          format: date-time
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+      required:
+        - id
+        - name
+        - isJoin
+        - followerCount
+        - createdAt
+        - updatedAt
+    IdolInfo:
+      type: object
+      properties:
+        id:
+          type: string
+        userId:
+          type: string
+        stageName:
+          type: string
+        bio:
+          type: string
+        avatarUrl:
+          type: string
+      required:
+        - id
+        - userId
+        - stageName
+    GetCommunityDetailResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        avatarUrl:
+          type: string
+        backgroundUrl:
+          type: string
+        followerCount:
+          type: number
+          description: Total number of followers in the community
+        isFollowing:
+          type: boolean
+          description: Indicates if the current user is following this community
+        idols:
+          description: List of idols in this community
+          type: array
+          items:
+            $ref: '#/components/schemas/IdolInfo'
+        createdAt:
+          format: date-time
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+      required:
+        - id
+        - name
+        - followerCount
+        - isFollowing
+        - idols
+        - createdAt
+        - updatedAt
+    JoinCommunityRequest:
+      type: object
+      properties:
+        communityId:
+          type: string
+          description: The ID of the community to join
+      required:
+        - communityId
+    LeaveCommunityRequest:
+      type: object
+      properties:
+        communityId:
+          type: string
+          description: The ID of the community to leave
+      required:
+        - communityId
