@@ -8,6 +8,7 @@ import { useLeaveCommunity } from './hooks/useLeaveCommunity';
 import { blackColor, grayColor, primaryColor } from 'constants/colors';
 import CloseIcon from 'assets/images/icons/close.svg';
 import SearchIcon from 'assets/images/icons/search.svg';
+import Button from 'components/Button/Button';
 
 interface ArtistCommunityModalProps {
   visible: boolean;
@@ -21,6 +22,7 @@ const FILTERS: FilterType[] = ['All', 'Joined'];
 const ArtistCommunityModal: React.FC<ArtistCommunityModalProps> = ({ visible, onClose }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [activeFilter, setActiveFilter] = useState<FilterType>('All');
+  const [loadingCommunityId, setLoadingCommunityId] = useState<string | null>(null);
 
   // Fetch communities based on filter and search
   const {
@@ -36,8 +38,8 @@ const ArtistCommunityModal: React.FC<ArtistCommunityModalProps> = ({ visible, on
     search: searchQuery,
   });
 
-  const { mutate: joinCommunity, isPending: isJoining } = useJoinCommunity();
-  const { mutate: leaveCommunity, isPending: isLeaving } = useLeaveCommunity();
+  const { mutate: joinCommunity } = useJoinCommunity();
+  const { mutate: leaveCommunity } = useLeaveCommunity();
 
   const handleJoinToggle = useCallback((communityId: string, isJoined: boolean) => {
     if (isJoined) {
@@ -53,15 +55,18 @@ const ArtistCommunityModal: React.FC<ArtistCommunityModalProps> = ({ visible, on
             text: 'Leave',
             style: 'destructive',
             onPress: () => {
+              setLoadingCommunityId(communityId);
               leaveCommunity(
                 {
                   body: { communityId }
                 },
                 {
                   onSuccess: () => {
+                    setLoadingCommunityId(null);
                     refresh();
                   },
                   onError: (error: any) => {
+                    setLoadingCommunityId(null);
                     Alert.alert('Error', error.message || 'Failed to leave community');
                   },
                 }
@@ -71,15 +76,18 @@ const ArtistCommunityModal: React.FC<ArtistCommunityModalProps> = ({ visible, on
         ]
       );
     } else {
+      setLoadingCommunityId(communityId);
       joinCommunity(
         {
           body: { communityId }
         },
         {
           onSuccess: () => {
+            setLoadingCommunityId(null);
             refresh();
           },
           onError: (error: any) => {
+            setLoadingCommunityId(null);
             Alert.alert('Error', error.message || 'Failed to join community');
           },
         }
@@ -89,6 +97,7 @@ const ArtistCommunityModal: React.FC<ArtistCommunityModalProps> = ({ visible, on
 
   const renderCommunityItem = ({ item }: { item: any }) => {
     const isNew = item.createdAt && new Date(item.createdAt) > new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
+    const isLoadingThisItem = loadingCommunityId === item.id;
 
     return (
       <S.CommunityItem>
@@ -106,15 +115,20 @@ const ArtistCommunityModal: React.FC<ArtistCommunityModalProps> = ({ visible, on
             {item.followerCount || 0} members{item.isJoin ? ' · Joined' : ''}
           </S.CommunityMembers>
         </S.CommunityInfo>
-        <S.JoinButton
-          isJoined={item.isJoin}
+        <Button
+          title={item.isJoin ? 'Joined' : 'Join'}
           onPress={() => handleJoinToggle(item.id, item.isJoin)}
-          disabled={isJoining || isLeaving}
-        >
-          <S.JoinButtonText isJoined={item.isJoin}>
-            {item.isJoin ? 'Joined' : 'Join'}
-          </S.JoinButtonText>
-        </S.JoinButton>
+          loading={isLoadingThisItem}
+          variant={item.isJoin ? 'outline' : 'default'}
+          buttonStyle={{
+            borderRadius: 20,
+            height: 40,
+            minWidth: 80,
+          }}
+          buttonTitleStyle={{
+            fontSize: 14,
+          }}
+        />
       </S.CommunityItem>
     );
   };

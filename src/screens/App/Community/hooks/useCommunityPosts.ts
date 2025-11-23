@@ -10,6 +10,7 @@ interface UseCommunityPostsParams {
   sortBy?: 'createdAt' | 'likesCount' | 'commentsCount';
   sortOrder?: 'asc' | 'desc';
   enabled?: boolean;
+  authorFilter?: 'all' | 'idol' | 'fan'; // Filter by author role (idol, fan, or all)
 }
 
 export const useCommunityPosts = (params: UseCommunityPostsParams) => {
@@ -21,6 +22,7 @@ export const useCommunityPosts = (params: UseCommunityPostsParams) => {
     sortBy = 'createdAt',
     sortOrder = 'desc',
     enabled = true,
+    authorFilter,
   } = params;
 
   // Build query params
@@ -31,8 +33,12 @@ export const useCommunityPosts = (params: UseCommunityPostsParams) => {
       sortOrder,
     };
 
+    if (authorFilter) {
+      params.authorFilter = authorFilter;
+    }
+
     return params;
-  }, [limit, sortBy, sortOrder]);
+  }, [limit, sortBy, sortOrder, authorFilter]);
 
   const { data, fetchNextPage, hasNextPage, isFetching, isLoading, isRefetching, error, refetch } = backendApi.useInfiniteQuery(
     'get',

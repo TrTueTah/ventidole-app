@@ -3722,6 +3722,8 @@ export interface operations {
                 sortBy?: "createdAt" | "likesCount" | "commentsCount";
                 /** @description Sort order */
                 sortOrder?: "asc" | "desc";
+                /** @description Filter by author role (for community posts) */
+                authorFilter?: "all" | "idol" | "fan";
             };
             header?: never;
             path?: never;
@@ -4030,6 +4032,8 @@ export interface operations {
                 sortBy?: "createdAt" | "likesCount" | "commentsCount";
                 /** @description Sort order */
                 sortOrder?: "asc" | "desc";
+                /** @description Filter by author role (for community posts) */
+                authorFilter?: "all" | "idol" | "fan";
             };
             header?: never;
             path: {

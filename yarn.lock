@@ -9248,6 +9248,11 @@ react-native-modal-popover@^2.0.1:
     lodash ">4.17.0"
     prop-types "^15.8.1"
 
+react-native-pager-view@^6.9.1:
+  version "6.9.1"
+  resolved "https://registry.yarnpkg.com/react-native-pager-view/-/react-native-pager-view-6.9.1.tgz#a9e6d9323935cc2ae1d46d7816b66f76dc3eff8e"
+  integrity sha512-uUT0MMMbNtoSbxe9pRvdJJKEi9snjuJ3fXlZhG8F2vVMOBJVt/AFtqMPUHu9yMflmqOr08PewKzj9EPl/Yj+Gw==
+
 react-native-permissions@^5.4.2:
   version "5.4.2"
   resolved "https://registry.yarnpkg.com/react-native-permissions/-/react-native-permissions-5.4.2.tgz#206c0e440cff2ce047514995457bd73a9924fd8b"
@@ -9308,6 +9313,13 @@ react-native-svg@15.12.1:
     css-select "^5.1.0"
     css-tree "^1.1.3"
     warn-once "0.1.1"
+
+react-native-tab-view@^4.2.0:
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/react-native-tab-view/-/react-native-tab-view-4.2.0.tgz#1d4ffce97c5875b99811d2b8109cad7d7da7eb74"
+  integrity sha512-TUbh7Yr0tE/99t1pJQLbQ+4/Px67xkT7/r3AhfV+93Q3WoUira0Lx7yuKUP2C118doqxub8NCLERwcqsHr29nQ==
+  dependencies:
+    use-latest-callback "^0.2.4"
 
 react-native-toast-message@^2.3.3:
   version "2.3.3"

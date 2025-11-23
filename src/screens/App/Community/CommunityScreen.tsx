@@ -1,30 +1,33 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Animated, ActivityIndicator, Alert } from 'react-native';
 import { useRoute, useNavigation, RouteProp } from '@react-navigation/native';
 import HeaderTransparent from 'components/Header/HeaderTransparent/HeaderTransparent';
-import PostCard from 'components/Card/PostCard/PostCard';
 import { useCommunityDetail } from './hooks/useCommunityDetail';
-import { useCommunityPosts } from './hooks/useCommunityPosts';
 import { useToggleCommunity } from './hooks/useToggleCommunity';
+import AboutTab from './components/AboutTab';
+import ArtistTab from './components/ArtistTab';
+import FanTab from './components/FanTab';
 import * as S from './CommunityScreen.style';
 import PlusIcon from 'assets/images/icons/plus.svg';
+import CheckIcon from 'assets/images/icons/check.svg';
 import { blackColor, primaryColor, whiteColor } from 'constants/colors';
 import { formatNumber } from 'helpers/format-number';
 import { components } from 'src/schemes/openapi';
 
 const HEADER_HEIGHT = 400;
 
-type PostDto = components['schemas']['PostDto'];
-
 type CommunityScreenRouteProp = RouteProp<
   { CommunityScreen: { communityId: string } },
   'CommunityScreen'
 >;
 
+type TabType = 'about' | 'artist' | 'fan';
+
 const CommunityScreen = () => {
   const scrollY = React.useRef(new Animated.Value(0)).current;
   const route = useRoute<CommunityScreenRouteProp>();
   const navigation = useNavigation();
+  const [activeTab, setActiveTab] = useState<TabType>('about');
 
   // Get communityId from route params
   const communityId = route.params?.communityId;
@@ -32,19 +35,6 @@ const CommunityScreen = () => {
   // Fetch community details
   const { community, isLoading: isCommunityLoading, refetch: refetchCommunity } = useCommunityDetail({
     communityId,
-  });
-
-  // Fetch community posts
-  const {
-    posts,
-    isLoading: isPostsLoading,
-    isLoadingMore,
-    hasMore,
-    loadMore,
-    refresh,
-  } = useCommunityPosts({
-    communityId,
-    limit: 20,
   });
 
   // Toggle join/leave
@@ -132,9 +122,13 @@ const CommunityScreen = () => {
           <S.BlurBackground />
           <S.HeaderSubtitle>{subtitleText}</S.HeaderSubtitle>
           <S.HeaderTitle>{community.name}</S.HeaderTitle>
-          <S.JoinButton onPress={handleJoinToggle} disabled={isToggling}>
-            <PlusIcon width={24} height={24} color={blackColor} />
-            <S.JoinText style={{ color: blackColor, fontSize: 14 }}>
+          <S.JoinButton onPress={handleJoinToggle} disabled={isToggling} isJoined={community.isFollowing}>
+            {community.isFollowing ? (
+              <CheckIcon width={24} height={24} color={whiteColor} />
+            ) : (
+              <PlusIcon width={24} height={24} color={blackColor} />
+            )}
+            <S.JoinText isJoined={community.isFollowing}>
               {community.isFollowing ? 'Joined' : 'Join'}
             </S.JoinText>
           </S.JoinButton>
@@ -143,30 +137,35 @@ const CommunityScreen = () => {
     );
   };
 
-  const renderPost = ({ item }: { item: PostDto }) => (
-    <PostCard post={item} />
+  const renderTabBar = () => (
+    <S.TabBarContainer>
+      <S.TabBar>
+        <S.TabItem isActive={activeTab === 'about'} onPress={() => setActiveTab('about')}>
+          <S.TabLabel isActive={activeTab === 'about'}>About</S.TabLabel>
+        </S.TabItem>
+        <S.TabItem isActive={activeTab === 'artist'} onPress={() => setActiveTab('artist')}>
+          <S.TabLabel isActive={activeTab === 'artist'}>Artist</S.TabLabel>
+        </S.TabItem>
+        <S.TabItem isActive={activeTab === 'fan'} onPress={() => setActiveTab('fan')}>
+          <S.TabLabel isActive={activeTab === 'fan'}>Fan</S.TabLabel>
+        </S.TabItem>
+      </S.TabBar>
+    </S.TabBarContainer>
   );
 
-  const renderEmpty = () => {
-    if (isPostsLoading) {
-      return null;
+  const renderTabContent = () => {
+    if (!communityId || !community) return null;
+
+    switch (activeTab) {
+      case 'about':
+        return <AboutTab community={community} />;
+      case 'artist':
+        return <ArtistTab communityId={communityId} />;
+      case 'fan':
+        return <FanTab communityId={communityId} />;
+      default:
+        return null;
     }
-
-    return (
-      <S.EmptyContainer>
-        <S.EmptyText>No posts yet in this community</S.EmptyText>
-      </S.EmptyContainer>
-    );
-  };
-
-  const renderFooter = () => {
-    if (!isLoadingMore) return null;
-
-    return (
-      <S.LoadingContainer>
-        <ActivityIndicator color={primaryColor} />
-      </S.LoadingContainer>
-    );
   };
 
   if (!communityId) {
@@ -192,28 +191,19 @@ const CommunityScreen = () => {
   return (
     <S.Container>
       <HeaderTransparent scrollY={scrollY} title={community?.name || ''} />
-      <Animated.FlatList
-        data={posts}
-        keyExtractor={item => item.postId}
-        renderItem={renderPost}
-        ListHeaderComponent={renderHeader}
-        ListEmptyComponent={renderEmpty}
-        ListFooterComponent={renderFooter}
-        scrollEventThrottle={16}
+      <Animated.ScrollView
+        style={{ flex: 1 }}
         showsVerticalScrollIndicator={false}
+        scrollEventThrottle={16}
         onScroll={Animated.event(
           [{ nativeEvent: { contentOffset: { y: scrollY } } }],
           { useNativeDriver: false },
         )}
-        onEndReached={hasMore ? loadMore : undefined}
-        onEndReachedThreshold={0.5}
-        refreshing={false}
-        onRefresh={refresh}
-        initialNumToRender={6}
-        maxToRenderPerBatch={10}
-        windowSize={5}
-        removeClippedSubviews
-      />
+      >
+        {renderHeader()}
+        {renderTabBar()}
+        {renderTabContent()}
+      </Animated.ScrollView>
       <S.FloatingButton onPress={handleCreatePost}>
         <PlusIcon width={24} height={24} color={whiteColor} />
       </S.FloatingButton>
