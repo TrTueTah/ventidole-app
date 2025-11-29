@@ -57,7 +57,7 @@ const HomeScreen = () => {
     ({ item }: { item: PostDto }) => {
       return (
         <S.TouchableZone
-          onPress={() => handlePostPress(item.postId, item.userId)}
+          onPress={() => handlePostPress(item.postId, item.communityId)}
         >
           <PostCard post={item} containerStyle={{ borderRadius: 20 }} />
         </S.TouchableZone>

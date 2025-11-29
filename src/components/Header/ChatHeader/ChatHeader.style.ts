@@ -14,12 +14,12 @@ export const WrapperHeader = styled.View`
   flex-direction: row;
   align-items: center;
   width: 100%;
-  gap: ${RFValue(10)}px;
+  gap: ${RFValue(10, 932)}px;
 
 `;
 
 export const HeaderTitle = styled.Text`
-  font-size: ${RFValue(18)}px;
+  font-size: ${RFValue(18, 932)}px;
   font-family: ${Montserrat700};
   color: ${blackColor};
 `;

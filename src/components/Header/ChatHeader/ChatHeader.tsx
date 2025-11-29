@@ -15,7 +15,7 @@ const ChatHeader: FC = () => {
   return (
     <S.Container style={headerInsets}>
       <S.WrapperHeader>
-        <ChatHeaderIcon width={RFValue(40)} height={RFValue(40)} color={secondaryColor} />
+        <ChatHeaderIcon width={RFValue(40, 932)} height={RFValue(40, 932)} color={secondaryColor} />
         <S.HeaderTitle>Channels</S.HeaderTitle>
       </S.WrapperHeader>
     </S.Container>

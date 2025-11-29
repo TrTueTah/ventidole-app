@@ -2295,6 +2295,50 @@ paths:
                   - message
       summary: Admin signup (bypass all verification, instantly active)
       tags: *ref_14
+  /v1/admin/authentication/refresh-token:
+    post:
+      operationId: AdminAuthController_refreshToken_v1
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RefreshTokenRequest'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: number
+                    example: 200
+                    description: HTTP status code
+                  message:
+                    type: string
+                    example: OK
+                    description: Response message
+                  data:
+                    $ref: '#/components/schemas/AdminAuthResponse'
+                    description: Response data
+                  error:
+                    type: object
+                    nullable: true
+                    example: null
+                    description: Error information (null on success)
+                  errorCode:
+                    type: string
+                    nullable: true
+                    example: null
+                    description: Error code (null on success)
+                required:
+                  - statusCode
+                  - message
+      summary: Admin refresh token
+      tags: *ref_14
   /v1/admin/communities:
     post:
       operationId: AdminCommunitiesController_createCommunity_v1
@@ -3747,6 +3791,10 @@ components:
           type: string
           description: Post ID
           example: post-clx123abc
+        communityId:
+          type: string
+          description: Community ID
+          example: community-123
         userId:
           type: string
           description: User ID who created the post
@@ -3799,6 +3847,7 @@ components:
             sharesCount: 0
       required:
         - postId
+        - communityId
         - userId
         - username
         - displayName
@@ -3816,6 +3865,10 @@ components:
           type: string
           description: Post ID
           example: post-clx123abc
+        communityId:
+          type: string
+          description: Community ID
+          example: community-123
         userId:
           type: string
           description: User ID who created the post
@@ -3885,6 +3938,7 @@ components:
           example: false
       required:
         - postId
+        - communityId
         - userId
         - displayName
         - content
@@ -3904,6 +3958,10 @@ components:
           type: string
           description: Post ID
           example: post-clx123abc
+        communityId:
+          type: string
+          description: Community ID
+          example: community-123
         userId:
           type: string
           description: User ID who created the post
@@ -3970,6 +4028,7 @@ components:
           example: false
       required:
         - postId
+        - communityId
         - userId
         - displayName
         - content
@@ -4849,14 +4908,14 @@ components:
           type: string
           example: admin123
           description: Admin password (min 6 characters)
-        name:
+        username:
           type: string
           example: Admin Name
           description: Admin name/username
       required:
         - email
         - password
-        - name
+        - username
     CreateCommunityRequest:
       type: object
       properties:

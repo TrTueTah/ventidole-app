@@ -58,6 +58,20 @@
 	</dict>
 	<key>NSUserTrackingUsageDescription</key>
 	<string>This app uses data to provide personalized content and ads.</string>
+  <key>NSCameraUsageDescription</key>
+	<string>Access to your Camera is required to pass verification and add photos to the profile and events.</string>
+	<key>NSLocalNetworkUsageDescription</key>
+	<string>Allow to discover the React Native dev server on your network.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Location access is required to provide location-based features.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Location access is required to provide location-based features while using the app.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Access to your Photos is required to add photos to the profile and events.</string>
+	<key>NSUserTrackingUsageDescription</key>
+	<string>Access to your data is required to provide personalized ads.</string>
+	<key>RCTNewArchEnabled</key>
+	<true/>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Montserrat-Black.ttf</string>

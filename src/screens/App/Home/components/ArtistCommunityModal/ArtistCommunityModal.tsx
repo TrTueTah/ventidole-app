@@ -15,88 +15,102 @@ interface ArtistCommunityModalProps {
   onClose: () => void;
 }
 
-type FilterType = 'All' | 'Group' | 'Solo' | 'Latin' | 'New' | 'Weverse' | 'Joined';
+type FilterType =
+  | 'All'
+  | 'Group'
+  | 'Solo'
+  | 'Latin'
+  | 'New'
+  | 'Weverse'
+  | 'Joined';
 
 const FILTERS: FilterType[] = ['All', 'Joined'];
 
-const ArtistCommunityModal: React.FC<ArtistCommunityModalProps> = ({ visible, onClose }) => {
+const ArtistCommunityModal: React.FC<ArtistCommunityModalProps> = ({
+  visible,
+  onClose,
+}) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [activeFilter, setActiveFilter] = useState<FilterType>('All');
-  const [loadingCommunityId, setLoadingCommunityId] = useState<string | null>(null);
+  const [loadingCommunityId, setLoadingCommunityId] = useState<string | null>(
+    null,
+  );
 
   // Fetch communities based on filter and search
-  const {
-    communities,
-    isLoading,
-    isLoadingMore,
-    hasMore,
-    loadMore,
-    refresh,
-  } = useCommunities({
-    limit: 20,
-    filter: activeFilter === 'Joined' ? 'joined' : 'all',
-    search: searchQuery,
-  });
+  const { communities, isLoading, isLoadingMore, hasMore, loadMore, refresh } =
+    useCommunities({
+      limit: 20,
+      filter: activeFilter === 'Joined' ? 'joined' : 'all',
+      search: searchQuery,
+    });
 
   const { mutate: joinCommunity } = useJoinCommunity();
   const { mutate: leaveCommunity } = useLeaveCommunity();
 
-  const handleJoinToggle = useCallback((communityId: string, isJoined: boolean) => {
-    if (isJoined) {
-      Alert.alert(
-        'Leave Community',
-        'Are you sure you want to leave this community?',
-        [
+  const handleJoinToggle = useCallback(
+    (communityId: string, isJoined: boolean) => {
+      if (isJoined) {
+        Alert.alert(
+          'Leave Community',
+          'Are you sure you want to leave this community?',
+          [
+            {
+              text: 'Cancel',
+              style: 'cancel',
+            },
+            {
+              text: 'Leave',
+              style: 'destructive',
+              onPress: () => {
+                setLoadingCommunityId(communityId);
+                leaveCommunity(
+                  {
+                    body: { communityId },
+                  },
+                  {
+                    onSuccess: () => {
+                      setLoadingCommunityId(null);
+                      refresh();
+                    },
+                    onError: (error: any) => {
+                      setLoadingCommunityId(null);
+                      Alert.alert(
+                        'Error',
+                        error.message || 'Failed to leave community',
+                      );
+                    },
+                  },
+                );
+              },
+            },
+          ],
+        );
+      } else {
+        setLoadingCommunityId(communityId);
+        joinCommunity(
           {
-            text: 'Cancel',
-            style: 'cancel',
+            body: { communityId },
           },
           {
-            text: 'Leave',
-            style: 'destructive',
-            onPress: () => {
-              setLoadingCommunityId(communityId);
-              leaveCommunity(
-                {
-                  body: { communityId }
-                },
-                {
-                  onSuccess: () => {
-                    setLoadingCommunityId(null);
-                    refresh();
-                  },
-                  onError: (error: any) => {
-                    setLoadingCommunityId(null);
-                    Alert.alert('Error', error.message || 'Failed to leave community');
-                  },
-                }
-              );
+            onSuccess: () => {
+              setLoadingCommunityId(null);
+              refresh();
+            },
+            onError: (error: any) => {
+              setLoadingCommunityId(null);
+              Alert.alert('Error', error.message || 'Failed to join community');
             },
           },
-        ]
-      );
-    } else {
-      setLoadingCommunityId(communityId);
-      joinCommunity(
-        {
-          body: { communityId }
-        },
-        {
-          onSuccess: () => {
-            setLoadingCommunityId(null);
-            refresh();
-          },
-          onError: (error: any) => {
-            setLoadingCommunityId(null);
-            Alert.alert('Error', error.message || 'Failed to join community');
-          },
-        }
-      );
-    }
-  }, [joinCommunity, leaveCommunity, refresh]);
+        );
+      }
+    },
+    [joinCommunity, leaveCommunity, refresh],
+  );
 
   const renderCommunityItem = ({ item }: { item: any }) => {
-    const isNew = item.createdAt && new Date(item.createdAt) > new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
+    const isNew =
+      item.createdAt &&
+      new Date(item.createdAt) > new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
     const isLoadingThisItem = loadingCommunityId === item.id;
 
     return (
@@ -141,7 +155,9 @@ const ArtistCommunityModal: React.FC<ArtistCommunityModalProps> = ({ visible, on
     return (
       <S.EmptyContainer>
         <S.EmptyText>
-          {searchQuery ? 'No communities found matching your search' : 'No communities available'}
+          {searchQuery
+            ? 'No communities found matching your search'
+            : 'No communities available'}
         </S.EmptyText>
       </S.EmptyContainer>
     );
@@ -184,7 +200,7 @@ const ArtistCommunityModal: React.FC<ArtistCommunityModalProps> = ({ visible, on
 
         <S.FilterContainer>
           <S.FilterContent>
-            {FILTERS.map((filter) => (
+            {FILTERS.map(filter => (
               <S.FilterButton
                 key={filter}
                 isActive={activeFilter === filter}

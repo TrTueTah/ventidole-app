@@ -674,6 +674,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/admin/authentication/refresh-token": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Admin refresh token */
+        post: operations["AdminAuthController_refreshToken_v1"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/admin/communities": {
         parameters: {
             query?: never;
@@ -1421,6 +1438,11 @@ export interface components {
              */
             postId: string;
             /**
+             * @description Community ID
+             * @example community-123
+             */
+            communityId: string;
+            /**
              * @description User ID who created the post
              * @example user-123
              */
@@ -1486,6 +1508,11 @@ export interface components {
              * @example post-clx123abc
              */
             postId: string;
+            /**
+             * @description Community ID
+             * @example community-123
+             */
+            communityId: string;
             /**
              * @description User ID who created the post
              * @example user-123
@@ -1573,6 +1600,11 @@ export interface components {
              * @example post-clx123abc
              */
             postId: string;
+            /**
+             * @description Community ID
+             * @example community-123
+             */
+            communityId: string;
             /**
              * @description User ID who created the post
              * @example user-123
@@ -2301,7 +2333,7 @@ export interface components {
              * @description Admin name/username
              * @example Admin Name
              */
-            name: string;
+            username: string;
         };
         CreateCommunityRequest: {
             /**
@@ -4922,6 +4954,53 @@ export interface operations {
         requestBody: {
             content: {
                 "application/json": components["schemas"]["AdminSignupRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /**
+                         * @description HTTP status code
+                         * @example 200
+                         */
+                        statusCode: number;
+                        /**
+                         * @description Response message
+                         * @example OK
+                         */
+                        message: string;
+                        /** @description Response data */
+                        data?: components["schemas"]["AdminAuthResponse"];
+                        /**
+                         * @description Error information (null on success)
+                         * @example null
+                         */
+                        error?: Record<string, never> | null;
+                        /**
+                         * @description Error code (null on success)
+                         * @example null
+                         */
+                        errorCode?: string | null;
+                    };
+                };
+            };
+        };
+    };
+    AdminAuthController_refreshToken_v1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RefreshTokenRequest"];
             };
         };
         responses: {

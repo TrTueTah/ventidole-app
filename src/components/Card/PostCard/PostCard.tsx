@@ -7,8 +7,9 @@ import { primaryColor } from 'constants/colors';
 import { formatEpoch, formatISODate } from 'helpers/date-converter';
 import { formatNumber } from 'helpers/format-number';
 import * as S from './PostCard.style';
-import { StyleProp, ViewStyle } from 'react-native';
+import { Dimensions, StyleProp, ViewStyle } from 'react-native';
 import { components } from 'src/schemes/openapi';
+import Carousel from 'react-native-reanimated-carousel';
 
 interface PostCardProps {
   post: components["schemas"]["PostDto"];
@@ -16,6 +17,8 @@ interface PostCardProps {
 }
 
 const PostCard: React.FC<PostCardProps> = ({ post, containerStyle }) => {
+  const width = Dimensions.get('window').width;
+
   return (
     <S.PostCardContainer style={containerStyle}>
       <S.PostInfoContainer>
@@ -35,7 +38,17 @@ const PostCard: React.FC<PostCardProps> = ({ post, containerStyle }) => {
       <S.PostContentContainer>
         <S.PostContent>{post.content}</S.PostContent>
       </S.PostContentContainer>
-      <S.PostImage source={{ uri: post.mediaUrls[0] }} resizeMode="cover" />
+      {post.mediaUrls && post.mediaUrls.length > 0 && (
+        <Carousel
+          loop={false}
+          width={width}
+          height={RFValue(200)}
+          data={post.mediaUrls}
+          renderItem={({ item }) => (
+            <S.PostImage source={{ uri: item }} resizeMode="cover" />
+          )}
+        />
+      )}
       <S.PostFooter>
         <S.PostFooterSection>
           <HeartOutline />
